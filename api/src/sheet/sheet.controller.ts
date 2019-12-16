@@ -6,7 +6,10 @@ export class SheetController {
   constructor(private readonly sheetService: SheetService) {}
 
   @Get()
-  findAll(@Query('reference') reference: string) {
-    return this.sheetService.getByReference(reference);
+  getByReference(
+    @Query('reference') reference: string,
+    @Query('fields') fields: string[],
+  ) {
+    return this.sheetService.getAll({ reference, fields });
   }
 }
