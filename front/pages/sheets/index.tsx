@@ -6,7 +6,8 @@ import {
   makeStyles,
   useTheme,
   Theme,
-  createStyles
+  createStyles,
+  fade
 } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -30,6 +31,8 @@ import Link from "next/link";
 import { SheetGetDTO } from "../../../dtos/src/";
 import { useRouter } from "next/router";
 import ReactMarkdown from "react-markdown";
+import { InputBase } from "@material-ui/core";
+import SearchIcon from "@material-ui/icons/Search";
 
 interface ISummaryRow {
   title: string;
@@ -48,6 +51,7 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       display: "flex"
     },
+
     appBar: {
       transition: theme.transitions.create(["margin", "width"], {
         easing: theme.transitions.easing.sharp,
@@ -90,6 +94,43 @@ const useStyles = makeStyles((theme: Theme) =>
         duration: theme.transitions.duration.leavingScreen
       }),
       marginLeft: -drawerWidth
+    },
+    search: {
+      position: "relative",
+      borderRadius: theme.shape.borderRadius,
+      backgroundColor: fade(theme.palette.common.white, 0.15),
+      "&:hover": {
+        backgroundColor: fade(theme.palette.common.white, 0.25)
+      },
+      marginLeft: 0,
+      width: "100%",
+      [theme.breakpoints.up("sm")]: {
+        marginLeft: theme.spacing(1),
+        width: "auto"
+      }
+    },
+    searchIcon: {
+      width: theme.spacing(7),
+      height: "100%",
+      position: "absolute",
+      pointerEvents: "none",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center"
+    },
+    inputRoot: {
+      color: "inherit"
+    },
+    inputInput: {
+      padding: theme.spacing(1, 1, 1, 7),
+      transition: theme.transitions.create("width"),
+      width: "100%",
+      [theme.breakpoints.up("sm")]: {
+        width: 120,
+        "&:focus": {
+          width: 200
+        }
+      }
     },
     contentShift: {
       transition: theme.transitions.create("margin", {
@@ -151,6 +192,20 @@ const SheetPage: NextPage<IProps> = ({ sheet, summaryRows }) => {
           <Typography variant="h6" noWrap>
             {sheet ? sheet.title : "no title"}
           </Typography>
+
+          <div className={classes.search}>
+            <div className={classes.searchIcon}>
+              <SearchIcon />
+            </div>
+            <InputBase
+              placeholder="Search.....…"
+              classes={{
+                root: classes.inputRoot,
+                input: classes.inputInput
+              }}
+              inputProps={{ "aria-label": "search" }}
+            />
+          </div>
         </Toolbar>
       </AppBar>
       <Drawer
