@@ -149,7 +149,7 @@ const SheetPage: NextPage<IProps> = ({ sheet, summaryRows }) => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            {sheet.title}
+            {sheet ? sheet.title : "no title"}
           </Typography>
         </Toolbar>
       </AppBar>
@@ -204,11 +204,9 @@ const SheetPage: NextPage<IProps> = ({ sheet, summaryRows }) => {
       >
         <div className={classes.drawerHeader} />
         <Typography paragraph>
-          {sheet && sheet.content ? (
-            <ReactMarkdown source={sheet.content} />
-          ) : (
-            "No content for this moment"
-          )}
+          {sheet && sheet.content
+            ? sheet.content
+            : "No content for this moment"}
         </Typography>
       </main>
     </div>
@@ -216,18 +214,21 @@ const SheetPage: NextPage<IProps> = ({ sheet, summaryRows }) => {
 };
 
 SheetPage.getInitialProps = async ({ query }) => {
+  console.log("getInitialProps");
   console.log(query);
+
   const res = await axios.request({
-    url: "http://localhost:3001/sheets?fields[]=title&fields[]=reference"
+    url: "http://localhost:3000/api/sheets"
   });
 
   const res2 = await axios.request({
-    url: `http://localhost:3001/sheets?reference=${query.reference}`
+    url: `http://localhost:3000/api/sheets/sheet?reference=${query.reference}`
   });
 
   let summaryRows = res.data as ISummaryRow[];
   console.log(`Show data fetched. Count: ${summaryRows.length}`);
 
+  console.log(res2);
   return {
     sheet: res2.data[0],
     summaryRows
