@@ -31,7 +31,7 @@ import Link from "next/link";
 import { SheetGetDTO } from "../../../dtos/src/";
 import { useRouter } from "next/router";
 import ReactMarkdown from "react-markdown";
-import { InputBase } from "@material-ui/core";
+import { InputBase, Button } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 
 interface ISummaryRow {
@@ -72,6 +72,9 @@ const useStyles = makeStyles((theme: Theme) =>
     hide: {
       display: "none"
     },
+    title: {
+      flexGrow: 1
+    },
     drawer: {
       width: drawerWidth,
       flexShrink: 0
@@ -86,6 +89,7 @@ const useStyles = makeStyles((theme: Theme) =>
       ...theme.mixins.toolbar,
       justifyContent: "flex-end"
     },
+    // modify content when drawer is opened
     content: {
       flexGrow: 1,
       padding: theme.spacing(3),
@@ -95,6 +99,7 @@ const useStyles = makeStyles((theme: Theme) =>
       }),
       marginLeft: -drawerWidth
     },
+
     search: {
       position: "relative",
       borderRadius: theme.shape.borderRadius,
@@ -102,7 +107,7 @@ const useStyles = makeStyles((theme: Theme) =>
       "&:hover": {
         backgroundColor: fade(theme.palette.common.white, 0.25)
       },
-      marginLeft: 0,
+      marginRight: theme.spacing(2),
       width: "100%",
       [theme.breakpoints.up("sm")]: {
         marginLeft: theme.spacing(1),
@@ -118,6 +123,7 @@ const useStyles = makeStyles((theme: Theme) =>
       alignItems: "center",
       justifyContent: "center"
     },
+
     inputRoot: {
       color: "inherit"
     },
@@ -126,9 +132,9 @@ const useStyles = makeStyles((theme: Theme) =>
       transition: theme.transitions.create("width"),
       width: "100%",
       [theme.breakpoints.up("sm")]: {
-        width: 120,
+        width: 200,
         "&:focus": {
-          width: 200
+          width: 240
         }
       }
     },
@@ -189,7 +195,7 @@ const SheetPage: NextPage<IProps> = ({ sheet, summaryRows }) => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap>
+          <Typography className={classes.title} variant="h6" noWrap>
             {sheet ? sheet.title : "no title"}
           </Typography>
 
@@ -198,7 +204,7 @@ const SheetPage: NextPage<IProps> = ({ sheet, summaryRows }) => {
               <SearchIcon />
             </div>
             <InputBase
-              placeholder="Search.....…"
+              placeholder="Rechercher..."
               classes={{
                 root: classes.inputRoot,
                 input: classes.inputInput
@@ -206,6 +212,8 @@ const SheetPage: NextPage<IProps> = ({ sheet, summaryRows }) => {
               inputProps={{ "aria-label": "search" }}
             />
           </div>
+          <Button color="inherit">Accueil</Button>
+          <Button color="inherit">Fiches PSE</Button>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -219,22 +227,10 @@ const SheetPage: NextPage<IProps> = ({ sheet, summaryRows }) => {
       >
         <div className={classes.drawerHeader}>
           <IconButton onClick={handleDrawerClose}>
-            {theme.direction === "ltr" ? (
-              <ChevronLeftIcon />
-            ) : (
-              <ChevronRightIcon />
-            )}
+            <ChevronLeftIcon />
           </IconButton>
         </div>
-        <List>
-          <ListItem button>
-            <ListItemIcon>
-              <InboxIcon />
-            </ListItemIcon>
-            <ListItemText primary={"Home"} />
-          </ListItem>
-        </List>
-        <Divider />
+
         <List>
           {summaryRows.map(summaryRow => (
             <ListItem button key={summaryRow.reference}>
@@ -258,11 +254,18 @@ const SheetPage: NextPage<IProps> = ({ sheet, summaryRows }) => {
         })}
       >
         <div className={classes.drawerHeader} />
-        <Typography paragraph>
+        <ReactMarkdown
+          source={
+            sheet && sheet.content
+              ? sheet.content
+              : "No content for this moment"
+          }
+        />
+        {/* <Typography paragraph>
           {sheet && sheet.content
             ? sheet.content
             : "No content for this moment"}
-        </Typography>
+        </Typography> */}
       </main>
     </div>
   );

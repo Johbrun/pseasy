@@ -62,7 +62,7 @@ const useStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.up("sm")]: {
         width: 1200,
         "&:focus": {
-          width: 200
+          width: 2000
         }
       }
     }
@@ -85,7 +85,7 @@ export default function SearchAppBar() {
             <MenuIcon />
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
-            Material-UIUUU
+            Material-UIUUUSSSSS
           </Typography>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
