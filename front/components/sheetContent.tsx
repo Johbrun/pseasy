@@ -1,10 +1,13 @@
 import { makeStyles, Theme, createStyles } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import clsx from "clsx";
+import { SheetGetDTO } from "../../dtos/src";
+import ReactMarkdown from "react-markdown";
 
 const drawerWidth = 240;
 
 interface IProps {
+  sheet?: SheetGetDTO;
   open: boolean;
 }
 const useStyles = makeStyles((theme: Theme) =>
@@ -50,6 +53,7 @@ export default function SheetContent(props: IProps) {
         })}
       >
         <div className={classes.drawerHeader} />
+        <ReactMarkdown source={props.sheet ? props.sheet.content : ""} />
         <Typography paragraph>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Rhoncus

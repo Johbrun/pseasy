@@ -49,9 +49,13 @@ const SheetPage: NextPage<IProps> = ({ sheet, summaryRows }) => {
         />
       </Head>
       <CssBaseline />
-      <SearchAppBar open={open} setOpen={setOpen} />
+      <SearchAppBar
+        open={open}
+        setOpen={setOpen}
+        title={sheet ? sheet.title : undefined}
+      />
       <SideDrawer open={open} setOpen={setOpen} summaryRows={summaryRows} />
-      <SheetContent open={open} />
+      {sheet ? <SheetContent open={open} sheet={sheet} /> : null}
       {/* <main
         className={clsx(classes.content, {
           [classes.contentShift]: open

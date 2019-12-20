@@ -16,6 +16,7 @@ import { Button } from "@material-ui/core";
 import clsx from "clsx";
 
 interface IProps {
+  title?: string;
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -133,8 +134,7 @@ export default function SearchAppBar(props: IProps) {
             <MenuIcon />
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
-            {/* {sheet ? sheet.title : "no title"} */}
-            COUCOU
+            {props.title ? props.title : "PSEasy - Référenciel PSE"}
           </Typography>
 
           <div className={classes.search}>
