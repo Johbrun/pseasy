@@ -1,6 +1,6 @@
 import React from "react";
 import Head from "next/head";
-import Nav from "../../components/nav/nav";
+import Nav from "../../components/nav";
 import { NextPage } from "next";
 import Link from "next/link";
 import styles from "./index.module.scss";

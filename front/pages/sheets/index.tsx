@@ -1,38 +1,14 @@
 import React from "react";
 import { NextPage } from "next";
 import axios from "axios";
-import clsx from "clsx";
-import {
-  makeStyles,
-  useTheme,
-  Theme,
-  createStyles,
-  fade
-} from "@material-ui/core/styles";
-import Drawer from "@material-ui/core/Drawer";
+import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import List from "@material-ui/core/List";
-import Typography from "@material-ui/core/Typography";
-import Divider from "@material-ui/core/Divider";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import MailIcon from "@material-ui/icons/Mail";
 import Head from "next/head";
-import Nav from "../../components/nav/nav";
-import Link from "next/link";
 import { SheetGetDTO } from "../../../dtos/src/";
 import { useRouter } from "next/router";
-import ReactMarkdown from "react-markdown";
-import { InputBase, Button } from "@material-ui/core";
-import SearchIcon from "@material-ui/icons/Search";
+import SearchAppBar from "../../components/nav";
+import SideDrawer from "../../components/drawer";
+import SheetContent from "../../components/sheetContent";
 
 interface ISummaryRow {
   title: string;
@@ -44,124 +20,19 @@ interface IProps {
   summaryRows: ISummaryRow[];
 }
 
-const drawerWidth = 240;
-
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
   createStyles({
     root: {
       display: "flex"
-    },
-
-    appBar: {
-      transition: theme.transitions.create(["margin", "width"], {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen
-      })
-    },
-    appBarShift: {
-      width: `calc(100% - ${drawerWidth}px)`,
-      marginLeft: drawerWidth,
-      transition: theme.transitions.create(["margin", "width"], {
-        easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen
-      })
-    },
-    menuButton: {
-      marginRight: theme.spacing(2)
-    },
-    hide: {
-      display: "none"
-    },
-    title: {
-      flexGrow: 1
-    },
-    drawer: {
-      width: drawerWidth,
-      flexShrink: 0
-    },
-    drawerPaper: {
-      width: drawerWidth
-    },
-    drawerHeader: {
-      display: "flex",
-      alignItems: "center",
-      padding: theme.spacing(0, 1),
-      ...theme.mixins.toolbar,
-      justifyContent: "flex-end"
-    },
-    // modify content when drawer is opened
-    content: {
-      flexGrow: 1,
-      padding: theme.spacing(3),
-      transition: theme.transitions.create("margin", {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen
-      }),
-      marginLeft: -drawerWidth
-    },
-
-    search: {
-      position: "relative",
-      borderRadius: theme.shape.borderRadius,
-      backgroundColor: fade(theme.palette.common.white, 0.15),
-      "&:hover": {
-        backgroundColor: fade(theme.palette.common.white, 0.25)
-      },
-      marginRight: theme.spacing(2),
-      width: "100%",
-      [theme.breakpoints.up("sm")]: {
-        marginLeft: theme.spacing(1),
-        width: "auto"
-      }
-    },
-    searchIcon: {
-      width: theme.spacing(7),
-      height: "100%",
-      position: "absolute",
-      pointerEvents: "none",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center"
-    },
-
-    inputRoot: {
-      color: "inherit"
-    },
-    inputInput: {
-      padding: theme.spacing(1, 1, 1, 7),
-      transition: theme.transitions.create("width"),
-      width: "100%",
-      [theme.breakpoints.up("sm")]: {
-        width: 200,
-        "&:focus": {
-          width: 240
-        }
-      }
-    },
-    contentShift: {
-      transition: theme.transitions.create("margin", {
-        easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen
-      }),
-      marginLeft: 0
     }
   })
 );
 
 const SheetPage: NextPage<IProps> = ({ sheet, summaryRows }) => {
-  const router = useRouter();
-  console.log(router.query.reference);
   const classes = useStyles();
-  const theme = useTheme();
+  const router = useRouter();
   const [open, setOpen] = React.useState(false);
-
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
+  console.log(router.query.reference);
 
   return (
     <div className={classes.root}>
@@ -177,78 +48,11 @@ const SheetPage: NextPage<IProps> = ({ sheet, summaryRows }) => {
           href="https://fonts.googleapis.com/icon?family=Material+Icons"
         />
       </Head>
-
       <CssBaseline />
-      <AppBar
-        position="fixed"
-        className={clsx(classes.appBar, {
-          [classes.appBarShift]: open
-        })}
-      >
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            className={clsx(classes.menuButton, open && classes.hide)}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography className={classes.title} variant="h6" noWrap>
-            {sheet ? sheet.title : "no title"}
-          </Typography>
-
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder="Rechercher..."
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput
-              }}
-              inputProps={{ "aria-label": "search" }}
-            />
-          </div>
-          <Button color="inherit">Accueil</Button>
-          <Button color="inherit">Fiches PSE</Button>
-        </Toolbar>
-      </AppBar>
-      <Drawer
-        className={classes.drawer}
-        variant="persistent"
-        anchor="left"
-        open={open}
-        classes={{
-          paper: classes.drawerPaper
-        }}
-      >
-        <div className={classes.drawerHeader}>
-          <IconButton onClick={handleDrawerClose}>
-            <ChevronLeftIcon />
-          </IconButton>
-        </div>
-
-        <List>
-          {summaryRows.map(summaryRow => (
-            <ListItem button key={summaryRow.reference}>
-              <ListItemIcon>
-                <InboxIcon />
-              </ListItemIcon>
-              <ListItemText
-                primary={
-                  <Link href={`/sheets?reference=${summaryRow.reference}`}>
-                    <a>{summaryRow.title}</a>
-                  </Link>
-                }
-              />
-            </ListItem>
-          ))}
-        </List>
-      </Drawer>
-      <main
+      <SearchAppBar open={open} setOpen={setOpen} />
+      <SideDrawer open={open} setOpen={setOpen} summaryRows={summaryRows} />
+      <SheetContent open={open} />
+      {/* <main
         className={clsx(classes.content, {
           [classes.contentShift]: open
         })}
@@ -260,13 +64,13 @@ const SheetPage: NextPage<IProps> = ({ sheet, summaryRows }) => {
               ? sheet.content
               : "No content for this moment"
           }
-        />
-        {/* <Typography paragraph>
+        /> */}
+      {/* <Typography paragraph>
           {sheet && sheet.content
             ? sheet.content
             : "No content for this moment"}
         </Typography> */}
-      </main>
+      {/* </main> */}
     </div>
   );
 };

@@ -12,23 +12,45 @@ import {
 } from "@material-ui/core/styles";
 import MenuIcon from "@material-ui/icons/Menu";
 import SearchIcon from "@material-ui/icons/Search";
+import { Button } from "@material-ui/core";
+import clsx from "clsx";
+
+interface IProps {
+  open: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const drawerWidth = 240;
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      flexGrow: 1,
-      color: "green"
+      display: "flex"
+    },
+    appBar: {
+      transition: theme.transitions.create(["margin", "width"], {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen
+      })
+    },
+    appBarShift: {
+      width: `calc(100% - ${drawerWidth}px)`,
+      marginLeft: drawerWidth,
+      transition: theme.transitions.create(["margin", "width"], {
+        easing: theme.transitions.easing.easeOut,
+        duration: theme.transitions.duration.enteringScreen
+      })
     },
     menuButton: {
-      marginRight: theme.spacing(2000)
+      marginRight: theme.spacing(2)
+    },
+    hide: {
+      display: "none"
     },
     title: {
-      flexGrow: 1,
-      display: "none",
-      [theme.breakpoints.up("sm")]: {
-        display: "block"
-      }
+      flexGrow: 1
     },
+
     search: {
       position: "relative",
       borderRadius: theme.shape.borderRadius,
@@ -36,11 +58,14 @@ const useStyles = makeStyles((theme: Theme) =>
       "&:hover": {
         backgroundColor: fade(theme.palette.common.white, 0.25)
       },
-      marginLeft: 0,
+      marginRight: theme.spacing(2),
       width: "100%",
       [theme.breakpoints.up("sm")]: {
         marginLeft: theme.spacing(1),
         width: "auto"
+      },
+      [theme.breakpoints.down("md")]: {
+        display: "none"
       }
     },
     searchIcon: {
@@ -52,6 +77,7 @@ const useStyles = makeStyles((theme: Theme) =>
       alignItems: "center",
       justifyContent: "center"
     },
+
     inputRoot: {
       color: "inherit"
     },
@@ -60,45 +86,73 @@ const useStyles = makeStyles((theme: Theme) =>
       transition: theme.transitions.create("width"),
       width: "100%",
       [theme.breakpoints.up("sm")]: {
-        width: 1200,
+        width: 200,
         "&:focus": {
-          width: 2000
+          width: 240
         }
+      }
+    },
+    contentShift: {
+      transition: theme.transitions.create("margin", {
+        easing: theme.transitions.easing.easeOut,
+        duration: theme.transitions.duration.enteringScreen
+      }),
+      marginLeft: 0
+    },
+    menuButtons: {
+      [theme.breakpoints.down("md")]: {
+        display: "none"
       }
     }
   })
 );
-
-export default function SearchAppBar() {
+export default function SearchAppBar(props: IProps) {
   const classes = useStyles();
+  // const [open, setOpen] = React.useState(false);
+
+  const handleDrawerOpen = () => {
+    props.setOpen(true);
+  };
 
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar
+        position="fixed"
+        className={clsx(classes.appBar, {
+          [classes.appBarShift]: props.open
+        })}
+      >
         <Toolbar>
           <IconButton
-            edge="start"
-            className={classes.menuButton}
             color="inherit"
             aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            edge="start"
+            className={clsx(classes.menuButton, props.open && classes.hide)}
           >
             <MenuIcon />
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
-            Material-UIUUUSSSSS
+            {/* {sheet ? sheet.title : "no title"} */}
+            COUCOU
           </Typography>
+
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
             </div>
             <InputBase
-              placeholder="Search…"
+              placeholder="Rechercher..."
               classes={{
                 root: classes.inputRoot,
                 input: classes.inputInput
               }}
               inputProps={{ "aria-label": "search" }}
             />
+          </div>
+          <div className={classes.menuButtons}>
+            <Button color="inherit">Accueil</Button>
+            <Button color="inherit">Fiches PSE</Button>
           </div>
         </Toolbar>
       </AppBar>

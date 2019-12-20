@@ -4,6 +4,7 @@ import Head from "next/head";
 import { ThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import theme from "./theme";
+import SearchAppBar from "../components/nav";
 
 export default class MyApp extends App {
   componentDidMount() {
