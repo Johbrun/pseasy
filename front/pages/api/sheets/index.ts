@@ -1,4 +1,3 @@
-// const db = require("../../lib/db");
 import escape from "sql-template-strings";
 import * as express from "express";
 import query from "../../../lib/db";
