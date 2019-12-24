@@ -7,7 +7,11 @@ const insertSheet = async (sheet: SheetCreation) => {
   await query(
     escape`INSERT INTO sheet (id, reference, version, title, content, updatedDate, idCategory)
      VALUES (${sheet.id},${sheet.reference},${sheet.version},${sheet.title},${sheet.content},${sheet.updatedDate}, 0)`
-  ).catch(e => console.error(e));
+  ).catch(e => {
+    console.error(`Error when inserting '${sheet.title}' (${sheet.id}) : ${e.sqlMessage}`);
+    console.debug(sheet);
+    throw e;
+  });
 };
 
 export default insertSheet;

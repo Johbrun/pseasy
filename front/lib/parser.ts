@@ -6,28 +6,38 @@ const fs = require("fs");
 const pdf2md = require("@opendocsg/pdf2md");
 const path = require("path");
 
-const parser = () => {
-  console.log("lauch parsing");
+const parser = async () => {
+  console.log("launch parsing");
   const startDate = new Date();
-  //   clean();
+  let nbSheet = 0;
+  let nbErr = 0;
+  await clean();
 
   const pdfBuffer = fs.readFileSync("./lib/REF.pdf");
 
   let i = 1;
   pdf2md(pdfBuffer, undefined)
-    .then((text: string) => {
+    .then(async (text: string) => {
       const matchs = [...text.matchAll(/^(#{4}\s[A-Z](.|\n)*?(?=[A-Z]|#{5}))((.|\n)*?(?=^####\s))/gm)];
+      console.log(`PDF parsed with success. ${matchs.length} regex matchs founds`);
 
       // regroup titles on several lines
-      matchs.forEach(m => {
+      // matchs.forEach(m => {
+      for (const m of matchs) {
+        nbSheet++;
         const title = m[1].replace(/[#\n]*/g, "").trim();
         try {
           // regroup titles on several lines
           const id = i++;
           const refString = m[3].match(/^ Référence.*/gm)[0];
           const content = m[3]
-            .replace(/^ Référence.*/gm, "")
-            .replace(/[\t]*/g, "")
+            .replace(/^ Référence.*/gm, "") // Remove ref line
+            .replace(/[\t]*/g, "") // Delete tabulations
+            .replace(/###/g, "") // Up titles : be careful : max : h2
+            .replace(/ +/g, " ") // delete supp spaces
+            .replace(/(.{1})(7)(.{1})/g, "$1ti$3")
+            .replace(/(.{1})(F)(.{1})/g, "$1tt$3")
+            .replace(/\^/g, "")
             .trim();
           const refM = [
             ...refString.matchAll(/^\s*Référence\s*:\s*(.*)\s*Version\s*:\s*(.*)\s*Mise\s*à\s*jour\s*:\s*(.*)/gm)
@@ -35,7 +45,6 @@ const parser = () => {
           const reference = refM[1].replace(/[\s\t]*/g, "").trim();
           const version = refM[2].trim();
           const updatedDate = new Date(); //refM[3].trim();
-          const createdAdminDate = new Date();
 
           const sheet: SheetCreation = {
             id: id.toString(),
@@ -45,13 +54,13 @@ const parser = () => {
             version,
             updatedDate
           };
-          insertSheet(sheet);
-          // console.log(sheet);
-          //console.log(m)
+
+          await insertSheet(sheet).catch(e => nbErr++);
         } catch (e) {
+          nbErr++;
           console.error(`Error on sheet '${title}' (${i}) : ${e}`);
         }
-      });
+      }
 
       // let outputFile = "./file" + i + ".md";
       // console.log(`Writing to ${outputFile}...`);
@@ -83,11 +92,13 @@ const parser = () => {
       // sheets.forEach(s => console.log(s.match(/^(.*)/g)));
       // sheets.forEach(s => console.log(s.match(/%^#{4}\s([A-Z].*\n\n.*)/gm)));
     })
+    .then(() =>
+      console.log(`Process ended in ${(+new Date() - +startDate) / 1000} sec for ${nbSheet} sheets and ${nbErr} errors`)
+    )
     .catch((err: any) => {
+      nbErr++;
       console.error(err);
     });
-
-  console.log(`Process ended in ${(+new Date() - +startDate) / 1000} sec`);
 };
 
 export default parser;

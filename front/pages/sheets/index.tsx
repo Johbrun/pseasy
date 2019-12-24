@@ -84,7 +84,7 @@ SheetPage.getInitialProps = async ({ query }) => {
   let summaryRows = res.data as ISummaryRow[];
   console.log(`Show data fetched. Count: ${summaryRows.length}`);
 
-  console.log(res2);
+  // console.log(res2);
   return {
     sheet: res2.data[0],
     summaryRows

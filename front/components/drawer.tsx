@@ -1,13 +1,14 @@
 import React from "react";
 import IconButton from "@material-ui/core/IconButton";
 import { createStyles, Theme, makeStyles } from "@material-ui/core/styles";
-import { Link, List } from "@material-ui/core";
+import { Link, List, ListItemIcon } from "@material-ui/core";
 import Drawer from "@material-ui/core/Drawer";
 import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
+// import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-
+// import InboxIcon from "@material-ui/icons/MoveToInbox";
+import InboxIcon from "@material-ui/icons/MoveToInbox";
 interface ISummaryRow {
   title: string;
   reference: string;
@@ -19,7 +20,7 @@ interface IProps {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const drawerWidth = 240;
+const drawerWidth = 280;
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -83,7 +84,9 @@ export default function SideDrawer(props: IProps) {
         <List>
           {props.summaryRows.map(summaryRow => (
             <ListItem button key={summaryRow.reference}>
-              {/* <ListItemIcon><InboxIcon /></ListItemIcon> */}
+              <ListItemIcon>
+                <InboxIcon />
+              </ListItemIcon>
               <ListItemText
                 primary={
                   <Link href={`/sheets?reference=${summaryRow.reference}`}>

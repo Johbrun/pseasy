@@ -4,7 +4,7 @@ import clsx from "clsx";
 import ReactMarkdown from "react-markdown";
 import { Sheet } from "../lib/interfaces/sheet.interface";
 
-const drawerWidth = 240;
+const drawerWidth = 280;
 
 interface IProps {
   sheet?: Sheet;
