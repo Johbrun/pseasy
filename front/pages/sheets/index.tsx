@@ -4,11 +4,11 @@ import axios from "axios";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Head from "next/head";
-import { SheetGetDTO } from "../../../dtos/src/";
 import { useRouter } from "next/router";
 import SearchAppBar from "../../components/nav";
 import SideDrawer from "../../components/drawer";
 import SheetContent from "../../components/sheetContent";
+import { Sheet } from "../../lib/interfaces/sheet.interface";
 
 interface ISummaryRow {
   title: string;
@@ -16,7 +16,7 @@ interface ISummaryRow {
 }
 
 interface IProps {
-  sheet?: SheetGetDTO;
+  sheet?: Sheet;
   summaryRows: ISummaryRow[];
 }
 
@@ -39,21 +39,11 @@ const SheetPage: NextPage<IProps> = ({ sheet, summaryRows }) => {
       <Head>
         <title>PSEasy</title>
         <link rel="icon" href="/favicon.ico" />
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
-        />
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/icon?family=Material+Icons"
-        />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
       </Head>
       <CssBaseline />
-      <SearchAppBar
-        open={open}
-        setOpen={setOpen}
-        title={sheet ? sheet.title : undefined}
-      />
+      <SearchAppBar open={open} setOpen={setOpen} title={sheet ? sheet.title : undefined} />
       <SideDrawer open={open} setOpen={setOpen} summaryRows={summaryRows} />
       {sheet ? <SheetContent open={open} sheet={sheet} /> : null}
       {/* <main

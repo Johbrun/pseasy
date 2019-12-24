@@ -83,11 +83,11 @@ export default function SideDrawer(props: IProps) {
         <List>
           {props.summaryRows.map(summaryRow => (
             <ListItem button key={summaryRow.reference}>
-              <ListItemIcon>{/* <InboxIcon /> */}</ListItemIcon>
+              {/* <ListItemIcon><InboxIcon /></ListItemIcon> */}
               <ListItemText
                 primary={
                   <Link href={`/sheets?reference=${summaryRow.reference}`}>
-                    <a>{summaryRow.title}</a>
+                    {summaryRow.title ? summaryRow.title : "NOPE NOPE"}
                   </Link>
                 }
               />

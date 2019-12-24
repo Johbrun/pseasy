@@ -4,7 +4,7 @@ import * as express from "express";
 
 module.exports = async (req: express.Request, res: express.Response) => {
   const sheet = await query(escape`
-    SELECT id, reference, version, updatedDate, title, content, level, createdAdminDate, updatedAdminDate
+    SELECT id, reference, version, updatedDate, title, content, level, createdAdminDate
     FROM sheet
     WHERE reference = ${req.query.reference}
   `);
