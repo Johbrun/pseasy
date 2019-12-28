@@ -9,13 +9,10 @@ import ListItemText from "@material-ui/core/ListItemText";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 // import InboxIcon from "@material-ui/icons/MoveToInbox";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
-interface ISummaryRow {
-  title: string;
-  reference: string;
-}
+import { SheetLight } from "../lib/interfaces/sheet.interface";
 
 interface IProps {
-  summaryRows: ISummaryRow[];
+  sheetsLight: SheetLight[];
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -82,7 +79,7 @@ export default function SideDrawer(props: IProps) {
         </div>
 
         <List>
-          {props.summaryRows.map(summaryRow => (
+          {props.sheetsLight.map(summaryRow => (
             <ListItem button key={summaryRow.reference}>
               <ListItemIcon>
                 <InboxIcon />

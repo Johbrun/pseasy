@@ -18,8 +18,14 @@ const parser = async () => {
   let i = 1;
   pdf2md(pdfBuffer, undefined)
     .then(async (text: string) => {
-      const matchs = [...text.matchAll(/^(#{4}\s[A-Z](.|\n)*?(?=[A-Z]|#{5}))((.|\n)*?(?=^####\s))/gm)];
-      console.log(`PDF parsed with success. ${matchs.length} regex matchs founds`);
+      const matchs = [
+        ...text.matchAll(
+          /^(#{4}\s[A-Z](.|\n)*?(?=[A-Z]|#{5}))((.|\n)*?(?=^####\s))/gm
+        )
+      ];
+      console.log(
+        `PDF parsed with success. ${matchs.length} regex matchs founds`
+      );
 
       // regroup titles on several lines
       // matchs.forEach(m => {
@@ -40,7 +46,9 @@ const parser = async () => {
             .replace(/\^/g, "")
             .trim();
           const refM = [
-            ...refString.matchAll(/^\s*Référence\s*:\s*(.*)\s*Version\s*:\s*(.*)\s*Mise\s*à\s*jour\s*:\s*(.*)/gm)
+            ...refString.matchAll(
+              /^\s*Référence\s*:\s*(.*)\s*Version\s*:\s*(.*)\s*Mise\s*à\s*jour\s*:\s*(.*)/gm
+            )
           ][0];
           const reference = refM[1].replace(/[\s\t]*/g, "").trim();
           const version = refM[2].trim();
@@ -49,7 +57,7 @@ const parser = async () => {
           const sheet: SheetCreation = {
             id: id.toString(),
             title,
-            content: content,
+            content,
             reference,
             version,
             updatedDate
@@ -93,7 +101,10 @@ const parser = async () => {
       // sheets.forEach(s => console.log(s.match(/%^#{4}\s([A-Z].*\n\n.*)/gm)));
     })
     .then(() =>
-      console.log(`Process ended in ${(+new Date() - +startDate) / 1000} sec for ${nbSheet} sheets and ${nbErr} errors`)
+      console.log(
+        `Process ended in ${(+new Date() - +startDate) /
+          1000} sec for ${nbSheet} sheets and ${nbErr} errors`
+      )
     )
     .catch((err: any) => {
       nbErr++;

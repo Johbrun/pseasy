@@ -6,7 +6,7 @@ const insertCategories = async (categories: CategoryCreation[]) => {
   let i = 0;
   for (const category of categories) {
     await query(
-      escape`INSERT INTO category VALUES (${i++}, ${category.num}, ${
+      escape`INSERT INTO category VALUES (${i++}, ${category.number}, ${
         category.name
       })`
     ).catch(e => console.error(e));

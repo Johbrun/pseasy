@@ -6,6 +6,14 @@ export interface Sheet {
   title: string;
   content: string;
   level: number;
+  idCategory: number;
+}
+
+export interface SheetLight {
+  id: string;
+  reference: string;
+  title: string;
+  idCategory: number;
 }
 
 export interface SheetCreation {

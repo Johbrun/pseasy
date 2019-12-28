@@ -5,7 +5,7 @@ import { NextPage } from "next";
 import Link from "next/link";
 import styles from "./index.module.scss";
 
-const Home: NextPage<{ userAgent: string }> = ({ userAgent }) => (
+const Home: NextPage<{ userAgent: string | undefined }> = ({ userAgent }) => (
   <div>
     <Head>
       <title>PSEasy</title>
@@ -19,7 +19,7 @@ const Home: NextPage<{ userAgent: string }> = ({ userAgent }) => (
         href="https://fonts.googleapis.com/icon?family=Material+Icons"
       />
     </Head>
-    <Nav />
+    {/* <Nav /> */}
 
     <div className={styles.hero}>
       <h1 className={styles.title}>Hello sur PSEasy ! </h1>

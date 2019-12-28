@@ -1,10 +1,10 @@
 export interface Category {
   id: number;
-  num: string;
+  number: string;
   name: string;
 }
 
 export interface CategoryCreation {
-  num: string;
+  number: string;
   name: string;
 }
