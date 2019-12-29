@@ -80,7 +80,7 @@ const parser = async () => {
 
       //   const exp = matchs.map(m => ({
       //     num: m[1],
-      //     name: m[2].replace("– ", "")
+      //     name: m[2].replace("– ", "").toLowerCase()
       //   }));
 
       //   // delete doublons

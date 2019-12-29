@@ -4,7 +4,7 @@ import clsx from "clsx";
 import ReactMarkdown from "react-markdown";
 import { Sheet } from "../lib/interfaces/sheet.interface";
 
-const drawerWidth = 280;
+const drawerWidth = 400;
 
 interface IProps {
   sheet?: Sheet;
@@ -54,8 +54,9 @@ export default function SheetContent(props: IProps) {
       >
         <div className={classes.drawerHeader} />
         {/* {props.sheet ? props.sheet.content : ""} */}
-        Référence : {props.sheet ? props.sheet.reference : ""} ; Version : {props.sheet ? props.sheet.version : ""} ;
-        updatedDate : {props.sheet ? props.sheet.updatedDate : ""}
+        Référence : {props.sheet ? props.sheet.reference : ""} ; Version :{" "}
+        {props.sheet ? props.sheet.version : ""} ; updatedDate :{" "}
+        {props.sheet ? props.sheet.updatedDate : ""}
         <ReactMarkdown source={props.sheet ? props.sheet.content : ""} />
       </main>
     </>

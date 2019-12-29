@@ -5,7 +5,7 @@ import { SheetLight } from "../lib/interfaces/sheet.interface";
 import { refSheetToType } from "../lib/helpers/refSheetToType";
 import Link from "next/link";
 
-const drawerWidth = 280;
+const drawerWidth = 400;
 
 interface IProps {
   categories: Category[];

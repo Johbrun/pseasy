@@ -4,7 +4,12 @@ import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import InputBase from "@material-ui/core/InputBase";
-import { createStyles, fade, Theme, makeStyles } from "@material-ui/core/styles";
+import {
+  createStyles,
+  fade,
+  Theme,
+  makeStyles
+} from "@material-ui/core/styles";
 import MenuIcon from "@material-ui/icons/Menu";
 import SearchIcon from "@material-ui/icons/Search";
 import { Button } from "@material-ui/core";
@@ -16,7 +21,7 @@ interface IProps {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const drawerWidth = 280;
+const drawerWidth = 400;
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -50,18 +55,24 @@ const useStyles = makeStyles((theme: Theme) =>
     search: {
       position: "relative",
       borderRadius: theme.shape.borderRadius,
-      backgroundColor: fade(theme.palette.common.white, 0.15),
+
       "&:hover": {
         backgroundColor: fade(theme.palette.common.white, 0.25)
       },
-      marginRight: theme.spacing(2),
+
       width: "100%",
-      [theme.breakpoints.up("sm")]: {
-        marginLeft: theme.spacing(1),
+      marginLeft: theme.spacing(1),
+
+      [theme.breakpoints.up("md")]: {
+        marginRight: theme.spacing(2),
+        backgroundColor: fade(theme.palette.common.white, 0.15),
         width: "auto"
       },
-      [theme.breakpoints.down("md")]: {
-        display: "none"
+      [theme.breakpoints.between("xs", "sm")]: {
+        width: "auto",
+        backgroundColor: fade(theme.palette.common.white, 0)
+        // display: "none"
+        // width: 20
       }
     },
     searchIcon: {
@@ -81,10 +92,16 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: theme.spacing(1, 1, 1, 7),
       transition: theme.transitions.create("width"),
       width: "100%",
-      [theme.breakpoints.up("sm")]: {
+      [theme.breakpoints.up("md")]: {
         width: 200,
         "&:focus": {
           width: 240
+        }
+      },
+      [theme.breakpoints.between("xs", "sm")]: {
+        width: 0,
+        "&:focus": {
+          width: 120
         }
       }
     },
@@ -94,11 +111,6 @@ const useStyles = makeStyles((theme: Theme) =>
         duration: theme.transitions.duration.enteringScreen
       }),
       marginLeft: 0
-    },
-    menuButtons: {
-      [theme.breakpoints.down("md")]: {
-        display: "none"
-      }
     }
   })
 );
@@ -129,7 +141,7 @@ export default function SearchAppBar(props: IProps) {
             <MenuIcon />
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
-            {props.title ? props.title : "PSEasy - Référenciel PSE"}
+            {props.title ? props.title : "PSEasy - Référentiel PSE"}
           </Typography>
 
           <div className={classes.search}>
@@ -144,10 +156,6 @@ export default function SearchAppBar(props: IProps) {
               }}
               inputProps={{ "aria-label": "search" }}
             />
-          </div>
-          <div className={classes.menuButtons}>
-            <Button color="inherit">Accueil</Button>
-            <Button color="inherit">Fiches PSE</Button>
           </div>
         </Toolbar>
       </AppBar>

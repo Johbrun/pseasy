@@ -1,7 +1,7 @@
 import React from "react";
 import IconButton from "@material-ui/core/IconButton";
 import { createStyles, Theme, makeStyles } from "@material-ui/core/styles";
-import { Link, List, ListItemIcon } from "@material-ui/core";
+import { Link, List, ListItemIcon, Collapse } from "@material-ui/core";
 import Drawer from "@material-ui/core/Drawer";
 import ListItem from "@material-ui/core/ListItem";
 // import ListItemIcon from "@material-ui/core/ListItemIcon";
@@ -10,23 +10,37 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 // import InboxIcon from "@material-ui/icons/MoveToInbox";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
 import { SheetLight } from "../lib/interfaces/sheet.interface";
+import { Category } from "../lib/interfaces/category.interface";
+import ExpandLess from "@material-ui/icons/ExpandLess";
+import ExpandMore from "@material-ui/icons/ExpandMore";
+import PanToolIcon from "@material-ui/icons/PanTool";
+import MenuBookIcon from "@material-ui/icons/MenuBook";
+import HomeIcon from "@material-ui/icons/Home";
+import LibraryBooksIcon from "@material-ui/icons/LibraryBooks";
+
+import ListIcon from "@material-ui/icons/List";
+import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 
 interface IProps {
+  categories: Category[];
   sheetsLight: SheetLight[];
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const drawerWidth = 280;
+const drawerWidth = 400;
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       display: "flex"
     },
-
     title: {
       flexGrow: 1
+    },
+    category: {
+      textTransform: "uppercase",
+      fontSize: "0.95rem"
     },
     drawer: {
       width: drawerWidth,
@@ -40,25 +54,44 @@ const useStyles = makeStyles((theme: Theme) =>
       alignItems: "center",
       padding: theme.spacing(0, 1),
       ...theme.mixins.toolbar,
-      justifyContent: "flex-end"
+      justifyContent: "space-between"
+    },
+    nested: {
+      paddingLeft: theme.spacing(4),
+      fontSize: "0.9rem"
     }
-    // // modify content when drawer is opened
-    // content: {
-    //   flexGrow: 1,
-    //   padding: theme.spacing(3),
-    //   transition: theme.transitions.create("margin", {
-    //     easing: theme.transitions.easing.sharp,
-    //     duration: theme.transitions.duration.leavingScreen
-    //   }),
-    //   marginLeft: -drawerWidth
-    // }
   })
 );
 export default function SideDrawer(props: IProps) {
   const classes = useStyles();
+  const [openedId, setOpenedId] = React.useState(-1);
 
   const handleDrawerClose = () => {
     props.setOpen(false);
+  };
+
+  const goAccueil = () => {
+    props.setOpen(false);
+  };
+
+  const prefixFromReference = (reference: string) => {
+    switch (reference.substring(0, 2)) {
+      case "AC":
+        return "(C) ";
+      case "PR":
+        return "(P) ";
+      case "FT":
+        return "(G) ";
+      default:
+        return "";
+    }
+  };
+  const handleClickCategory = (id: number) => {
+    if (id === openedId) {
+      // when click on selected
+      id = -1;
+    }
+    setOpenedId(id);
   };
 
   return (
@@ -73,25 +106,73 @@ export default function SideDrawer(props: IProps) {
         }}
       >
         <div className={classes.drawerHeader}>
+          <IconButton onClick={goAccueil}>
+            <HomeIcon />
+          </IconButton>
           <IconButton onClick={handleDrawerClose}>
             <ChevronLeftIcon />
           </IconButton>
         </div>
 
         <List>
-          {props.sheetsLight.map(summaryRow => (
-            <ListItem button key={summaryRow.reference}>
-              <ListItemIcon>
-                <InboxIcon />
-              </ListItemIcon>
-              <ListItemText
+          {props.categories.map(category => (
+            <>
+              <ListItem
+                button
+                key={category.id}
+                onClick={() => handleClickCategory(category.id)}
+              >
+                <ListItemIcon>
+                  {category.number.includes("1.") ? (
+                    <MenuBookIcon />
+                  ) : (
+                    <PanToolIcon />
+                  )}
+                </ListItemIcon>
+
+                <ListItemText
+                  primary={category.name}
+                  className={classes.category}
+                />
+                {openedId === category.id ? <ExpandLess /> : <ExpandMore />}
+                {/* <ListItemText
                 primary={
                   <Link href={`/sheets?reference=${summaryRow.reference}`}>
                     {summaryRow.title ? summaryRow.title : "NOPE NOPE"}
                   </Link>
                 }
-              />
-            </ListItem>
+              /> */}
+              </ListItem>
+              <Collapse
+                in={openedId === category.id}
+                timeout="auto"
+                unmountOnExit
+              >
+                <List component="div" disablePadding>
+                  {props.sheetsLight
+                    .filter(s => s.idCategory === category.id)
+                    .map(s => (
+                      // <ListItem button className={classes.nested}>
+                      //   <ListItemText primary={category.name} />
+                      // </ListItem>
+                      <>
+                        <ListItemText
+                          className={classes.nested}
+                          key={s.id}
+                          primary={
+                            <>
+                              {prefixFromReference(s.reference)}
+                              <Link href={`/sheets?reference=${s.reference}`}>
+                                {s.title ? s.title : "Aucun titre renseigné"}
+                              </Link>
+                            </>
+                          }
+                        />
+                      </>
+                    ))}
+                </List>
+              </Collapse>
+            </>
           ))}
         </List>
       </Drawer>

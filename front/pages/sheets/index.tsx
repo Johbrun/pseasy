@@ -52,7 +52,12 @@ const SheetPage: NextPage<IProps> = ({ sheet, sheetsLight, categories }) => {
         setOpen={setOpen}
         title={sheet ? sheet.title : undefined}
       />
-      <SideDrawer open={open} setOpen={setOpen} sheetsLight={sheetsLight} />
+      <SideDrawer
+        open={open}
+        setOpen={setOpen}
+        categories={categories}
+        sheetsLight={sheetsLight}
+      />
       {sheet ? <SheetContent open={open} sheet={sheet} /> : null}
       {!sheet ? (
         <CategoriesList
