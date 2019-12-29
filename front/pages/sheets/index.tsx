@@ -90,9 +90,6 @@ const SheetPage: NextPage<IProps> = ({ sheet, sheetsLight, categories }) => {
 };
 
 SheetPage.getInitialProps = async ({ query }) => {
-  console.log("getInitialProps");
-  console.log(query);
-
   const sheetsLight = (
     await axios.request({
       url: "http://localhost:3000/api/sheets"

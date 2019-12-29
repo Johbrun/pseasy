@@ -4,11 +4,8 @@ import { createStyles, Theme, makeStyles } from "@material-ui/core/styles";
 import { Link, List, ListItemIcon, Collapse } from "@material-ui/core";
 import Drawer from "@material-ui/core/Drawer";
 import ListItem from "@material-ui/core/ListItem";
-// import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-// import InboxIcon from "@material-ui/icons/MoveToInbox";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
 import { SheetLight } from "../lib/interfaces/sheet.interface";
 import { Category } from "../lib/interfaces/category.interface";
 import ExpandLess from "@material-ui/icons/ExpandLess";
@@ -16,10 +13,7 @@ import ExpandMore from "@material-ui/icons/ExpandMore";
 import PanToolIcon from "@material-ui/icons/PanTool";
 import MenuBookIcon from "@material-ui/icons/MenuBook";
 import HomeIcon from "@material-ui/icons/Home";
-import LibraryBooksIcon from "@material-ui/icons/LibraryBooks";
-
-import ListIcon from "@material-ui/icons/List";
-import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
+import { useRouter } from "next/router";
 
 interface IProps {
   categories: Category[];
@@ -63,6 +57,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 export default function SideDrawer(props: IProps) {
+  const router = useRouter();
   const classes = useStyles();
   const [openedId, setOpenedId] = React.useState(-1);
 
@@ -71,7 +66,7 @@ export default function SideDrawer(props: IProps) {
   };
 
   const goAccueil = () => {
-    props.setOpen(false);
+    router.push("/index");
   };
 
   const prefixFromReference = (reference: string) => {
@@ -135,13 +130,6 @@ export default function SideDrawer(props: IProps) {
                   className={classes.category}
                 />
                 {openedId === category.id ? <ExpandLess /> : <ExpandMore />}
-                {/* <ListItemText
-                primary={
-                  <Link href={`/sheets?reference=${summaryRow.reference}`}>
-                    {summaryRow.title ? summaryRow.title : "NOPE NOPE"}
-                  </Link>
-                }
-              /> */}
               </ListItem>
               <Collapse
                 in={openedId === category.id}
@@ -152,23 +140,18 @@ export default function SideDrawer(props: IProps) {
                   {props.sheetsLight
                     .filter(s => s.idCategory === category.id)
                     .map(s => (
-                      // <ListItem button className={classes.nested}>
-                      //   <ListItemText primary={category.name} />
-                      // </ListItem>
-                      <>
-                        <ListItemText
-                          className={classes.nested}
-                          key={s.id}
-                          primary={
-                            <>
-                              {prefixFromReference(s.reference)}
-                              <Link href={`/sheets?reference=${s.reference}`}>
-                                {s.title ? s.title : "Aucun titre renseigné"}
-                              </Link>
-                            </>
-                          }
-                        />
-                      </>
+                      <ListItemText
+                        className={classes.nested}
+                        key={s.id}
+                        primary={
+                          <>
+                            {prefixFromReference(s.reference)}
+                            <Link href={`/sheets?reference=${s.reference}`}>
+                              {s.title ? s.title : "Aucun titre renseigné"}
+                            </Link>
+                          </>
+                        }
+                      />
                     ))}
                 </List>
               </Collapse>

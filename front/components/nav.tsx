@@ -116,7 +116,6 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 export default function SearchAppBar(props: IProps) {
   const classes = useStyles();
-  // const [open, setOpen] = React.useState(false);
 
   const handleDrawerOpen = () => {
     props.setOpen(true);
