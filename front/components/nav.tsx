@@ -17,8 +17,8 @@ import clsx from "clsx";
 
 interface IProps {
   title?: string;
-  open: boolean;
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  open?: boolean;
+  setOpen?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const drawerWidth = 400;
@@ -41,6 +41,9 @@ const useStyles = makeStyles((theme: Theme) =>
         easing: theme.transitions.easing.easeOut,
         duration: theme.transitions.duration.enteringScreen
       })
+    },
+    drawerButtonShift: {
+      display: "none"
     },
     menuButton: {
       marginRight: theme.spacing(2)
@@ -118,7 +121,7 @@ export default function SearchAppBar(props: IProps) {
   const classes = useStyles();
 
   const handleDrawerOpen = () => {
-    props.setOpen(true);
+    if (props.setOpen) props.setOpen(true);
   };
 
   return (
@@ -135,7 +138,9 @@ export default function SearchAppBar(props: IProps) {
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
-            className={clsx(classes.menuButton, props.open && classes.hide)}
+            className={clsx(classes.menuButton, props.open && classes.hide, {
+              [classes.drawerButtonShift]: typeof props.open === "undefined"
+            })}
           >
             <MenuIcon />
           </IconButton>

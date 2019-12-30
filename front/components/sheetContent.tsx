@@ -53,7 +53,6 @@ export default function SheetContent(props: IProps) {
         })}
       >
         <div className={classes.drawerHeader} />
-        {/* {props.sheet ? props.sheet.content : ""} */}
         Référence : {props.sheet ? props.sheet.reference : ""} ; Version :{" "}
         {props.sheet ? props.sheet.version : ""} ; updatedDate :{" "}
         {props.sheet ? props.sheet.updatedDate : ""}
