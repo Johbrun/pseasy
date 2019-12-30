@@ -35,7 +35,8 @@ const parser = async () => {
         try {
           // regroup titles on several lines
           const id = i++;
-          const refString = m[3].match(/^ Référence.*/gm)[0];
+          let refString = m[3] ? m[3].match(/^ Référence.*/gm) : '';
+          refString = refString ? refString[0] : refString = '';
           const content = m[3]
             .replace(/^ Référence.*/gm, "") // Remove ref line
             .replace(/[\t]*/g, "") // Delete tabulations
@@ -103,7 +104,7 @@ const parser = async () => {
     .then(() =>
       console.log(
         `Process ended in ${(+new Date() - +startDate) /
-          1000} sec for ${nbSheet} sheets and ${nbErr} errors`
+        1000} sec for ${nbSheet} sheets and ${nbErr} errors`
       )
     )
     .catch((err: any) => {
