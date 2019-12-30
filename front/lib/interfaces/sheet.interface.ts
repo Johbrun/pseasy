@@ -12,7 +12,10 @@ export interface Sheet {
 export interface SheetLight {
   id: string;
   reference: string;
+  version: string;
+  updatedDate: Date;
   title: string;
+  level: number;
   idCategory: number;
 }
 

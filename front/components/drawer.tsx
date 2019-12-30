@@ -121,12 +121,12 @@ export default function SideDrawer(props: IProps) {
                   {category.number.includes("1.") ? (
                     <MenuBookIcon />
                   ) : (
-                    <PanToolIcon />
-                  )}
+                      <PanToolIcon />
+                    )}
                 </ListItemIcon>
 
                 <ListItemText
-                  primary={category.name}
+                  primary={category.number + ' ' + category.name}
                   className={classes.category}
                 />
                 {openedId === category.id ? <ExpandLess /> : <ExpandMore />}

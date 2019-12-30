@@ -25,7 +25,7 @@ const useStyles = makeStyles(() =>
     },
     content: {
       display: "flex"
-    }
+    },
   })
 );
 

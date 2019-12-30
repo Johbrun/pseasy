@@ -1,7 +1,7 @@
 export function refSheetToType(reference: string) {
   switch (reference.substring(0, 2)) {
     case "AC":
-      return "Apport de connaissances";
+      return "Connaissances";
     case "PR":
       return "Procédures";
     case "FT":

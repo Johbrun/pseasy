@@ -34,10 +34,11 @@ export default function Footer() {
                 color="textSecondary"
                 component="p"
             >
-                PSEasy est une application autonome, qui n'est pas liée à {' '}
-                <Link href="https://interieur.gouv.fr">interieur.gouv.fr</Link>, ni à quelconque instution officelle.
+                PSEasy est une application autonome et n'est pas liée à {' '}
+                <Link href="https://interieur.gouv.fr">interieur.gouv.fr</Link>, ni à quelconque institution officelle.
            <br />
-                <Link href="https://www.interieur.gouv.fr/Le-ministere/Securite-civile/Documentation-technique/Secourisme-et-associations/Les-recommandations-et-les-referentiels/">Consultez les documents officiels</Link>{" "}
+                <Link href="https://www.interieur.gouv.fr/Le-ministere/Securite-civile/Documentation-technique/Secourisme-et-associations/Les-recommandations-et-les-referentiels/">
+                    Consultez ici les documents officiels</Link>
 
             </Typography>
             <br />

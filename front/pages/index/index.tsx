@@ -8,6 +8,7 @@ import ClassIcon from '@material-ui/icons/Class';
 import BallotIcon from '@material-ui/icons/Ballot';
 import SearchIcon from '@material-ui/icons/Search';
 import CloudOffIcon from '@material-ui/icons/CloudOff';
+import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import Chip from '@material-ui/core/Chip';
 import ScheduleIcon from '@material-ui/icons/Schedule';
 import clsx from "clsx";
@@ -46,11 +47,12 @@ const getIconElementFromName = (icon: IconsCard, classes: any) => {
     case IconsCard.HorsLigne: return <CloudOffIcon className={classes.cardMedia} />;
     case IconsCard.Recherche: return <SearchIcon className={classes.cardMedia} />;
     case IconsCard.Comment: return <CommentIcon className={classes.cardMedia} />;
+    case IconsCard.Quizz: return <HelpOutlineIcon className={classes.cardMedia} />;
   }
 };
 
 enum IconsCard {
-  Fiches, Classement, Recherche, HorsLigne, App, Historique, Differences, Comment
+  Fiches, Classement, Recherche, HorsLigne, App, Historique, Differences, Comment, Quizz
 }
 
 const cards: { title: string; content: string; icon: IconsCard, status: string }[] = [
@@ -71,7 +73,7 @@ const cards: { title: string; content: string; icon: IconsCard, status: string }
   {
     title: "Recherche par mot clé",
     content:
-      "Retrouver toutes les fiches en lien avec un ou plusieurs mots clés",
+      "Retrouvez toutes les fiches en lien avec un ou plusieurs mots clés",
     icon: IconsCard.Recherche,
     status: 'Prévu T1 2020'
   },
@@ -97,17 +99,24 @@ const cards: { title: string; content: string; icon: IconsCard, status: string }
   {
     title: "Affichage des différences",
     content:
-      "En un clic, afficher les ajouts / modifications / suppressions de texte des fiches entre les différentes mises à jour",
+      "Affichez les nouveautés de contenu des fiches entre les différentes mises à jour",
     icon: IconsCard.Differences,
-    status: 'Prévu T1 2020'
+    status: 'Prévu T2 2020'
+  },
+  {
+    title: "Quizz",
+    content:
+      "Testez vos connaissances du référentiel",
+    icon: IconsCard.Quizz,
+    status: 'Prévu T2 2020'
   },
   {
     title: "Echangez",
     content:
-      "Une interrogation, un flou ? Surligner la partie intéressée et poser votre question",
+      "Une interrogation, un flou ? Surligner la partie intéressée, poser votre question, la communauté vous répondra !",
     icon: IconsCard.Comment,
-    status: 'Prévu T2 2020'
-  }
+    status: 'Prévu T3 2020'
+  },
 ];
 
 const useStyles = makeStyles((theme: Theme) =>
