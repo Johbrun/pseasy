@@ -19,9 +19,8 @@ const updateSheetsCategory = async () => {
     if (typeof sheet !== undefined) {
       let cn = `${
         sheet.reference.substring(0, 2) === "FT" ? "2" : "1"
-      }.${+sheet.reference.substring(2, 4)}`;
+        }.${+sheet.reference.substring(2, 4)}`;
 
-      console.log(cn);
       let catNumber = categories.find(c => c.number === cn)?.id;
 
       console.log(

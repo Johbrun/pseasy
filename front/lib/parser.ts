@@ -2,12 +2,13 @@ import clean from "./query/clean";
 import insertCategories from "./query/insertCategories";
 import { SheetCreation } from "./interfaces/sheet.interface";
 import insertSheet from "./query/insertSheet";
+import updateSheetsCategory from "./query/updateSheetsCategory";
 const fs = require("fs");
 const pdf2md = require("@opendocsg/pdf2md");
 const path = require("path");
 
 const parser = async () => {
-  console.log("launch parsing");
+  console.log("Launch PDF parsing...");
   const startDate = new Date();
   let nbSheet = 0;
   let nbErr = 0;
@@ -70,6 +71,8 @@ const parser = async () => {
           console.error(`Error on sheet '${title}' (${i}) : ${e}`);
         }
       }
+      await updateSheetsCategory();
+
 
       // let outputFile = "./file" + i + ".md";
       // console.log(`Writing to ${outputFile}...`);

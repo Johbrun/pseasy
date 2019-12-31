@@ -1,6 +1,7 @@
 const withCSS = require("@zeit/next-sass");
+const withOffline = require('next-offline')
 
-module.exports = withCSS({
+module.exports = withOffline(withCSS({
   cssModules: true,
   cssLoaderOptions: {
     importLoaders: 1,
@@ -9,4 +10,4 @@ module.exports = withCSS({
   sassLoaderOptions: {
     includePaths: ["styles"]
   }
-});
+}));
