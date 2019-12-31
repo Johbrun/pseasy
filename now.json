@@ -6,7 +6,11 @@
         "MYSQL_HOST": "@mysql-host",
         "MYSQL_DATABASE": "@mysql-database",
         "MYSQL_USER": "@mysql-user",
-        "MYSQL_PASSWORD": "@mysql-password",
-        "API_URL": "https://pseasy.now.sh"
+        "MYSQL_PASSWORD": "@mysql-password"
+    },
+    "build": {
+        "env": {
+            "API_URL": "https://pseasy.now.sh"
+        }
     }
 }
