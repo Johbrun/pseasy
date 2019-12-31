@@ -77,17 +77,17 @@ const SheetPage: NextPage<IProps> = ({ sheet, sheetsLight, categories }) => {
 SheetPage.getInitialProps = async ({ query }) => {
   const sheetsLight = (
     await axios.request({
-      url: "/api/sheets"
+      url: `${process.env.API_URL}/api/sheets`
     })
   ).data as SheetLight[];
 
   const res2 = await axios.request({
-    url: `/api/sheets/sheet?reference=${query.reference}`
+    url: `${process.env.API_URL}/api/sheets/sheet?reference=${query.reference}`
   });
 
   const categories = (
     await axios.request({
-      url: `/api/categories`
+      url: `${process.env.API_URL}/api/categories`
     })
   ).data as Category[];
 
