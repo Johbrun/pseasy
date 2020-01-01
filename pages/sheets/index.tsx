@@ -11,6 +11,8 @@ import { Sheet, SheetLight } from "../../lib/interfaces/sheet.interface";
 import { Category } from "../../lib/interfaces/category.interface";
 import CategoriesList from "../../components/categoriesList";
 import Footer from "../../components/footer";
+import { fetchSheet, fetchSheetsLight } from "../../services/sheet.service";
+import { fetchCategories } from "../../services/category.service";
 
 interface IProps {
   sheet?: Sheet;
@@ -78,25 +80,17 @@ SheetPage.getInitialProps = async ({ query }) => {
   console.log("Loading sheet page...");
   const start = +new Date();
 
-  const [sheetsLight, sheet, categories] = await Promise.all([
-    axios.request({
-      url: `${process.env.API_URL}/api/sheets`
-    }),
-    axios.request({
-      url: `${process.env.API_URL}/api/sheets/sheet?reference=${query.reference}`
-    }),
-    axios.request({
-      url: `${process.env.API_URL}/api/categories`
-    })
-  ])
+  const sheet = query.reference ? await fetchSheet(query.reference) : undefined;
+  const sheetsLight = await fetchSheetsLight();
+  const categories = await fetchCategories();
 
   const end = +new Date();
-  console.log(`Show data fetched. Count: ${sheetsLight.data.length} in ${(end - start) / 1000} seconds`);
+  console.log(`Show data fetched. Count: ${sheetsLight.length} in ${(end - start) / 1000} seconds`);
 
   return {
-    sheet: sheet.data[0] as Sheet,
-    sheetsLight: sheetsLight.data as SheetLight[],
-    categories: categories.data as Category[]
+    sheet,
+    sheetsLight,
+    categories
   };
 };
 
