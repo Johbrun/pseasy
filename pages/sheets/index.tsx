@@ -75,28 +75,28 @@ const SheetPage: NextPage<IProps> = ({ sheet, sheetsLight, categories }) => {
 };
 
 SheetPage.getInitialProps = async ({ query }) => {
-  const sheetsLight = (
-    await axios.request({
+  console.log("Loading sheet page...");
+  const start = +new Date();
+
+  const [sheetsLight, sheet, categories] = await Promise.all([
+    axios.request({
       url: `${process.env.API_URL}/api/sheets`
-    })
-  ).data as SheetLight[];
-
-  const res2 = await axios.request({
-    url: `${process.env.API_URL}/api/sheets/sheet?reference=${query.reference}`
-  });
-
-  const categories = (
-    await axios.request({
+    }),
+    axios.request({
+      url: `${process.env.API_URL}/api/sheets/sheet?reference=${query.reference}`
+    }),
+    axios.request({
       url: `${process.env.API_URL}/api/categories`
     })
-  ).data as Category[];
+  ])
 
-  console.log(`Show data fetched. Count: ${sheetsLight.length}`);
+  const end = +new Date();
+  console.log(`Show data fetched. Count: ${sheetsLight.data.length} in ${(end - start) / 1000} seconds`);
 
   return {
-    sheet: res2.data[0],
-    sheetsLight,
-    categories
+    sheet: sheet.data[0] as Sheet,
+    sheetsLight: sheetsLight.data as SheetLight[],
+    categories: categories.data as Category[]
   };
 };
 

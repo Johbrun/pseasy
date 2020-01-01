@@ -110,10 +110,10 @@ export default function CategoriesList(props: IProps) {
       >
         <div className={classes.drawerHeader} />
         {props.categories.map(category => (
-          <div>
+          <div key={'div-' + category.id}>
             <span key={category.id} className={classes.titleCategory}>{category.number} {category.name}</span>
 
-            <TableContainer component={Paper} className={classes.container}>
+            <TableContainer key={'table-' + category.id} component={Paper} className={classes.container}>
               <Table className={classes.table} aria-label="simple table">
                 <TableHead>
                   <TableRow>
@@ -135,26 +135,24 @@ export default function CategoriesList(props: IProps) {
                     .map(s => {
                       const type = refSheetToType(s.reference);
                       return (
-                        <>
-                          <TableRow key={s.id} onClick={event => handleClick(event, s.reference)} hover className={classes.row}>
-                            <TableCell component="th" scope="row">
-                              {s.reference}
-                            </TableCell>
-                            <TableCell>
+                        <TableRow key={s.id} onClick={event => handleClick(event, s.reference)} hover className={classes.row}>
+                          <TableCell key={s.id} component="th" scope="row">
+                            {s.reference}
+                          </TableCell>
+                          <TableCell>
 
-                              <Chip label={refSheetToType(s.reference)} className={
-                                clsx(classes.chip, {
-                                  [classes.chipConnaissance]: (type === 'Connaissances'),
-                                  [classes.chipProcedure]: (type === 'Procédures'),
-                                  [classes.chipTechnique]: (type === 'Techniques'),
-                                })} />
-                            </TableCell>
-                            <TableCell>N/C</TableCell>
-                            <TableCell>{s.title}</TableCell>
-                            <TableCell>{s.version}</TableCell>
-                            <TableCell>{getDateFormated(new Date(s.updatedDate))}</TableCell>
-                          </TableRow>
-                        </>
+                            <Chip key={s.id} label={refSheetToType(s.reference)} className={
+                              clsx(classes.chip, {
+                                [classes.chipConnaissance]: (type === 'Connaissances'),
+                                [classes.chipProcedure]: (type === 'Procédures'),
+                                [classes.chipTechnique]: (type === 'Techniques'),
+                              })} />
+                          </TableCell>
+                          <TableCell>N/C</TableCell>
+                          <TableCell>{s.title}</TableCell>
+                          <TableCell>{s.version}</TableCell>
+                          <TableCell>{getDateFormated(new Date(s.updatedDate))}</TableCell>
+                        </TableRow>
                       )
                     }
                     )}

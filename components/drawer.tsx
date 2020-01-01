@@ -111,10 +111,10 @@ export default function SideDrawer(props: IProps) {
 
         <List>
           {props.categories.map(category => (
-            <>
+            <div key={'li-' + category.id} >
               <ListItem
                 button
-                key={category.id}
+                key={'li-' + category.id}
                 onClick={() => handleClickCategory(category.id)}
               >
                 <ListItemIcon>
@@ -132,6 +132,7 @@ export default function SideDrawer(props: IProps) {
                 {openedId === category.id ? <ExpandLess /> : <ExpandMore />}
               </ListItem>
               <Collapse
+                key={'co-' + category.id}
                 in={openedId === category.id}
                 timeout="auto"
                 unmountOnExit
@@ -155,10 +156,10 @@ export default function SideDrawer(props: IProps) {
                     ))}
                 </List>
               </Collapse>
-            </>
+            </div>
           ))}
         </List>
       </Drawer>
-    </div>
+    </div >
   );
 }
