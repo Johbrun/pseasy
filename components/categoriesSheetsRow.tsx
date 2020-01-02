@@ -7,8 +7,6 @@ import { getDateFormated } from "../lib/helpers/getDateFormated";
 import { sortSheetByProcedure } from "../lib/helpers/sortSheetByProcedure";
 import { useRouter } from "next/router";
 
-const drawerWidth = 400;
-
 interface IProps {
   category: Category
   sheetsLight: SheetLight[];
@@ -16,8 +14,10 @@ interface IProps {
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    root: {
+      width: "54px",
+    },
     table: {
-      minWidth: 650,
     },
     r: {
       width: 60,
@@ -26,14 +26,24 @@ const useStyles = makeStyles((theme: Theme) =>
       fontSize: '30px',
       textTransform: 'uppercase',
       fontWeight: 600,
+      [theme.breakpoints.down("sm")]: {
+        fontSize: '24px',
+      }
     },
     container: {
-      margin: '10px 20px 30px 20px'
+      margin: '10px 20px 30px 20px',
+      [theme.breakpoints.down("sm")]: {
+        margin: '10px 00px 30px 0px;',
+      }
     },
     chip: {
       color: 'white',
       backgroundColor: theme.palette.grey[800],
-      height: '25px'
+      height: '25px',
+      [theme.breakpoints.down("sm")]: {
+        width: '25px',
+        color: 'transparent'
+      }
     },
     chipConnaissance: {
       backgroundColor: 'blueviolet'
@@ -46,6 +56,11 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     row: {
       cursor: 'pointer'
+    },
+    hideSm: {
+      [theme.breakpoints.down("sm")]: {
+        display: 'none'
+      }
     }
   })
 );
@@ -79,14 +94,18 @@ export default function CategoriesSheetsRow(props: IProps) {
       <span key={props.category.id} className={classes.titleCategory}>{props.category.number} {props.category.name}</span>
 
       <TableContainer key={'table-' + props.category.id} component={Paper} className={classes.container}>
-        <Table className={classes.table} aria-label="simple table">
+        <Table className={classes.table} size="small" aria-label="simple table">
           <TableHead>
             <TableRow>
               {headCells.map(headCell => (
                 <TableCell
                   key={headCell.id}
                   variant='head'
-                  className={classes.r}
+                  className={
+                    clsx(classes.r, {
+                      [classes.hideSm]: (['reference', 'level', 'version'].includes(headCell.id)),
+                    })}
+
                 >
                   {headCell.label}
                 </TableCell>
@@ -100,11 +119,10 @@ export default function CategoriesSheetsRow(props: IProps) {
                 const type = refSheetToType(s.reference);
                 return (
                   <TableRow key={s.id} onClick={event => handleClick(event, s.reference)} hover className={classes.row}>
-                    <TableCell key={s.id} component="th" scope="row">
+                    <TableCell key={s.id} component="th" scope="row" className={classes.hideSm}>
                       {s.reference}
                     </TableCell>
                     <TableCell>
-
                       <Chip key={s.id} label={refSheetToType(s.reference)} className={
                         clsx(classes.chip, {
                           [classes.chipConnaissance]: (type === 'Connaissances'),
@@ -112,9 +130,9 @@ export default function CategoriesSheetsRow(props: IProps) {
                           [classes.chipTechnique]: (type === 'Techniques'),
                         })} />
                     </TableCell>
-                    <TableCell>N/C</TableCell>
+                    <TableCell className={classes.hideSm}>N/C</TableCell>
                     <TableCell>{s.title}</TableCell>
-                    <TableCell>{s.version}</TableCell>
+                    <TableCell className={classes.hideSm}>{s.version}</TableCell>
                     <TableCell>{getDateFormated(new Date(s.updatedDate))}</TableCell>
                   </TableRow>
                 )

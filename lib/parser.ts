@@ -32,21 +32,23 @@ const parser = async () => {
       // matchs.forEach(m => {
       for (const m of matchs) {
         nbSheet++;
-        const title = m[1].replace(/[#\n]*/g, "").trim();
+        const title = m[1].replace(/[#\n]*/g, "").replace(/-$/g, "").trim();
         try {
           // regroup titles on several lines
           const id = i++;
           let refString = m[3] ? m[3].match(/^ Référence.*/gm) : '';
           refString = refString ? refString[0] : refString = '';
-          const content = m[3]
+          let content = m[3]
             .replace(/^ Référence.*/gm, "") // Remove ref line
             .replace(/[\t]*/g, "") // Delete tabulations
             .replace(/###/g, "") // Up titles : be careful : max : h2
-            .replace(/ +/g, " ") // delete supp spaces
             .replace(/(.{1})(7)(.{1})/g, "$1ti$3")
             .replace(/(.{1})(F)(.{1})/g, "$1tt$3")
+            .replace(/(#+ [A-z].*)(\n\n#+)( [a-z])/g, "$1$3") // uncut titles
             .replace(/\^/g, "")
+            .replace(/ \u00a0+/g, " ") // delete supp spaces
             .trim();
+
           const refM = [
             ...refString.matchAll(
               /^\s*Référence\s*:\s*(.*)\s*Version\s*:\s*(.*)\s*Mise\s*à\s*jour\s*:\s*(.*)/gm
@@ -56,6 +58,9 @@ const parser = async () => {
           const version = refM[2].trim();
           const updatedDate = new Date(); //refM[3].trim();
 
+          if (reference === 'PR01B01') {
+            // console.log(encodeURI(content))
+          }
           const sheet: SheetCreation = {
             id: id.toString(),
             title,

@@ -23,7 +23,11 @@ interface IProps {
 const useStyles = makeStyles(() =>
   createStyles({
     root: {
-
+      fontSize: '0.875rem',
+      fontFamily: "'Avenir', 'Roboto', 'Helvetica', 'Arial', sans-serif",
+      fontWeight: 400,
+      lineHeight: '1.73',
+      letterSpacing: '0.01071em'
     },
     content: {
       display: "flex"

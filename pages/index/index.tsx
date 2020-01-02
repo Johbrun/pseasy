@@ -129,15 +129,10 @@ const useStyles = makeStyles((theme: Theme) =>
       ...theme.mixins.toolbar,
       justifyContent: "flex-end"
     },
-    // content: {
-    //   flexGrow: 1,
-    //   padding: theme.spacing(3)
-    // },
     icon: {
       marginRight: theme.spacing(2)
     },
     heroContent: {
-      // backgroundColor: theme.palette.background.paper,
       padding: theme.spacing(8, 0, 6),
       color: "white"
     },

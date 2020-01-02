@@ -23,9 +23,6 @@ const updateSheetsCategory = async () => {
 
       let catNumber = categories.find(c => c.number === cn)?.id;
 
-      console.log(
-        `UPDATE sheet SET idCategory = ${catNumber} WHERE id = ${sheet.id} (sheet ${sheet.reference})`
-      );
       if (catNumber || catNumber === 0) {
         await query(
           escape`UPDATE sheet SET idCategory = ${catNumber} WHERE sheet.id = ${sheet.id}`

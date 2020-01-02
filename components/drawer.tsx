@@ -14,6 +14,7 @@ import PanToolIcon from "@material-ui/icons/PanTool";
 import MenuBookIcon from "@material-ui/icons/MenuBook";
 import HomeIcon from "@material-ui/icons/Home";
 import { useRouter } from "next/router";
+import ListIcon from '@material-ui/icons/List';
 
 interface IProps {
   categories: Category[];
@@ -110,6 +111,19 @@ export default function SideDrawer(props: IProps) {
         </div>
 
         <List>
+          <ListItem
+            button
+            onClick={() => router.push("/sheets")}
+          >
+            <ListItemIcon>
+              <ListIcon />
+            </ListItemIcon>
+            <ListItemText
+              primary={'0. SOMMAIRE'}
+              className={classes.category}
+            />
+          </ListItem>
+
           {props.categories.map(category => (
             <div key={'li-' + category.id} >
               <ListItem
