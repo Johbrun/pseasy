@@ -6,6 +6,8 @@ import { refSheetToType } from "../lib/helpers/refSheetToType";
 import { getDateFormated } from "../lib/helpers/getDateFormated";
 import { sortSheetByProcedure } from "../lib/helpers/sortSheetByProcedure";
 import { useRouter } from "next/router";
+import SearchInput from "./searchInput";
+import { useState } from "react";
 
 const drawerWidth = 400;
 
@@ -14,6 +16,7 @@ interface IProps {
   sheetsLight: SheetLight[];
   open: boolean;
 }
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -81,11 +84,11 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function CategoriesList(props: IProps) {
   const classes = useStyles();
   const router = useRouter();
+  const [filterSheet, setFilterSheet] = useState<string>('');
 
   const handleClick = (event: React.MouseEvent<unknown>, reference: string) => {
     router.push(`/sheets?reference=${reference}`);
   }
-
 
   interface HeadCell {
     id: keyof (SheetLight & { type: string, category: string });
@@ -109,58 +112,66 @@ export default function CategoriesList(props: IProps) {
         })}
       >
         <div className={classes.drawerHeader} />
-        {props.categories.map(category => (
-          <div key={'div-' + category.id}>
-            <span key={category.id} className={classes.titleCategory}>{category.number} {category.name}</span>
 
-            <TableContainer key={'table-' + category.id} component={Paper} className={classes.container}>
-              <Table className={classes.table} aria-label="simple table">
-                <TableHead>
-                  <TableRow>
-                    {headCells.map(headCell => (
-                      <TableCell
-                        key={headCell.id}
-                        variant='head'
-                        className={classes.r}
-                      >
-                        {headCell.label}
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {props.sheetsLight
-                    .filter(s => s.idCategory === category.id)
-                    .sort(sortSheetByProcedure)
-                    .map(s => {
-                      const type = refSheetToType(s.reference);
-                      return (
-                        <TableRow key={s.id} onClick={event => handleClick(event, s.reference)} hover className={classes.row}>
-                          <TableCell key={s.id} component="th" scope="row">
-                            {s.reference}
-                          </TableCell>
-                          <TableCell>
+        <SearchInput searchField={filterSheet} setSearchField={setFilterSheet} />
 
-                            <Chip key={s.id} label={refSheetToType(s.reference)} className={
-                              clsx(classes.chip, {
-                                [classes.chipConnaissance]: (type === 'Connaissances'),
-                                [classes.chipProcedure]: (type === 'Procédures'),
-                                [classes.chipTechnique]: (type === 'Techniques'),
-                              })} />
-                          </TableCell>
-                          <TableCell>N/C</TableCell>
-                          <TableCell>{s.title}</TableCell>
-                          <TableCell>{s.version}</TableCell>
-                          <TableCell>{getDateFormated(new Date(s.updatedDate))}</TableCell>
-                        </TableRow>
-                      )
-                    }
-                    )}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </div>
-        ))}
+        {props.categories.map(category => {
+          const sheetsCategoryFiltered = props.sheetsLight
+            .filter(s => s.idCategory === category.id)
+            .filter(s => filterSheet ? s.title.toLowerCase().includes(filterSheet.toLowerCase()) : true);
+
+          if (sheetsCategoryFiltered.length === 0) return <></>
+          return (
+            <div key={'div-' + category.id}>
+              <span key={category.id} className={classes.titleCategory}>{category.number} {category.name}</span>
+
+              <TableContainer key={'table-' + category.id} component={Paper} className={classes.container}>
+                <Table className={classes.table} aria-label="simple table">
+                  <TableHead>
+                    <TableRow>
+                      {headCells.map(headCell => (
+                        <TableCell
+                          key={headCell.id}
+                          variant='head'
+                          className={classes.r}
+                        >
+                          {headCell.label}
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {sheetsCategoryFiltered
+                      .sort(sortSheetByProcedure)
+                      .map(s => {
+                        const type = refSheetToType(s.reference);
+                        return (
+                          <TableRow key={s.id} onClick={event => handleClick(event, s.reference)} hover className={classes.row}>
+                            <TableCell key={s.id} component="th" scope="row">
+                              {s.reference}
+                            </TableCell>
+                            <TableCell>
+
+                              <Chip key={s.id} label={refSheetToType(s.reference)} className={
+                                clsx(classes.chip, {
+                                  [classes.chipConnaissance]: (type === 'Connaissances'),
+                                  [classes.chipProcedure]: (type === 'Procédures'),
+                                  [classes.chipTechnique]: (type === 'Techniques'),
+                                })} />
+                            </TableCell>
+                            <TableCell>N/C</TableCell>
+                            <TableCell>{s.title}</TableCell>
+                            <TableCell>{s.version}</TableCell>
+                            <TableCell>{getDateFormated(new Date(s.updatedDate))}</TableCell>
+                          </TableRow>
+                        )
+                      }
+                      )}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </div>)
+        })}
       </main>
     </>
   );
