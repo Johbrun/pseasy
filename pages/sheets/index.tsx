@@ -9,7 +9,7 @@ import SideDrawer from "../../components/drawer";
 import SheetContent from "../../components/sheetContent";
 import { Sheet, SheetLight } from "../../lib/interfaces/sheet.interface";
 import { Category } from "../../lib/interfaces/category.interface";
-import CategoriesList from "../../components/categoriesList";
+import CategoriesSheetsList from "../../components/categoriesSheetsList";
 import Footer from "../../components/footer";
 import { fetchSheet, fetchSheetsLight } from "../../services/sheet.service";
 import { fetchCategories } from "../../services/category.service";
@@ -64,7 +64,7 @@ const SheetPage: NextPage<IProps> = ({ sheet, sheetsLight, categories }) => {
         />
         {sheet ? <SheetContent open={open} sheet={sheet} /> : null}
         {!sheet ? (
-          <CategoriesList
+          <CategoriesSheetsList
             open={open}
             categories={categories}
             sheetsLight={sheetsLight}
