@@ -25,7 +25,7 @@ app.prepare().then(() => {
     });
 
     server.get('*', (req, res) => {
-        if (dev || req.query.noCache) {
+        if (/*dev || */req.query.noCache) { // FIX THAAAAAAAAAAAAAAAT
             res.setHeader('X-Cache-Status', 'DISABLED');
             defaultRequestHandler(req, res);
         } else {

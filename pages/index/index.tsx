@@ -231,7 +231,7 @@ const Home: NextPage<{ userAgent: string | undefined }> = ({ userAgent }) => {
           <div className={classes.divTitle}>
             <img
               className={classes.imgTitle}
-              src="/cover.jpg"
+              src="cover.jpg"
             />
             <div className={classes.heroContent}>
               <Container maxWidth="sm">

@@ -91,6 +91,7 @@ SheetPage.getInitialProps = async ({ query }) => {
 
   const [sheetsLight, categories, sheet] = await Promise.all(apiCalls);
 
+  console.log('categories', categories);
   const end = +new Date();
   console.log(`Show data fetched. Count: ${sheetsLight.length} in ${(end - start) / 1000} seconds`);
 
