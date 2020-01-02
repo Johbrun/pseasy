@@ -80,9 +80,12 @@ SheetPage.getInitialProps = async ({ query }) => {
   console.log("Loading sheet page...");
   const start = +new Date();
 
-  const sheet = query.reference ? await fetchSheet(query.reference) : undefined;
-  const sheetsLight = await fetchSheetsLight();
-  const categories = await fetchCategories();
+  const apiCalls: Promise<any>[] = [fetchSheetsLight(), fetchCategories()]
+  if (query.reference) {
+    apiCalls.push(fetchSheet(query.reference))
+  };
+
+  const [sheetsLight, categories, sheet] = await Promise.all(apiCalls);
 
   const end = +new Date();
   console.log(`Show data fetched. Count: ${sheetsLight.length} in ${(end - start) / 1000} seconds`);

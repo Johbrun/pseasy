@@ -1,10 +1,19 @@
 import React from "react";
 import App from "next/app";
-import Head from "next/head";
 import { ThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import theme from "../theme";
-import SearchAppBar from "../components/nav";
+import NProgress from 'nprogress'
+import Router from 'next/router'
+import Head from 'next/head'
+
+Router.events.on('routeChangeStart', url => {
+  console.log(`Loading: ${url}`)
+  NProgress.start()
+})
+Router.events.on('routeChangeComplete', () => NProgress.done())
+Router.events.on('routeChangeError', () => NProgress.done())
+
 
 export default class MyApp extends App {
   componentDidMount() {
@@ -21,7 +30,8 @@ export default class MyApp extends App {
     return (
       <React.Fragment>
         <Head>
-          <title>My page</title>
+          {/* Import CSS for nprogress */}
+          <link rel="stylesheet" type="text/css" href="/nprogress.css" />
         </Head>
         <ThemeProvider theme={theme}>
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
