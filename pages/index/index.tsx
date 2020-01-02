@@ -173,8 +173,6 @@ const useStyles = makeStyles((theme: Theme) =>
       height: "100%",
       width: " 100%",
       objectFit: "cover",
-      webkitFilter: "blur(5px)",
-      filter: "blur(4px)"
     },
     title1: {
       fontSize: "5rem",
@@ -226,21 +224,14 @@ const Home: NextPage<{ userAgent: string | undefined }> = ({ userAgent }) => {
       <React.Fragment>
         <CssBaseline />
         <SearchAppBar title={"PSEasy - Fiches PSE"} />
-        {/* <AppBar position="relative">
-          <Toolbar>
-            <CameraIcon className={classes.icon} />
-            <Typography variant="h6" color="inherit" noWrap>
-              Album layout
-            </Typography>
-          </Toolbar>
-        </AppBar> */}
+
         <main>
           <div className={classes.drawerHeader} />
           {/* Hero unit */}
           <div className={classes.divTitle}>
             <img
               className={classes.imgTitle}
-              src="https://live.staticflickr.com/8180/8059366225_96bdc06eff_b.jpg"
+              src="/cover.jpg"
             />
             <div className={classes.heroContent}>
               <Container maxWidth="sm">

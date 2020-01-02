@@ -63,7 +63,7 @@ export default function CategoriesSheetsList(props: IProps) {
         <SearchInput searchField={filterSheet} setSearchField={setFilterSheet} />
 
         {props.categories.map(category => (
-          <CategoriesSheetsRow category={category} sheetsLight={props.sheetsLight
+          <CategoriesSheetsRow key={'csr-' + category.id} category={category} sheetsLight={props.sheetsLight
             .filter(s => s.idCategory === category.id)
             .filter(s => filterSheet ? s.title.toLowerCase().includes(filterSheet.toLowerCase()) : true)
           } />
