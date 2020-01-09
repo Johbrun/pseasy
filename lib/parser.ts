@@ -3,9 +3,18 @@ import insertCategories from "./query/insertCategories";
 import { SheetCreation } from "./interfaces/sheet.interface";
 import insertSheet from "./query/insertSheet";
 import updateSheetsCategory from "./query/updateSheetsCategory";
+import { json } from "express";
 const fs = require("fs");
 const pdf2md = require("@opendocsg/pdf2md");
 const path = require("path");
+
+const parseSheets = async (body: string) => {
+  // fs.writeFileSync(path.resolve("./body.txt"), body);
+  // body = fs.readFileSync("./body.txt");
+  const matchs = [...body.matchAll(/^(Référence.*?(?=\n))\n+(.*)\n+((.|\n)*?(?=Référence))/gm)];
+  console.log(JSON.stringify(matchs));
+  return matchs.length;
+};
 
 const parser = async () => {
   console.log("Launch PDF parsing...");
@@ -108,4 +117,4 @@ const parser = async () => {
     });
 };
 
-export default parser;
+export { parser, parseSheets };
