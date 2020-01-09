@@ -12,32 +12,29 @@ const parser = async () => {
   const startDate = new Date();
   let nbSheet = 0;
   let nbErr = 0;
-  await clean();
+  // await clean();
 
-  const pdfBuffer = fs.readFileSync("./lib/REF.pdf");
+  const pdfBuffer = fs.readFileSync("./lib/REF2019_1C.pdf");
 
   let i = 1;
   pdf2md(pdfBuffer, undefined)
     .then(async (text: string) => {
-      const matchs = [
-        ...text.matchAll(
-          /^(#{4}\s[A-Z](.|\n)*?(?=[A-Z]|#{5}))((.|\n)*?(?=^####\s))/gm
-        )
-      ];
-      console.log(
-        `PDF parsed with success. ${matchs.length} regex matchs founds`
-      );
+      const matchs = [...text.matchAll(/^(#{4}\s[A-Z](.|\n)*?(?=[A-Z]|#{5}))((.|\n)*?(?=^####\s))/gm)];
+      console.log(`PDF parsed with success. ${matchs ? matchs.length : "0"} regex matchs founds`);
 
       // regroup titles on several lines
       // matchs.forEach(m => {
       for (const m of matchs) {
         nbSheet++;
-        const title = m[1].replace(/[#\n]*/g, "").replace(/-$/g, "").trim();
+        const title = m[1]
+          .replace(/[#\n]*/g, "")
+          .replace(/-$/g, "")
+          .trim();
         try {
           // regroup titles on several lines
           const id = i++;
-          let refString = m[3] ? m[3].match(/^ Référence.*/gm) : '';
-          refString = refString ? refString[0] : refString = '';
+          let refString = m[3] ? m[3].match(/^ Référence.*/gm) : "";
+          refString = refString ? refString[0] : (refString = "");
           let content = m[3]
             .replace(/^ Référence.*/gm, "") // Remove ref line
             .replace(/[\t]*/g, "") // Delete tabulations
@@ -50,17 +47,12 @@ const parser = async () => {
             .trim();
 
           const refM = [
-            ...refString.matchAll(
-              /^\s*Référence\s*:\s*(.*)\s*Version\s*:\s*(.*)\s*Mise\s*à\s*jour\s*:\s*(.*)/gm
-            )
+            ...refString.matchAll(/^\s*Référence\s*:\s*(.*)\s*Version\s*:\s*(.*)\s*Mise\s*à\s*jour\s*:\s*(.*)/gm)
           ][0];
           const reference = refM[1].replace(/[\s\t]*/g, "").trim();
           const version = refM[2].trim();
           const updatedDate = new Date(); //refM[3].trim();
 
-          if (reference === 'PR01B01') {
-            // console.log(encodeURI(content))
-          }
           const sheet: SheetCreation = {
             id: id.toString(),
             title,
@@ -69,15 +61,13 @@ const parser = async () => {
             version,
             updatedDate
           };
-
-          await insertSheet(sheet).catch(e => nbErr++);
+          // await insertSheet(sheet).catch(e => nbErr++);
         } catch (e) {
           nbErr++;
           console.error(`Error on sheet '${title}' (${i}) : ${e}`);
         }
       }
-      await updateSheetsCategory();
-
+      // await updateSheetsCategory();
 
       // let outputFile = "./file" + i + ".md";
       // console.log(`Writing to ${outputFile}...`);
@@ -110,10 +100,7 @@ const parser = async () => {
       // sheets.forEach(s => console.log(s.match(/%^#{4}\s([A-Z].*\n\n.*)/gm)));
     })
     .then(() =>
-      console.log(
-        `Process ended in ${(+new Date() - +startDate) /
-        1000} sec for ${nbSheet} sheets and ${nbErr} errors`
-      )
+      console.log(`Process ended in ${(+new Date() - +startDate) / 1000} sec for ${nbSheet} sheets and ${nbErr} errors`)
     )
     .catch((err: any) => {
       nbErr++;

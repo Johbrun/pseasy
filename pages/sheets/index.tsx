@@ -23,15 +23,15 @@ interface IProps {
 const useStyles = makeStyles(() =>
   createStyles({
     root: {
-      fontSize: '0.875rem',
+      fontSize: "0.875rem",
       fontFamily: "'Avenir', 'Roboto', 'Helvetica', 'Arial', sans-serif",
       fontWeight: 400,
-      lineHeight: '1.73',
-      letterSpacing: '0.01071em'
+      lineHeight: "1.73",
+      letterSpacing: "0.01071em"
     },
     content: {
       display: "flex"
-    },
+    }
   })
 );
 
@@ -44,36 +44,15 @@ const SheetPage: NextPage<IProps> = ({ sheet, sheetsLight, categories }) => {
       <Head>
         <title>PSEasy - Fiches PSE</title>
         <link rel="icon" href="/favicon.ico" />
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
-        />
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/icon?family=Material+Icons"
-        />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
       </Head>
       <CssBaseline />
       <div className={classes.content}>
-        <SearchAppBar
-          open={open}
-          setOpen={setOpen}
-          title={sheet ? sheet.title : undefined}
-        />
-        <SideDrawer
-          open={open}
-          setOpen={setOpen}
-          categories={categories}
-          sheetsLight={sheetsLight}
-        />
+        <SearchAppBar open={open} setOpen={setOpen} title={sheet ? sheet.title : undefined} />
+        <SideDrawer open={open} setOpen={setOpen} categories={categories} sheetsLight={sheetsLight} />
         {sheet ? <SheetContent open={open} sheet={sheet} /> : null}
-        {!sheet ? (
-          <CategoriesSheetsList
-            open={open}
-            categories={categories}
-            sheetsLight={sheetsLight}
-          />
-        ) : null}
+        {!sheet ? <CategoriesSheetsList open={open} categories={categories} sheetsLight={sheetsLight} /> : null}
       </div>
       <Footer />
     </div>
@@ -84,14 +63,13 @@ SheetPage.getInitialProps = async ({ query }) => {
   console.log("Loading sheet page...");
   const start = +new Date();
 
-  const apiCalls: Promise<any>[] = [fetchSheetsLight(), fetchCategories()]
+  const apiCalls: Promise<any>[] = [fetchSheetsLight(), fetchCategories()];
   if (query.reference) {
-    apiCalls.push(fetchSheet(query.reference))
-  };
+    apiCalls.push(fetchSheet(query.reference));
+  }
 
   const [sheetsLight, categories, sheet] = await Promise.all(apiCalls);
 
-  console.log('categories', categories);
   const end = +new Date();
   console.log(`Show data fetched. Count: ${sheetsLight.length} in ${(end - start) / 1000} seconds`);
 

@@ -5,6 +5,7 @@ import { SheetLight } from "../lib/interfaces/sheet.interface";
 import SearchInput from "./searchInput";
 import { useState } from "react";
 import CategoriesSheetsRow from "./categoriesSheetsRow";
+import LevelSelect from "./levelSelect";
 
 const drawerWidth = 400;
 
@@ -18,7 +19,7 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       display: "flex",
-      fontFamily: "Roboto",
+      fontFamily: "Roboto"
     },
     // modify content when drawer is opened
     content: {
@@ -44,12 +45,19 @@ const useStyles = makeStyles((theme: Theme) =>
       ...theme.mixins.toolbar,
       justifyContent: "flex-end"
     },
+    filtersHeader: {
+      display: "flex",
+      [theme.breakpoints.down("xs")]: {
+        display: "inherit"
+      }
+    }
   })
 );
 
 export default function CategoriesSheetsList(props: IProps) {
   const classes = useStyles();
-  const [filterSheet, setFilterSheet] = useState<string>('');
+  const [filterSheet, setFilterSheet] = useState<string>("");
+  const [filterLevel, setFilterLevel] = useState<number>(0);
 
   return (
     <>
@@ -60,13 +68,21 @@ export default function CategoriesSheetsList(props: IProps) {
       >
         <div className={classes.drawerHeader} />
 
-        <SearchInput searchField={filterSheet} setSearchField={setFilterSheet} />
+        <div className={classes.filtersHeader}>
+          <SearchInput searchField={filterSheet} setSearchField={setFilterSheet} />
+
+          <LevelSelect levelSelected={filterLevel} setLevelSelected={setFilterLevel} />
+        </div>
 
         {props.categories.map(category => (
-          <CategoriesSheetsRow key={'csr-' + category.id} category={category} sheetsLight={props.sheetsLight
-            .filter(s => s.idCategory === category.id)
-            .filter(s => filterSheet ? s.title.toLowerCase().includes(filterSheet.toLowerCase()) : true)
-          } />
+          <CategoriesSheetsRow
+            key={"csr-" + category.id}
+            category={category}
+            sheetsLight={props.sheetsLight
+              .filter(s => s.idCategory === category.id)
+              .filter(s => s.level === filterLevel || filterLevel === 0)
+              .filter(s => (filterSheet ? s.title.toLowerCase().includes(filterSheet.toLowerCase()) : true))}
+          />
         ))}
       </main>
     </>
