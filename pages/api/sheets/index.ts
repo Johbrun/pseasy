@@ -13,10 +13,12 @@ module.exports = async (req: express.Request, res: express.Response) =>
     else if (req.method === 'POST') 
     {
         const nbSheetsParsed = await parseSheets(req.body);
+        res.setHeader('Content-Type', 'application/json');
         res.status(200).json({ msg: `Parsed ${nbSheetsParsed} sheets` });
     }
     else 
     {
+        res.setHeader('Content-Type', 'application/json');
         res.status(405).json({ error: 'Method not allowed' });
     }
 };
