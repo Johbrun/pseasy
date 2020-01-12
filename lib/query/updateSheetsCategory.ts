@@ -1,39 +1,45 @@
-import query from "../db";
-import escape from "sql-template-strings";
-import { SheetCreation } from "../interfaces/sheet.interface";
-import { Category } from "../interfaces/category.interface";
+import query from '../db';
+import escape from 'sql-template-strings';
+import { SheetCreation } from '../interfaces/sheet.interface';
+import { Category } from '../interfaces/category.interface';
 
-const updateSheetsCategory = async () => {
-  console.debug("updateSheetsCategory() called");
+const updateSheetsCategory = async () => 
+{
+    console.debug('updateSheetsCategory() called');
 
-  const categories = (await query(
-    escape`SELECT id, number, name FROM category`
-  )) as Category[];
+    const categories = (await query(
+        escape`SELECT id, number, name FROM category`
+    )) as Category[];
 
-  const sheets = (await query(escape`SELECT id, reference FROM sheet`)) as {
+    const sheets = (await query(escape`SELECT id, reference FROM sheet`)) as {
     id: string;
     reference: string;
   }[];
 
-  for (const sheet of sheets) {
-    if (typeof sheet !== undefined) {
-      let cn = `${
-        sheet.reference.substring(0, 2) === "FT" ? "2" : "1"
-        }.${+sheet.reference.substring(2, 4)}`;
+    for (const sheet of sheets) 
+    {
+        if (typeof sheet !== undefined) 
+        {
+            let cn = `${
+                sheet.reference.substring(0, 2) === 'FT' ? '2' : '1'
+            }.${+sheet.reference.substring(2, 4)}`;
 
-      let catNumber = categories.find(c => c.number === cn)?.id;
+            let catNumber = categories.find(c => c.number === cn)?.id;
 
-      if (catNumber || catNumber === 0) {
-        await query(
-          escape`UPDATE sheet SET idCategory = ${catNumber} WHERE sheet.id = ${sheet.id}`
-        );
-      } else {
-        console.error(
-          `Unable to update sheet ${sheet.id} with category number ${catNumber}`
-        );
-      }
+            if (catNumber || catNumber === 0) 
+            {
+                await query(
+                    escape`UPDATE sheet SET idCategory = ${catNumber} WHERE sheet.id = ${sheet.id}`
+                );
+            }
+            else 
+            {
+                console.error(
+                    `Unable to update sheet ${sheet.id} with category number ${catNumber}`
+                );
+            }
+        }
     }
-  }
 };
 
 export default updateSheetsCategory;
