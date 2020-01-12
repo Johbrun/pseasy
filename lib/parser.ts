@@ -1,4 +1,4 @@
-import clean from './query/clean';
+import cleanByUpdateYear from './query/cleanByUpdateYear';
 import insertCategories from './query/insertCategories';
 import { SheetCreation } from './interfaces/sheet.interface';
 import insertSheet from './query/insertSheet';
@@ -8,12 +8,18 @@ const fs = require('fs');
 const pdf2md = require('@opendocsg/pdf2md');
 const path = require('path');
 
-const parseSheets = async (body: string) => 
+const parseSheets = async (body: string, year : string) => 
 {
-    // fs.writeFileSync(path.resolve("./body.txt"), body);
-    // body = fs.readFileSync("./body.txt");
+    await cleanByUpdateYear(year);
+
+
     const matchs = [...body.matchAll(/^(Référence.*?(?=\n))\n+(.*)\n+((.|\n)*?(?=Référence))/gm)];
     console.log(JSON.stringify(matchs));
+
+
+    await updateSheetsCategory();
+
+    
     return matchs.length;
 };
 

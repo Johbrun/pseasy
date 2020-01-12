@@ -1,6 +1,5 @@
 import query from '../db';
 import escape from 'sql-template-strings';
-import { SheetCreation } from '../interfaces/sheet.interface';
 import { Category } from '../interfaces/category.interface';
 
 const updateSheetsCategory = async () => 
