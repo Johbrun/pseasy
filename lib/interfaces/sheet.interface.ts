@@ -9,6 +9,17 @@ export interface Sheet {
   idCategory: number;
 }
 
+export interface SheetHistory {
+  id: string;
+  idCategory: number;
+  version: string;
+  updatedDate: Date;
+}
+
+export interface SheetExtended extends Sheet{
+  history:SheetHistory[]
+}
+
 export interface SheetLight {
   id: string;
   reference: string;

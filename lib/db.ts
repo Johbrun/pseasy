@@ -15,6 +15,7 @@ const query = async (query: SQLStatement) =>
 {
     try 
     {
+        // TODO : add protection against injections ?
         const results = await db.query(query);
         await db.end();
         return results;

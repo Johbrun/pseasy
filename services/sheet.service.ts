@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { SheetLight, Sheet } from '../lib/interfaces/sheet.interface';
+import { SheetLight, SheetExtended } from '../lib/interfaces/sheet.interface';
 
 let sheetsLight: SheetLight[] = [];
 
@@ -16,22 +16,22 @@ const fetchSheetsLight = async (noCache: boolean = false) =>
     return sheetsLight;
 };
 
-const fetchSheet = async (reference: string | string[]) => 
+const fetchSheetByReference = async (reference: string | string[], version?:string) => 
 {
     if (!reference) 
     {
         throw new Error('No reference passed in argument');
     }
-    console.log(`Fetch sheet ${reference}...`);
+    console.log(`Fetch sheet ${reference} with version ${version}...`);
 
-    const sheet = (await axios.request({
-        url: `${process.env.API_URL}/api/sheets/sheet?reference=${reference}`
-    })).data[0] as Sheet;
+    const sheetExtended = (await axios.request({
+        url: `${process.env.API_URL}/api/sheets/sheet?reference=${reference}&version=${version}`
+    })).data as SheetExtended;
 
     console.log(`Fetch sheet ${reference} [OK]`);
-    return sheet;
+    return sheetExtended;
 };
 
 export {
-    fetchSheetsLight, fetchSheet
+    fetchSheetsLight, fetchSheetByReference
 };

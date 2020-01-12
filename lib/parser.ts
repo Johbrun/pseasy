@@ -114,7 +114,7 @@ const parser = async () =>
             // \*\*([0-9].[0-9])\s(.*)\*\*
             // \n\n((.|\n)*)^####
 
-            // const sheets = text.split(" Référence	   :");
+            // const sheets = text.split(" Référence	  :");
             // sheets.shift();
             // console.log("sheets nb : ", sheets.length);
             // console.log(sheets.match(/%^#{4}\s([A-Z].*\n\n.*)/gm)]) // ^#{4}\s([A-Z].*\n\n.*)
