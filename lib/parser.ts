@@ -4,23 +4,69 @@ import { SheetCreation } from './interfaces/sheet.interface';
 import insertSheet from './query/insertSheet';
 import updateSheetsCategory from './query/updateSheetsCategory';
 import { json } from 'express';
+import { fromDateFormated } from './helpers/fromDateFormated';
 const fs = require('fs');
 const pdf2md = require('@opendocsg/pdf2md');
 const path = require('path');
 
 const parseSheets = async (body: string, year : string) => 
 {
+
+    const r1 = body.match(/Référence :/g)!.length;
+    console.log(`Received ${r1} sheets`);
+
     await cleanByUpdateYear(year);
+    // add end for next regex
+    body+= '<table>\n<tbody>\n<tr class="odd">\n<td><blockquote>\n<p>Référence :';
 
+    // extract sheets
+    const sheets = [...body.matchAll(/<table>.*?(?=<table>\n<tbody>\n<tr class="odd">\n<td><blockquote>\n<p>Référence :)/gmis)].map(m => m[0]);
+    let nbErr=0;
+    let header;
+    let i = 0;
+    for (let sheet of sheets)
+    {
+        i++;
+        try
+        {
+            sheet = sheet.replace(/ \u00a0+/g, ' ') // delete supp spaces
+                .trim();
+            const matches = [...sheet.matchAll(/<table>((.|\n)*)?(?=^# )((.|\n)*)/gmi)];
 
-    const matchs = [...body.matchAll(/^(Référence.*?(?=\n))\n+(.*)\n+((.|\n)*?(?=Référence))/gm)];
-    console.log(JSON.stringify(matchs));
+            header = matches[0][1];
+            let content = matches[0][3];
 
+            let [, reference, , version, , updatedDate] = header.match(/<p>(.*)<\/p>/gmi)!.map(h => h.replace('<p>', '').replace('</p>', ''));
+            const title = content.match(/^# (.*)/gm);
+            if (!title)
+            {
+                throw new Error('Sheet with no title');
+            }
+        
+            content = content.replace(title[0], '').replace(/^\n*/, '');
+
+            const sheetCreation: SheetCreation = {
+                title : title[0].replace('# ', '').trim(),
+                content,
+                reference:reference.replace(/ /gi, ''),
+                version,
+                updatedDate: fromDateFormated(updatedDate)
+            };
+            await insertSheet(sheetCreation);
+        }
+        catch(e)
+        {
+            console.error(i,e);
+            nbErr++;
+            let outputFile = './debug/' + year + '-' +i + '.md';
+            console.log(`Writing to ${outputFile}...`);
+            fs.writeFileSync(path.resolve(outputFile), e+'\n\n\n'+sheet);
+        }
+    }
 
     await updateSheetsCategory();
 
-    
-    return matchs.length;
+    return {r1, r2 :sheets.length, err : nbErr};
 };
 
 const parser = async () => 

@@ -2,7 +2,7 @@ export interface Sheet {
   id: string;
   reference: string;
   version: string;
-  updatedDate: Date;
+  updatedDate: string;
   title: string;
   content: string;
   level: number;
@@ -13,7 +13,7 @@ export interface SheetHistory {
   id: string;
   idCategory: number;
   version: string;
-  updatedDate: Date;
+  updatedDate: string;
 }
 
 export interface SheetExtended extends Sheet{
@@ -24,17 +24,16 @@ export interface SheetLight {
   id: string;
   reference: string;
   version: string;
-  updatedDate: Date;
+  updatedDate: string;
   title: string;
   level: number;
   idCategory: number;
 }
 
 export interface SheetCreation {
-  id: string;
   reference: string;
   version: string;
-  updatedDate: Date;
+  updatedDate: string;
   title: string;
   content: string;
   level?: number;

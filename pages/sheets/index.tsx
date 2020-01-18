@@ -1,14 +1,13 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import { NextPage } from 'next';
-import axios from 'axios';
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import { makeStyles, createStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Head from 'next/head';
 import SearchAppBar from '../../components/nav';
 import SideDrawer from '../../components/drawer';
 import SheetContent from '../../components/sheetContent';
-import { Sheet, SheetLight, SheetExtended } from '../../lib/interfaces/sheet.interface';
+import { SheetLight, SheetExtended } from '../../lib/interfaces/sheet.interface';
 import { Category } from '../../lib/interfaces/category.interface';
 import CategoriesSheetsList from '../../components/categoriesSheetsList';
 import Footer from '../../components/footer';
@@ -84,7 +83,7 @@ SheetPage.getInitialProps = async ({ query }) =>
 
     return {
         sheet: sheetExtended,
-        sheetsLight,
+        sheetsLight : sheetsLight,
         categories
     };
 };

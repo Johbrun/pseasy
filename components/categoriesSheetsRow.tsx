@@ -16,7 +16,7 @@ import clsx from 'clsx';
 import { Category } from '../lib/interfaces/category.interface';
 import { SheetLight } from '../lib/interfaces/sheet.interface';
 import { refSheetToType } from '../lib/helpers/refSheetToType';
-import { getDateFormated } from '../lib/helpers/getDateFormated';
+import { toDateFormated } from '../lib/helpers/toDateFormated';
 import { sortSheetByProcedure } from '../lib/helpers/sortSheetByProcedure';
 import { useRouter } from 'next/router';
 
@@ -149,7 +149,7 @@ export default function CategoriesSheetsRow(props: IProps)
                                     <TableCell className={classes.hideSm}>PSE {s.level}</TableCell>
                                     <TableCell>{s.title}</TableCell>
                                     <TableCell className={classes.hideSm}>{s.version}</TableCell>
-                                    <TableCell>{getDateFormated(new Date(s.updatedDate))}</TableCell>
+                                    <TableCell>{toDateFormated(new Date(s.updatedDate))}</TableCell>
                                 </TableRow>
                             );
                         })}

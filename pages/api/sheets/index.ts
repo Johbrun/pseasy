@@ -15,9 +15,9 @@ module.exports = async (req: express.Request, res: express.Response) =>
         const headerYear = 'x-sheets-year';
         if (req.headers[headerYear])
         {
-            const nbSheetsParsed = await parser.parseSheets(req.body, req.headers[headerYear] as string);
+            const response = await parser.parseSheets(req.body, req.headers[headerYear] as string);
             res.setHeader('Content-Type', 'application/json');
-            return res.status(200).json({ msg: `Parsed ${nbSheetsParsed} sheets` });
+            return res.status(200).json({ msg: response });
            
         }
         res.setHeader('Content-Type', 'application/json');

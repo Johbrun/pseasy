@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import ReactMarkdown from 'react-markdown';
 import { Sheet, SheetExtended } from '../lib/interfaces/sheet.interface';
 import { refSheetToType } from '../lib/helpers/refSheetToType';
-import { getDateFormated } from '../lib/helpers/getDateFormated';
+import { toDateFormated } from '../lib/helpers/toDateFormated';
 import React from 'react';
 
 const drawerWidth = 400;
@@ -107,7 +107,7 @@ export default function SheetContent(props: IProps)
                 <div className={classes.metadata}>
                     <span>Fiche { props.sheet.reference } ; </span>
                     <span>Version :{' '}{ props.sheet.version} ; </span>
-                    <span>Mise à jour en {' '}{ getDateFormated(new Date(props.sheet.updatedDate)) } ; </span>
+                    <span>Mise à jour en {' '}{ toDateFormated(new Date(props.sheet.updatedDate)) } ; </span>
                     <span>Mises à jour disponibles : {' '}{ props.sheet.history.length}</span>
                 </div>
                 <Chip label={type} className={
@@ -126,7 +126,7 @@ export default function SheetContent(props: IProps)
                             value={id}
                             onChange={handleChange}
                         >
-                            {props.sheet.history.map(h => <MenuItem key={h.version} value={h.id}>{getDateFormated(new Date(h.updatedDate))}</MenuItem> )}
+                            {props.sheet.history.map(h => <MenuItem key={h.version} value={h.id}>{toDateFormated(new Date(h.updatedDate))}</MenuItem> )}
                         </Select>
                     </FormControl>
 
@@ -144,7 +144,7 @@ export default function SheetContent(props: IProps)
                 </div>
                
 
-                <ReactMarkdown source={ props.sheet.content} />
+                <ReactMarkdown source={ props.sheet.content} escapeHtml={false}/>
             </main>
         </>
     );

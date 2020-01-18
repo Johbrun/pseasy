@@ -27,3 +27,4 @@ yarn-error.log*
 .remote.env
 file0.md
 REF.md
+debug/*

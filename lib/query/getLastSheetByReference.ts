@@ -6,7 +6,7 @@ const getSheetByReference = async (reference: string, version?:string) : Promise
 {
     console.debug(`getLastSheetByReference() called ; reference : ${reference} ; version : ${version}`);
 
-    const q = version !== 'undefined' ?
+    const q = typeof version !== 'undefined' && version !== 'undefined'?
         escape`
           SELECT id, reference, version, updatedDate, title, content, level, createdAdminDate
           FROM sheet
