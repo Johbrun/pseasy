@@ -40,10 +40,18 @@ const SheetPage: NextPage<IProps> = ({ sheet, sheetsLight, categories }) =>
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
     const [currentSheet, setCurrentSheet] = React.useState(sheet);
+    const [currentSheetCompare, setCurrentSheetCompare] = React.useState(sheet);
 
     const onSelectVersion = async (version :string) =>
     {
+        console.log('onSelectVersion', version);
         setCurrentSheet(await fetchSheetByReference(currentSheet? currentSheet.reference : '', version));
+    };
+
+    const onSelectCompare = async (version :string) =>
+    {
+        console.log('onSelectCompare', version);
+        setCurrentSheetCompare(await fetchSheetByReference(currentSheetCompare? currentSheetCompare.reference : '', version));
     };
     return (
         <div className={classes.root}>
@@ -57,7 +65,7 @@ const SheetPage: NextPage<IProps> = ({ sheet, sheetsLight, categories }) =>
             <div className={classes.content}>
                 <SearchAppBar open={open} setOpen={setOpen} title={sheet ? sheet.title : undefined} />
                 <SideDrawer open={open} setOpen={setOpen} categories={categories} sheetsLight={sheetsLight} />
-                {currentSheet ? <SheetContent open={open} sheet={currentSheet} onSelectVersion={onSelectVersion} /> : null}
+                {currentSheet ? <SheetContent open={open} sheet={currentSheet} sheetCompare={currentSheetCompare} onSelectVersion={onSelectVersion} onSelectCompare={onSelectCompare} /> : null}
                 {!sheet ? <CategoriesSheetsList open={open} categories={categories} sheetsLight={sheetsLight} /> : null}
             </div>
             <Footer />
