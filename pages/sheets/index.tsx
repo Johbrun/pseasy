@@ -39,13 +39,19 @@ const SheetPage: NextPage<IProps> = ({ sheet, sheetsLight, categories }) =>
 {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
-    const [currentSheet, setCurrentSheet] = React.useState(sheet);
+    const [currentSheet, setCurrentSheet] = React.useState<SheetExtended | undefined>(sheet);
     const [currentSheetCompare, setCurrentSheetCompare] = React.useState(sheet);
+
+    if (!sheet && currentSheet) 
+    {
+        setCurrentSheet(undefined);
+    }
 
     const onSelectVersion = async (version :string) =>
     {
         console.log('onSelectVersion', version);
         setCurrentSheet(await fetchSheetByReference(currentSheet? currentSheet.reference : '', version));
+        // sheet = await fetchSheetByReference(sheet? sheet.reference : '', version);
     };
 
     const onSelectCompare = async (version :string) =>

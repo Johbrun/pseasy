@@ -2,10 +2,10 @@
 import { makeStyles, Theme, createStyles, Chip, Select, MenuItem, FormControl, InputLabel } from '@material-ui/core';
 import clsx from 'clsx';
 import ReactMarkdown from 'react-markdown';
-import { Sheet, SheetExtended } from '../lib/interfaces/sheet.interface';
+import { SheetExtended } from '../lib/interfaces/sheet.interface';
 import { refSheetToType } from '../lib/helpers/refSheetToType';
 import { toDateFormated } from '../lib/helpers/toDateFormated';
-import React from 'react';
+import React, { useEffect } from 'react';
 import * as jsdiff from 'diff';
 
 const drawerWidth = 400;
@@ -92,20 +92,19 @@ export default function SheetContent(props: IProps)
     const [id, setId] = React.useState(props.sheet.id);
     const [idC, setIdC] = React.useState(props.sheet.id);
 
-    // TODO : mettre le plus ancien en comparaison
+    // const [loading, setLoading] = React.useState(false);
     let diff;
     if (props.sheetCompare && props.sheet.updatedDate < props.sheetCompare?.updatedDate)
     {
-        diff = jsdiff.diffSentences(props.sheet.content, props.sheetCompare ? props.sheetCompare.content : props.sheet.content);
+        diff = jsdiff.diffWords(props.sheet.content, props.sheetCompare ? props.sheetCompare.content : props.sheet.content);
     }
     else
     {
-        diff = jsdiff.diffSentences(props.sheetCompare ? props.sheetCompare.content : props.sheet.content, props.sheet.content );
+        diff = jsdiff.diffWords(props.sheetCompare ? props.sheetCompare.content : props.sheet.content, props.sheet.content );
     }
-    // var diff = jsdiff.diffWords(props.sheet.content, props.sheetCompare ? props.sheetCompare.content : props.sheet.content);
     const txt = diff.map(d => d.added ? `__${d.value}__` : d.removed ? `<s>${d.value}</s>` : d.value).join('');
-    console.log(diff);
-    // console.log(diff);
+    // if (loading) setLoading(true); // how to loading ?
+
 
     const onSelectCurrentVersion = (event: React.ChangeEvent<{ value: unknown }>) => 
     {
@@ -126,15 +125,13 @@ export default function SheetContent(props: IProps)
 
     return (
         <>
-        
             <main
                 className={clsx(classes.content, {
                     [classes.contentShift]: props.open
                 })}
             >
                 <div className={classes.drawerHeader} />
-                version : {props.sheet.version}
-                compare : {props.sheetCompare ? props.sheetCompare.version : ''}
+                {/* {loading && <span>Chargement en cours...</span> } */}
                 <h1 className={classes.title}>{ props.sheet.title}</h1>
                 <div className={classes.metadata}>
                     <span>Fiche { props.sheet.reference } ; </span>
@@ -176,7 +173,7 @@ export default function SheetContent(props: IProps)
                     </FormControl>
                 </div>
                
-           
+                
                 <ReactMarkdown source={ txt} escapeHtml={false}/>
             </main>
         </>
