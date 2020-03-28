@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `bwniwqurrlvpqsbnncix`
+-- Database: `pseasy`
 --
 
 -- --------------------------------------------------------
@@ -41,7 +41,7 @@ CREATE TABLE `category` (
 --
 
 CREATE TABLE `sheet` (
-  `id` varchar(36) NOT NULL,
+  `id` int(4) NOT NULL AUTO_INCREMENT,
   `reference` varchar(200) NOT NULL,
   `version` varchar(10) NOT NULL,
   `updatedDate` datetime NOT NULL,
@@ -49,7 +49,8 @@ CREATE TABLE `sheet` (
   `content` text CHARACTER SET utf32 COLLATE utf32_general_ci NOT NULL,
   `level` int(11) DEFAULT NULL,
   `idCategory` int(10) NOT NULL,
-  `createdAdminDate` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6)
+  `createdAdminDate` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+    PRIMARY KEY(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -67,8 +68,8 @@ ALTER TABLE `category`
 -- Indexes for table `sheet`
 --
 ALTER TABLE `sheet`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `IDX_abe5090fb6d0efce53b95ac93e` (`reference`),
+  -- ADD PRIMARY KEY (`id`),
+  -- ADD UNIQUE KEY `IDX_abe5090fb6d0efce53b95ac93e` (`reference`),
   ADD KEY `idCategory` (`idCategory`);
 
 --

@@ -8,5 +8,6 @@ export function fromDateFormated(str: String)
     const monthInt = months.indexOf(m);
 
     const date = new Date(Number(y), monthInt);
+
     return date;
 }

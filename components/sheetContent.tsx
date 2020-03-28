@@ -87,6 +87,8 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function SheetContent(props: IProps) 
 {
+    // console.log(props.sheet)
+    console.log("coucou")
     const classes = useStyles();
     const type = refSheetToType( props.sheet.reference );
     const [id, setId] = React.useState(props.sheet.id);

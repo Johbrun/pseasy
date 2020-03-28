@@ -11,3 +11,20 @@ Attention, en plus pour 2014
 * Header : comparer aux 2018,2019
  
 SELECT reference, COUNT(reference)as nb FROM `sheet` WHERE 1 group by reference ORDER BY nb DESC
+
+MySQL
+```
+#  Pull images
+docker pull mysql && docker pull phpmyadmin/phpmyadmin
+
+# Verify that images are pulled correctly
+docker images
+
+# Run containers
+docker run --name mysql -e MYSQL_ROOT_PASSWORD=0000 -d -p 33060:3306 mysql
+docker run --name myadmin -d --link mysql:db -p 8080:80 phpmyadmin/phpmyadmin
+
+# Connect
+http://localhost:8080/
+root:0000
+```

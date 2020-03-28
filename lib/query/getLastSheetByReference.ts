@@ -8,7 +8,7 @@ const getSheetByReference = async (reference: string, version?:string) : Promise
 
     const q = typeof version !== 'undefined' && version !== 'undefined'?
         escape`
-          SELECT id, reference, version, updatedDate, title, content, level, createdAdminDate
+          SELECT id, reference, version, updatedDate, title, content, level, createdAdminDate, idCategory
           FROM sheet
           WHERE reference = ${reference}
           AND version = ${version}
@@ -17,7 +17,7 @@ const getSheetByReference = async (reference: string, version?:string) : Promise
         `
         :
         escape`
-          SELECT id, reference, version, updatedDate, title, content, level, createdAdminDate
+          SELECT id, reference, version, updatedDate, title, content, level, createdAdminDate, idCategory
           FROM sheet
           WHERE reference = ${reference}
           ORDER BY updatedDate DESC

@@ -7,6 +7,7 @@ module.exports = async (req: express.Request, res: express.Response) =>
     if (req.method === 'GET') 
     {
         const sheets = await getSummary();
+        console.log(sheets)
         res.setHeader('Content-Type', 'application/json');
         res.status(200).json(sheets);
     }

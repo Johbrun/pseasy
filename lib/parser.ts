@@ -33,7 +33,7 @@ const parseSheets = async (body: string, year : string) =>
                 .trim();
             const matches = [...sheet.matchAll(/<table>((.|\n)*)?(?=^# )((.|\n)*)/gmi)];
 
-            header = matches[0][1];
+            header = matches[0][1] ;
             let content = matches[0][3];
 
             let [, reference, , version, , updatedDate] = header.match(/<p>(.*)<\/p>/gmi)!.map(h => h.replace('<p>', '').replace('</p>', ''));
@@ -49,7 +49,7 @@ const parseSheets = async (body: string, year : string) =>
                 title : title[0].replace('# ', '').trim(),
                 content,
                 reference:reference.replace(/ /gi, ''),
-                version,
+                version:version.replace(/N/gi, ''),
                 updatedDate: fromDateFormated(updatedDate)
             };
             await insertSheet(sheetCreation);
@@ -58,9 +58,10 @@ const parseSheets = async (body: string, year : string) =>
         {
             console.error(i,e);
             nbErr++;
-            let outputFile = './debug/' + year + '-' +i + '.md';
-            console.log(`Writing to ${outputFile}...`);
-            fs.writeFileSync(path.resolve(outputFile), e+'\n\n\n'+sheet);
+            let outputFilePath = './debug/' + year + '-' +i + '.md';
+            console.log(`Writing to ${outputFilePath}...`);
+      
+            fs.writeFileSync(path.resolve(outputFilePath), e+'\n\n\n'+sheet);
         }
     }
 
@@ -127,7 +128,7 @@ const parser = async () =>
                         version,
                         updatedDate
                     };
-                    // await insertSheet(sheet).catch(e => nbErr++);
+                     //await insertSheet(sheet).catch(e => nbErr++);
                 }
                 catch (e) 
                 {

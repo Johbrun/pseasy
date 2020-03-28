@@ -20,6 +20,9 @@ INSERT INTO `category` (`id`, `number`, `name`) VALUES
 
 -- Insert sheets level (2019)
 UPDATE `sheet` 
+SET `level` = 1
+;
+UPDATE `sheet` 
 SET `level` = 2
 WHERE `reference` IN (
 'PR02P05',

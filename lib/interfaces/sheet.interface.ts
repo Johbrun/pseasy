@@ -33,7 +33,7 @@ export interface SheetLight {
 export interface SheetCreation {
   reference: string;
   version: string;
-  updatedDate: string;
+  updatedDate: Date;
   title: string;
   content: string;
   level?: number;

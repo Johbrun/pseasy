@@ -95,6 +95,7 @@ SheetPage.getInitialProps = async ({ query }) =>
     const end = +new Date();
     console.log(`Show data fetched. Count: ${sheetsLight.length} in ${(end - start) / 1000} seconds`);
 
+    console.log(typeof sheetExtended)
     return {
         sheet: sheetExtended,
         sheetsLight : sheetsLight,
