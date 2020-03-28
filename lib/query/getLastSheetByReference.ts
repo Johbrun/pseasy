@@ -4,7 +4,7 @@ import { Sheet } from '../interfaces/sheet.interface';
 
 const getSheetByReference = async (reference: string, version?:string) : Promise<Sheet[]>=> 
 {
-    console.debug(`getLastSheetByReference() called ; reference : ${reference} ; version : ${version}`);
+    console.debug(`getSheetByReference() called ; reference : ${reference} ; version : ${version}`);
 
     const q = typeof version !== 'undefined' && version !== 'undefined'?
         escape`

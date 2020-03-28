@@ -42,9 +42,18 @@ const SheetPage: NextPage<IProps> = ({ sheet, sheetsLight, categories }) =>
     const [currentSheet, setCurrentSheet] = React.useState<SheetExtended | undefined>(sheet);
     const [currentSheetCompare, setCurrentSheetCompare] = React.useState(sheet);
 
+
+        console.log('currentSheet version',  currentSheet ? 'currentSheet : ' + currentSheet.version :  'no currentSheet')
+        console.log('sheet version', sheet ? 'sheet : '+ sheet.version : 'no sheet')
+
     if (!sheet && currentSheet) 
     {
         setCurrentSheet(undefined);
+    }
+
+    if (sheet && !currentSheet)
+    {
+        setCurrentSheet(sheet)
     }
 
     const onSelectVersion = async (version :string) =>
@@ -93,9 +102,9 @@ SheetPage.getInitialProps = async ({ query }) =>
     const [sheetsLight, categories, sheetExtended] = await Promise.all(apiCalls);
 
     const end = +new Date();
-    console.log(`Show data fetched. Count: ${sheetsLight.length} in ${(end - start) / 1000} seconds`);
+    console.log(`Data fetched. Count: ${sheetsLight.length} in ${(end - start) / 1000} seconds`);
 
-    console.log(typeof sheetExtended)
+    // console.log(sheetExtended);
     return {
         sheet: sheetExtended,
         sheetsLight : sheetsLight,
