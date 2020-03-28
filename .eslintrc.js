@@ -31,8 +31,8 @@ module.exports = {
             4
         ],
         'linebreak-style': [
-            'error',
-            'windows'
+            'warn',
+            'unix'
         ],
         'quotes': [
             'error',
@@ -48,6 +48,7 @@ module.exports = {
           "args": "after-used",
           "ignoreRestSiblings": false
         }],
-        'brace-style' : ['error', 'allman', {'allowSingleLine' : true}]
+        'brace-style' : ['error', 'allman', {'allowSingleLine' : true}],
+        'max-len' : ['error', {'code' : 130}]
     }
 };

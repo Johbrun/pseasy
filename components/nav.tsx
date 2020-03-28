@@ -150,7 +150,7 @@ export default function SearchAppBar(props: IProps)
                         {props.title ? props.title : 'PSEasy - Référentiel PSE'}
                     </Typography>
 
-                    <div className={classes.search}>
+                    {/* <div className={classes.search}>
                         <div className={classes.searchIcon}>
                             <SearchIcon />
                         </div>
@@ -162,7 +162,7 @@ export default function SearchAppBar(props: IProps)
                             }}
                             inputProps={{ 'aria-label': 'search' }}
                         />
-                    </div>
+                    </div> */}
                 </Toolbar>
             </AppBar>
         </div>
