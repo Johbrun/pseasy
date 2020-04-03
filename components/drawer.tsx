@@ -168,6 +168,19 @@ export default function SideDrawer(props: IProps)
                     </ListItem>
                     <ListItem
                         button
+                        onClick={() => router.push('/contact')}
+                    >
+                        <ListItemIcon>
+                            <ContactSupportIcon />
+                        </ListItemIcon>
+                        
+                        <ListItemText
+                            primary={'CONTACT / MISES A JOUR'}
+                            className={classes.category}
+                        />
+                    </ListItem>
+                    <ListItem
+                        button
                         onClick={() => router.push('/sheets')}
                     >
                         <ListItemIcon>
