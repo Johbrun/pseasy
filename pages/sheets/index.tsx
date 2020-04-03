@@ -13,6 +13,7 @@ import CategoriesSheetsList from '../../components/categoriesSheetsList';
 import Footer from '../../components/footer';
 import { fetchSheetByReference, fetchSheetsLight } from '../../services/sheet.service';
 import { fetchCategories } from '../../services/category.service';
+import { postVisit } from '../../services/visit.service';
 
 interface IProps {
   sheet?: SheetExtended;
@@ -101,7 +102,8 @@ const SheetPage: NextPage<IProps> = ({ sheet, sheetsLight, categories }) =>
 
 SheetPage.getInitialProps = async ({ query }) => 
 {
-    console.log('********** getInitialProps - Loading sheet page... *********');
+    console.log('********** getInitialProps SHEET - Loading sheet page... *********');
+    postVisit(query);
     const start = +new Date();
 
     const apiCalls: Promise<any>[] = [fetchSheetsLight(), fetchCategories()];

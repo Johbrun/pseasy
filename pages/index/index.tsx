@@ -35,6 +35,7 @@ import CompareArrowsIcon from '@material-ui/icons/CompareArrows';
 import CommentIcon from '@material-ui/icons/Comment';
 import { useRouter } from 'next/router';
 import Footer from '../../components/footer';
+import { postVisit } from '../../services/visit.service';
 
 const getIconElementFromName = (icon: IconsCard, classes: any) => 
 {
@@ -353,8 +354,11 @@ const Home: NextPage<{}> = () =>
 
 Home.getInitialProps = async ({ req }) => 
 {
-    const userAgent = req ? req.headers['user-agent'] : navigator.userAgent;
-    return { userAgent };
+    console.log('********** getInitialProps INDEX - Loading sheet page... *********');
+
+    postVisit(req);
+
+    return {userAgent : req ? req.headers['userAgent'] : null};
 };
 
 export default Home;
