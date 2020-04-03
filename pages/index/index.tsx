@@ -32,6 +32,7 @@ import CommentIcon from '@material-ui/icons/Comment';
 import { useRouter } from 'next/router';
 import Footer from '../../components/footer';
 import { postVisit } from '../../services/visit.service';
+import WarningModal from '../../components/warningModal';
 
 const getIconElementFromName = (icon: IconsCard, classes: any) => 
 {
@@ -189,7 +190,7 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         statusChipNok: {
             backgroundColor: 'red'
-        }
+        },
     })
 );
 
@@ -226,6 +227,7 @@ const Home: NextPage<{}> = () =>
                 <CssBaseline />
                 <SearchAppBar title={'PSEasy - Fiches PSE'} />
 
+                <WarningModal />
                 <main>
                     <div className={classes.drawerHeader} />
                     {/* Hero unit */}
@@ -265,7 +267,7 @@ const Home: NextPage<{}> = () =>
                                         </Grid>
                                         <Grid item>
                                             <Button variant="contained" color="primary" onClick={handleClickQuizz}>
-                        Affronter le quizz
+                                                Affronter le quizz
                                             </Button>
                                         </Grid>
                                     </Grid>
@@ -360,7 +362,6 @@ const Home: NextPage<{}> = () =>
 
 Home.getInitialProps = async ({ req }) => 
 {
-    console.log('TEST', process.env.TEST);
     console.log('GetInitialProps index');
     if (req) postVisit(req);
 
