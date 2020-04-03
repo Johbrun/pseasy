@@ -1,7 +1,7 @@
 import React from 'react';
 import IconButton from '@material-ui/core/IconButton';
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
-import { Link, List, ListItemIcon, Collapse } from '@material-ui/core';
+import { Link, List, ListItemIcon, Collapse, Chip } from '@material-ui/core';
 import Drawer from '@material-ui/core/Drawer';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -15,6 +15,12 @@ import MenuBookIcon from '@material-ui/icons/MenuBook';
 import HomeIcon from '@material-ui/icons/Home';
 import { useRouter } from 'next/router';
 import ListIcon from '@material-ui/icons/List';
+import { refSheetToType } from '../lib/helpers/refSheetToType';
+import clsx from 'clsx';
+import ContactSupportIcon from '@material-ui/icons/ContactSupport';
+import AssignmentIcon from '@material-ui/icons/Assignment';
+
+
 
 interface IProps {
   categories: Category[];
@@ -54,7 +60,23 @@ const useStyles = makeStyles((theme: Theme) =>
         nested: {
             paddingLeft: theme.spacing(4),
             fontSize: '0.9rem'
-        }
+        },
+        chip: {
+            color: 'white',
+            backgroundColor: theme.palette.grey[800],
+            height: '20px',
+            width: '20px',
+            marginRight: '4px',
+        },
+        chipConnaissance: {
+            backgroundColor: 'blueviolet'
+        },
+        chipProcedure: {
+            backgroundColor: 'royalblue'
+        },
+        chipTechnique: {
+            backgroundColor: 'orange'
+        },
     })
 );
 export default function SideDrawer(props: IProps) 
@@ -75,18 +97,17 @@ export default function SideDrawer(props: IProps)
 
     const prefixFromReference = (reference: string) => 
     {
-        switch (reference.substring(0, 2)) 
-        {
-        case 'AC':
-            return '(C) ';
-        case 'PR':
-            return '(P) ';
-        case 'FT':
-            return '(G) ';
-        default:
-            return '';
-        }
+        const type = refSheetToType(reference);
+        return(<Chip
+            key={reference}
+            className={clsx(classes.chip, {
+                [classes.chipConnaissance]: type === 'Connaissances',
+                [classes.chipProcedure]: type === 'Procédures',
+                [classes.chipTechnique]: type === 'Techniques'
+            })}
+        />);
     };
+       
     const handleClickCategory = (id: number) => 
     {
         if (id === openedId) 
@@ -97,6 +118,7 @@ export default function SideDrawer(props: IProps)
         setOpenedId(id);
     };
 
+    console.log('waaa', props.open);
     return (
         <div className={classes.root}>
             <Drawer
@@ -120,13 +142,40 @@ export default function SideDrawer(props: IProps)
                 <List>
                     <ListItem
                         button
+                        onClick={() => router.push('/')}
+                    >
+                        <ListItemIcon>
+                            < HomeIcon />
+                        </ListItemIcon>
+                        
+                        <ListItemText
+                            primary={'ACCUEIL'}
+                            className={classes.category}
+                        />
+                    </ListItem>
+                    <ListItem
+                        button
+                        onClick={() => router.push('/quizz')}
+                    >
+                        <ListItemIcon>
+                            <ContactSupportIcon />
+                        </ListItemIcon>
+                        
+                        <ListItemText
+                            primary={'QUIZZ'}
+                            className={classes.category}
+                        />
+                    </ListItem>
+                    <ListItem
+                        button
                         onClick={() => router.push('/sheets')}
                     >
                         <ListItemIcon>
-                            <ListIcon />
+                            <AssignmentIcon />
                         </ListItemIcon>
+                        
                         <ListItemText
-                            primary={'0. SOMMAIRE'}
+                            primary={'INDEX DES FICHES'}
                             className={classes.category}
                         />
                     </ListItem>

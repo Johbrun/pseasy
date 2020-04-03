@@ -203,6 +203,11 @@ const Home: NextPage<{}> = () =>
         router.push('/sheets');
     };
 
+    const handleClickQuizz = () => 
+    {
+        router.push('/quizz');
+    };
+
     return (
         <div className={classes.root}>
             <Head>
@@ -256,6 +261,11 @@ const Home: NextPage<{}> = () =>
                                         <Grid item>
                                             <Button variant="contained" color="primary" onClick={handleClickSheets}>
                                                 Consulter les fiches
+                                            </Button>
+                                        </Grid>
+                                        <Grid item>
+                                            <Button variant="contained" color="primary" onClick={handleClickQuizz}>
+                        Affronter le quizz
                                             </Button>
                                         </Grid>
                                     </Grid>
