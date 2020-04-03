@@ -23,10 +23,10 @@ import AssignmentIcon from '@material-ui/icons/Assignment';
 
 
 interface IProps {
-  categories: Category[];
-  sheetsLight: SheetLight[];
-  open: boolean;
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+    categories: Category[];
+    sheetsLight: SheetLight[];
+    open: boolean;
+    setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const drawerWidth = 400;
@@ -79,26 +79,22 @@ const useStyles = makeStyles((theme: Theme) =>
         },
     })
 );
-export default function SideDrawer(props: IProps) 
-{
+export default function SideDrawer(props: IProps) {
     const router = useRouter();
     const classes = useStyles();
     const [openedId, setOpenedId] = React.useState(-1);
 
-    const handleDrawerClose = () => 
-    {
+    const handleDrawerClose = () => {
         props.setOpen(false);
     };
 
-    const goAccueil = () => 
-    {
+    const goAccueil = () => {
         router.push('/index');
     };
 
-    const prefixFromReference = (reference: string) => 
-    {
+    const prefixFromReference = (reference: string) => {
         const type = refSheetToType(reference);
-        return(<Chip
+        return (<Chip
             key={reference}
             className={clsx(classes.chip, {
                 [classes.chipConnaissance]: type === 'Connaissances',
@@ -107,11 +103,9 @@ export default function SideDrawer(props: IProps)
             })}
         />);
     };
-       
-    const handleClickCategory = (id: number) => 
-    {
-        if (id === openedId) 
-        {
+
+    const handleClickCategory = (id: number) => {
+        if (id === openedId) {
             // when click on selected
             id = -1;
         }
@@ -147,7 +141,7 @@ export default function SideDrawer(props: IProps)
                         <ListItemIcon>
                             < HomeIcon />
                         </ListItemIcon>
-                        
+
                         <ListItemText
                             primary={'ACCUEIL'}
                             className={classes.category}
@@ -160,7 +154,7 @@ export default function SideDrawer(props: IProps)
                         <ListItemIcon>
                             <ContactSupportIcon />
                         </ListItemIcon>
-                        
+
                         <ListItemText
                             primary={'QUIZZ'}
                             className={classes.category}
@@ -173,7 +167,7 @@ export default function SideDrawer(props: IProps)
                         <ListItemIcon>
                             <ContactSupportIcon />
                         </ListItemIcon>
-                        
+
                         <ListItemText
                             primary={'CONTACT / MISES A JOUR'}
                             className={classes.category}
@@ -186,7 +180,7 @@ export default function SideDrawer(props: IProps)
                         <ListItemIcon>
                             <AssignmentIcon />
                         </ListItemIcon>
-                        
+
                         <ListItemText
                             primary={'INDEX DES FICHES'}
                             className={classes.category}
@@ -204,8 +198,8 @@ export default function SideDrawer(props: IProps)
                                     {category.number.includes('1.') ? (
                                         <MenuBookIcon />
                                     ) : (
-                                        <PanToolIcon />
-                                    )}
+                                            <PanToolIcon />
+                                        )}
                                 </ListItemIcon>
 
                                 <ListItemText

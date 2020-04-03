@@ -270,6 +270,11 @@ const Home: NextPage<{}> = () =>
                                                 Affronter le quizz
                                             </Button>
                                         </Grid>
+                                        <Grid item>
+                                            <Button variant="contained" color="primary" onClick={handleClickQuizz}>
+                                                Affronter le quizz
+                                            </Button>
+                                        </Grid>
                                     </Grid>
                                 </div>
                             </Container>
