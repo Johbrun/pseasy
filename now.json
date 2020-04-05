@@ -10,7 +10,7 @@
     },
     "build": {
         "env": {
-            "API_URL": "https://pseasy.now.sh"
+            "API_URL": "https://pseasy.fr"
         }
     }
 }
