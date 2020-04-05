@@ -54,10 +54,6 @@ CREATE TABLE `sheet` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Indexes for dumped tables
---
-
---
 -- Indexes for table `category`
 --
 ALTER TABLE `category`
@@ -97,9 +93,6 @@ CREATE TABLE `visit` (
   `date` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Index pour les tables exportées
---
 
 --
 -- Index pour la table `visit`
