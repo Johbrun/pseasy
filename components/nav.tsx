@@ -54,7 +54,18 @@ const useStyles = makeStyles((theme: Theme) =>
         title: {
             flexGrow: 1
         },
+        version: {
+            width: 'auto',
+            fontSize : '1rem',
+            marginLeft: theme.spacing(1),
 
+            [theme.breakpoints.up('md')]: {
+                marginRight: theme.spacing(2),
+            },
+            [theme.breakpoints.between('xs', 'sm')]: {
+                marginRight: theme.spacing(0),
+            }
+        },
         search: {
             position: 'relative',
             borderRadius: theme.shape.borderRadius,
@@ -79,7 +90,7 @@ const useStyles = makeStyles((theme: Theme) =>
             }
         },
         searchIcon: {
-            width: theme.spacing(7),
+            width: theme.spacing(0),
             height: '100%',
             position: 'absolute',
             pointerEvents: 'none',
@@ -163,6 +174,9 @@ export default function SearchAppBar(props: IProps)
                             inputProps={{ 'aria-label': 'search' }}
                         />
                     </div> */}
+                    <div className={classes.version}>
+                        <span>PSEasy - Bêta v0.3</span>
+                    </div>
                 </Toolbar>
             </AppBar>
         </div>
