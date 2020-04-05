@@ -90,7 +90,7 @@ const useStyles = makeStyles((theme: Theme) =>
             }
         },
         searchIcon: {
-            width: theme.spacing(0),
+            width: theme.spacing(7),
             height: '100%',
             position: 'absolute',
             pointerEvents: 'none',
