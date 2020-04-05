@@ -83,6 +83,40 @@ ALTER TABLE `sheet`
   ADD CONSTRAINT `sheet_ibfk_1` FOREIGN KEY (`idCategory`) REFERENCES `category` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 COMMIT;
 
+
+--
+-- Structure de la table `visit`
+--
+
+CREATE TABLE `visit` (
+  `id` int(11) NOT NULL,
+  `url` varchar(255) DEFAULT NULL,
+  `ip` varchar(20) NOT NULL,
+  `userAgent` varchar(255) DEFAULT NULL,
+  `idVisitor` varchar(255) NOT NULL,
+  `date` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Index pour les tables exportées
+--
+
+--
+-- Index pour la table `visit`
+--
+ALTER TABLE `visit`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT pour les tables exportées
+--
+
+--
+-- AUTO_INCREMENT pour la table `visit`
+--
+ALTER TABLE `visit`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

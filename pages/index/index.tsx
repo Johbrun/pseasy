@@ -354,8 +354,7 @@ const Home: NextPage<{}> = () =>
 
 Home.getInitialProps = async ({ req }) => 
 {
-    console.log('********** getInitialProps INDEX - Loading sheet page... *********');
-
+    console.log('GetInitialProps index');
     postVisit(req);
 
     return {userAgent : req ? req.headers['userAgent'] : null};

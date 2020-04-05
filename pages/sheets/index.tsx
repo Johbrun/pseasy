@@ -100,10 +100,11 @@ const SheetPage: NextPage<IProps> = ({ sheet, sheetsLight, categories }) =>
     );
 };
 
-SheetPage.getInitialProps = async ({ query }) => 
+SheetPage.getInitialProps = async ({ req, query }) => 
 {
-    console.log('********** getInitialProps SHEET - Loading sheet page... *********');
-    postVisit(query);
+    console.log('GetInitialProps sheet');
+    postVisit(req);
+
     const start = +new Date();
 
     const apiCalls: Promise<any>[] = [fetchSheetsLight(), fetchCategories()];
@@ -115,7 +116,7 @@ SheetPage.getInitialProps = async ({ query }) =>
     const [sheetsLight, categories, sheetExtended] = await Promise.all(apiCalls);
 
     const end = +new Date();
-    console.log(`Data fetchedc Count: ${sheetsLight.length} in ${(end - start) / 1000} seconds`);
+    console.log(`Data fetched ; Count: ${sheetsLight.length} in ${(end - start) / 1000} seconds`);
 
     return {
         sheet: sheetExtended,
