@@ -1,12 +1,9 @@
 import cleanByUpdateYear from './query/cleanByUpdateYear';
-import insertCategories from './query/insertCategories';
 import { SheetCreation } from './interfaces/sheet.interface';
 import insertSheet from './query/insertSheet';
 import updateSheetsCategory from './query/updateSheetsCategory';
-import { json } from 'express';
 import { fromDateFormated } from './helpers/fromDateFormated';
 const fs = require('fs');
-const pdf2md = require('@opendocsg/pdf2md');
 const path = require('path');
 
 const parseSheets = async (body: string, year : string) => 

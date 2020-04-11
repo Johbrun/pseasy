@@ -19,16 +19,12 @@ import {
     CssBaseline,
     Typography,
     Theme,
-    AppBar,
-    Toolbar,
     Container,
     Grid,
     Button,
     Card,
-    CardMedia,
     CardContent,
     CardActions,
-    Icon
 } from '@material-ui/core';
 import SearchAppBar from '../../components/nav';
 import CompareArrowsIcon from '@material-ui/icons/CompareArrows';
@@ -55,28 +51,28 @@ const getIconElementFromName = (icon: IconsCard, classes: any) =>
 };
 
 enum IconsCard {
-  Fiches, Classement, Recherche, HorsLigne, App, Historique, Differences, Comment, Quizz
+    Fiches, Classement, Recherche, HorsLigne, App, Historique, Differences, Comment, Quizz
 }
 
 const cards: { title: string; content: string; icon: IconsCard, status: string }[] = [
     {
         title: 'Fiches PSE à jour',
         content:
-      'Consultez la version des fiches du référentiel revu en Septembre 2019',
+            'Consultez la version des fiches du référentiel revu en Septembre 2019',
         icon: IconsCard.Fiches,
         status: 'Opérationnel'
     },
     {
         title: 'Classement par catégories',
         content:
-      'Rerouvez facilement la fiche en utilisant l\'affichage par catégorie',
+            'Rerouvez facilement la fiche en utilisant l\'affichage par catégorie',
         icon: IconsCard.Classement,
         status: 'Opérationnel'
     },
     {
         title: 'Recherche par mot clé',
         content:
-      'Retrouvez toutes les fiches en lien avec un ou plusieurs mots clés',
+            'Retrouvez toutes les fiches en lien avec un ou plusieurs mots clés',
         icon: IconsCard.Recherche,
         status: 'Prévu T1 2020'
     },
@@ -89,7 +85,7 @@ const cards: { title: string; content: string; icon: IconsCard, status: string }
     {
         title: 'Mode \'App\'',
         content:
-      'Lancez l\'application directement depuis le menu de votre téléphone',
+            'Lancez l\'application directement depuis le menu de votre téléphone',
         icon: IconsCard.App,
         status: 'Prévu T1 2020'
     },
@@ -102,21 +98,21 @@ const cards: { title: string; content: string; icon: IconsCard, status: string }
     {
         title: 'Affichage des différences',
         content:
-      'Affichez les nouveautés de contenu des fiches entre les différentes mises à jour',
+            'Affichez les nouveautés de contenu des fiches entre les différentes mises à jour',
         icon: IconsCard.Differences,
         status: 'Prévu T2 2020'
     },
     {
         title: 'Quizz',
         content:
-      'Testez vos connaissances du référentiel',
+            'Testez vos connaissances du référentiel',
         icon: IconsCard.Quizz,
         status: 'Prévu T2 2020'
     },
     {
         title: 'Echangez',
         content:
-      'Une interrogation, un flou ? Surligner la partie intéressée, poser votre question, la communauté vous répondra !',
+            'Une interrogation, un flou ? Surligner la partie intéressée, poser votre question, la communauté vous répondra !',
         icon: IconsCard.Comment,
         status: 'Prévu T3 2020'
     },
@@ -242,7 +238,7 @@ const Home: NextPage<{}> = () =>
                                     gutterBottom
                                     className={classes.title1}
                                 >
-                  PSEasy
+                                    PSEasy
                                 </Typography>
                                 <Typography
                                     variant="h5"
@@ -251,15 +247,15 @@ const Home: NextPage<{}> = () =>
                                     className={classes.title2}
                                     paragraph
                                 >
-                  PSEasy est une application permettant la consultation des
-                  recommandations et référentiels relatifs au secourisme en
-                  France.
+                                    PSEasy est une application permettant la consultation des
+                                    recommandations et référentiels relatifs au secourisme en
+                                    France.
                                 </Typography>
                                 <div className={classes.heroButtons}>
                                     <Grid container spacing={2} justify="center">
                                         <Grid item>
                                             <Button variant="contained" color="primary" onClick={handleClickSheets}>
-                        Consulter les fiches
+                                                Consulter les fiches
                                             </Button>
                                         </Grid>
                                     </Grid>
@@ -355,9 +351,9 @@ const Home: NextPage<{}> = () =>
 Home.getInitialProps = async ({ req }) => 
 {
     console.log('GetInitialProps index');
-    postVisit(req);
+    if (req) postVisit(req);
 
-    return {userAgent : req ? req.headers['userAgent'] : null};
+    return { userAgent: req ? req.headers['userAgent'] : null };
 };
 
 export default Home;

@@ -7,7 +7,6 @@ import SearchInput from './searchInput';
 import { useState } from 'react';
 import CategoriesSheetsRow from './categoriesSheetsRow';
 import LevelSelect from './levelSelect';
-import { orderByReference } from '../lib/helpers/orderByReference';
 import DateSelect from './dateSelect';
 
 const drawerWidth = 400;
@@ -80,7 +79,8 @@ export default function CategoriesSheetsList(props: IProps)
                     <SearchInput searchField={filterSheet} setSearchField={setFilterSheet} />
 
                     <LevelSelect levelSelected={filterLevel} setLevelSelected={setFilterLevel} />
-                    <DateSelect dates={availableUpdateDate.map(d => new Date(d).getTime())} dateSelected={filterDate} setDateSelected={setFilterDate} />
+                    <DateSelect dates={availableUpdateDate
+                        .map(d => new Date(d).getTime())} dateSelected={filterDate} setDateSelected={setFilterDate} />
                 </div>
 
                 {props.categories.map(category => (

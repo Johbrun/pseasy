@@ -1,8 +1,5 @@
 import * as express from 'express';
-import insertVisit from '../../../lib/query/insertVisit';
-import { VisitCreation, VisitUserCreation } from '../../../lib/interfaces/visit.interface';
-import insertUser from '../../../lib/query/insertUser';
-import { UserCreation } from '../../../lib/interfaces/user.interface';
+import { VisitUserCreation } from '../../../lib/interfaces/visit.interface';
 import { ErrorCodes } from '../errorCodes';
 import saveNewVisitor from '../../../lib/actions/saveNewVisitor';
 

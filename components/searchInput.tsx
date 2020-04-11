@@ -1,6 +1,7 @@
-import { makeStyles, Theme, createStyles, Grid, TextField } from "@material-ui/core";
+/* eslint-disable react/react-in-jsx-scope */
+import { makeStyles, Theme, createStyles, Grid, TextField } from '@material-ui/core';
 import SearchRoundedIcon from '@material-ui/icons/SearchRounded';
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction } from 'react';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -15,7 +16,8 @@ interface IProps {
     setSearchField: Dispatch<SetStateAction<string>>
 }
 
-export default function SearchInput(props: IProps) {
+export default function SearchInput(props: IProps) 
+{
     const classes = useStyles();
 
     return (
@@ -25,9 +27,10 @@ export default function SearchInput(props: IProps) {
                     <SearchRoundedIcon />
                 </Grid>
                 <Grid item>
-                    <TextField id="input-with-icon-grid" label="Rechercher une fiche..." onChange={(event) => props.setSearchField(event.target.value)} />
+                    <TextField id="input-with-icon-grid" label="Rechercher une fiche..." 
+                        onChange={(event) => props.setSearchField(event.target.value)} />
                 </Grid>
             </Grid>
         </div>
-    )
+    );
 }

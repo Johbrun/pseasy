@@ -1,12 +1,15 @@
-import { makeStyles, Theme, createStyles, Link, Typography } from "@material-ui/core";
+/* eslint-disable react/no-unescaped-entities */
+/* eslint-disable react/react-in-jsx-scope */
+import { makeStyles, Theme, createStyles, Link, Typography } from '@material-ui/core';
 
 
-function Copyright() {
+function Copyright() 
+{
     return (
         <Typography variant="body2" color="textSecondary" align="center">
-            {"Copyright © "} PSEasy {' '}
+            {'Copyright © '} PSEasy {' '}
             {new Date().getFullYear()}
-            {"."}
+            {'.'}
         </Typography>
     );
 }
@@ -20,14 +23,15 @@ const useStyles = makeStyles((theme: Theme) =>
     }));
 
 
-export default function Footer() {
+export default function Footer() 
+{
     const classes = useStyles();
 
     return (
         <footer className={classes.footer}>
             <Typography variant="h6" align="center" gutterBottom>
                 PSEasy
-          </Typography>
+            </Typography>
             <Typography
                 variant="subtitle1"
                 align="center"
@@ -36,10 +40,9 @@ export default function Footer() {
             >
                 PSEasy n'est pas liée à {' '}
                 <Link href="https://interieur.gouv.fr">interieur.gouv.fr</Link>, ni à quelconque institution officielle.
-           <br />
+                <br />
                 <Link href="https://www.interieur.gouv.fr/Le-ministere/Securite-civile/Documentation-technique/Secourisme-et-associations/Les-recommandations-et-les-referentiels/">
                     Consultez ici les documents officiels</Link>
-
             </Typography>
             <br />
             <Copyright />
