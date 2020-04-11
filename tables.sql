@@ -80,25 +80,27 @@ ALTER TABLE `sheet`
 COMMIT;
 
 
---
--- Structure de la table `visit`
---
+
+CREATE TABLE `user` (
+  `id` varchar(255) NOT NULL,
+  `ip` varchar(20) NOT NULL,
+  `userAgent` varchar(255) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (id)
+);
+ALTER TABLE `user` CHANGE `ip` `ip` VARCHAR(20) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL; 
 
 CREATE TABLE `visit` (
   `id` int(11) NOT NULL,
+  `idUser` varchar(255) NOT NULL,
   `url` varchar(255) DEFAULT NULL,
-  `ip` varchar(20) NOT NULL,
-  `userAgent` varchar(255) DEFAULT NULL,
-  `idVisitor` varchar(255) NOT NULL,
-  `date` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `date` datetime NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (idUser) REFERENCES user(id)
+) 
+ALTER TABLE `visit` CHANGE `id` `id` INT(11) NOT NULL AUTO_INCREMENT;
 
 
---
--- Index pour la table `visit`
---
-ALTER TABLE `visit`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT pour les tables exportées
