@@ -13,10 +13,7 @@ const postVisit = async (req: any) => {
         else {
             ip = req.connection ? req.connection.remoteAddress : '';
         }
-        console.log(req.headers)
-        console.log(req.connection.remoteAddress)
         const url = req.url;
-
         const userAgent = req ? req.headers['user-agent'] : navigator.userAgent;
 
         console.log('post visit... from ' + ip);

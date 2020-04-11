@@ -1,7 +1,7 @@
 {
     "name": "pseasy",
     "version": 2,
-    "alias": "pseasy.now.sh",
+    "alias": "pseasy.fr",
     "env": {
         "MYSQL_HOST": "@mysql-host",
         "MYSQL_DATABASE": "@mysql-database",
@@ -12,5 +12,32 @@
         "env": {
             "API_URL": "https://pseasy.fr"
         }
+    },
+    "redirects": [
+        {
+            "source": "https://pseasy.now.sh",
+            "destination": "https://pseasy.fr"
+        }
+    ],
+    "headers": {
+        "source": "/(.*)",
+        "headers": [
+            {
+                "key": "X-Content-Type-Options",
+                "value": "nosniff"
+            },
+            {
+                "key": "X-Frame-Options",
+                "value": "DENY"
+            },
+            {
+                "key": "X-XSS-Protection",
+                "value": "1; mode=block"
+            },
+            {
+                "key": "Referrer-Policy",
+                "value": "no-referrer"
+            }
+        ]
     }
 }
