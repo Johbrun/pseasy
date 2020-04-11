@@ -5,7 +5,16 @@ import { VisitCreation, VisitUserCreation } from '../lib/interfaces/visit.interf
 const postVisit = async (req: any) => {
     if (!req) return;
     try {
-        const ip = req.connection ? req.connection.remoteAddress : '';
+        let ip;
+        const forwarded = req.headers['x-forwarded-for'];
+        if (forwarded) {
+            ip = forwarded.split(/, /)[0]
+        }
+        else {
+            ip = req.connection ? req.connection.remoteAddress : '';
+        }
+        console.log(req.headers)
+        console.log(req.connection.remoteAddress)
         const url = req.url;
 
         const userAgent = req ? req.headers['user-agent'] : navigator.userAgent;

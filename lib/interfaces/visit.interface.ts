@@ -1,5 +1,3 @@
-import { UserCreation } from "./user.interface";
-
 export interface VisitCreation {
     url: string;
     date: Date;
