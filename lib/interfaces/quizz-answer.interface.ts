@@ -1,6 +1,6 @@
 export interface QuizzAnswerCreation {
-    idQuestion: string;
-    idUser: string;
+    idQuestion: number;
+    idUser?: string;
     answer1Choice : boolean;
     answer2Choice : boolean;
     answer3Choice : boolean;

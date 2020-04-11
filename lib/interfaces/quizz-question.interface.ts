@@ -1,13 +1,16 @@
 export interface QuizzQuestion {
-    id: string;
+    id: number;
     idUser: string;
-    answer1Choice : boolean;
-    answer2Choice : boolean;
-    answer3Choice : boolean;
+    question : string;
+    difficulty : string;
+    level : string;
+    answer1 : string;
+    answer2 : string;
+    answer3 : string;
   }
 
 export interface QuizzQuestionFull {
-    id: string;
+    id: number;
     idUser: string;
     answer1IsOk : boolean;
     answer2IsOk : boolean;

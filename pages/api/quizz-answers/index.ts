@@ -18,13 +18,15 @@ module.exports = async (req: express.Request, res: express.Response) =>
     {
         console.error(e);
     }
+    console.log('userId', userId)
 
     res.setHeader('Content-Type', 'application/json');
 
     if (req.method === 'POST') 
     {
         const answers = await getQuizzAnswersByUserId(userId);
-        if (answers)
+        console.log('answers', answers)
+        if (answers.length !== 0)
         {
             res.status(400).json({ error: ErrorCodes.Quizz_Already_Completed });
             return;
