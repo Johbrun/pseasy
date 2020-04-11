@@ -13,12 +13,6 @@
             "API_URL": "https://pseasy.fr"
         }
     },
-    "redirects": [
-        {
-            "source": "https://pseasy.now.sh",
-            "destination": "https://pseasy.fr"
-        }
-    ],
     "headers": [
         {
             "source": "/(.*)",
