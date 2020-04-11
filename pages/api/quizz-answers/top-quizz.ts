@@ -30,10 +30,8 @@ module.exports = async (req: express.Request, res: express.Response) =>
         const questions =  await getQuizzQuestionsFull();
         const answers =  await getQuizzAnswers() ;
         const users =  await getUsers();
-        console.log(users);
 
         const userIds = [...new Set( answers.map(a => a.idUser))];
-        console.log(userIds);
         const results = Array<UserScore>();
 
         userIds.forEach(uId => 
@@ -54,7 +52,6 @@ module.exports = async (req: express.Request, res: express.Response) =>
             // insert only user with name in leaderbord
             if (user && user.name)
             {
-                console.log(score, questions.length);
                 score = Math.floor((score / questions.length) * 100);
                 results.push({name : user.name, score});
             }

@@ -21,6 +21,6 @@ module.exports = async (req: express.Request, res: express.Response) =>
     }
     else 
     {
-        res.status(405).json({ error: 'Method not allowed' });
+        res.status(405).json({ error: ErrorCodes.Internal_Server_Error });
     }
 };

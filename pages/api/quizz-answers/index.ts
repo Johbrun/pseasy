@@ -1,13 +1,11 @@
 import * as express from 'express';
 import { ErrorCodes } from '../errorCodes';
-import getQuizzQuestions from '../../../lib/query/getQuizzQuestions';
 import { queryToVisitUser } from '../../../lib/helpers/queryToUserVisit';
 import saveNewVisitor from '../../../lib/actions/saveNewVisitor';
 import insertQuizzAnswers from '../../../lib/query/insertQuizzAnswers';
-import { TableBody } from 'material-ui';
 import { QuizzAnswerCreation } from '../../../lib/interfaces/quizz-answer.interface';
-import { User } from '../../../lib/interfaces/user.interface';
 import getQuizzQuestionsFull from '../../../lib/query/getQuizzQuestionsFull';
+import getQuizzAnswersByUserId from '../../../lib/query/getQuizzAnswersByUserId';
 
 module.exports = async (req: express.Request, res: express.Response) => 
 {
@@ -25,16 +23,19 @@ module.exports = async (req: express.Request, res: express.Response) =>
 
     if (req.method === 'POST') 
     {
+        const answers = await getQuizzAnswersByUserId(userId);
+        if (answers)
+        {
+            res.status(400).json({ error: ErrorCodes.Quizz_Already_Completed });
+            return;
+        }
         const body = req.body as QuizzAnswerCreation[];
         for (const quizzAnswer of body)
         {
-            console.log(quizzAnswer);
-            console.log(userId);
             quizzAnswer.idUser = userId;
             await insertQuizzAnswers(quizzAnswer);
         }
         const response = await getQuizzQuestionsFull();
-        console.log(response);
         res.setHeader('Content-Type', 'application/json');
         res.status(200).json(response);
     }

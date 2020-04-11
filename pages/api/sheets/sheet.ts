@@ -1,6 +1,7 @@
 import * as express from 'express';
 import getSheetByReference from '../../../lib/query/getLastSheetByReference';
 import getVersionsByReference from '../../../lib/query/getVersionsByReference';
+import { ErrorCodes } from '../errorCodes';
 
 module.exports = async (req: express.Request, res: express.Response) => 
 {
@@ -21,6 +22,6 @@ module.exports = async (req: express.Request, res: express.Response) =>
     else 
     {
         res.setHeader('Content-Type', 'application/json');
-        return res.status(405).json({ error: 'Method not allowed' });
+        return res.status(405).json({ error: ErrorCodes.Internal_Server_Error });
     }
 };

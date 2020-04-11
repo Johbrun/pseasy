@@ -10,8 +10,13 @@ module.exports = async (req: express.Request, res: express.Response) =>
     if (req.method === 'PATCH') 
     {
         const usernameUpdate = req.body as UsernameUpdate;
+        if (!usernameUpdate.name.match(/^[a-z\s]+$/i))
+        {
+            return res.status(400).json({ error: ErrorCodes.Name_Must_Contains_Only_AlphaChar });
+        }
         try 
         {
+
             const response = await updateUserName(req.query.idUser, usernameUpdate);
             return res.status(200).json({ msg: response });
         }
@@ -22,6 +27,6 @@ module.exports = async (req: express.Request, res: express.Response) =>
     }
     else 
     {
-        res.status(405).json({ error: 'Method not allowed' });
+        res.status(405).json({ error: ErrorCodes.Internal_Server_Error });
     }
 };
