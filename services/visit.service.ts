@@ -1,5 +1,4 @@
 import axios from 'axios';
-import crypto from 'crypto';
 import { VisitCreation, VisitUserCreation } from '../lib/interfaces/visit.interface';
 
 const postVisit = async (req: any) => {
