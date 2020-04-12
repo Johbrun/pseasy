@@ -9,8 +9,8 @@ export interface QuizzQuestion {
   }
 
 export interface QuizzQuestionFull extends QuizzQuestion{
-  sheetReference : string;
-  explaination :string;
+    sheetReference : string;
+    explaination :string;
     answer1IsOk : boolean;
     answer2IsOk : boolean;
     answer3IsOk : boolean;

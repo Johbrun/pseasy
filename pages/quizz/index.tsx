@@ -27,6 +27,9 @@ import { QuizzQuestion, QuizzQuestionFull } from '../../lib/interfaces/quizz-que
 import { QuizzAnswer, QuizzAnswerCreation } from '../../lib/interfaces/quizz-answer.interface';
 import { postVisit } from '../../services/visit.service';
 import ResultModal from '../../components/resultModal';
+import QuizzCheckboxAnswer from '../../components/quizzCheckboxAnswer';
+import { questionAnswerByIdx } from '../../lib/helpers/questionAnswerByIdx';
+import { answersOk } from '../../lib/helpers/answersOk';
 
 interface IProps {
     sheetsLight: SheetLight[];
@@ -60,9 +63,6 @@ const useStyles = makeStyles(() =>
             ...theme.mixins.toolbar,
             justifyContent: 'flex-end'
         },
-        rightAnswer : {
-            color : 'green'
-        }
     })
 );
 
@@ -72,6 +72,9 @@ const QuizzPage: NextPage<IProps> = ({ quizzQuestions, quizzAnswers }) =>
     const [open, setOpen] = React.useState(false);
     
     const [answers, setAnswers] = React.useState<QuizzAnswerCreation[]>(quizzAnswers);
+    const [completed, setCompleted] = React.useState<boolean>(quizzAnswers.length > 0);
+    const [displayModale, setDisplayModale] = React.useState<boolean>(false);
+
     console.log(answers);
     if (answers.length === 0) 
     {
@@ -82,9 +85,7 @@ const QuizzPage: NextPage<IProps> = ({ quizzQuestions, quizzAnswers }) =>
         });
         setAnswers(tmp);
     }
-    const [completed, setCompleted] = React.useState<boolean>(quizzAnswers.length > 0);
-    const [displayModale, setDisplayModale] = React.useState<boolean>(false);
-
+  
     const handleChange = (idQuestion: number, idx: number) => 
     {
         let question = answers.find(a => a.idQuestion === idQuestion);
@@ -101,18 +102,18 @@ const QuizzPage: NextPage<IProps> = ({ quizzQuestions, quizzAnswers }) =>
        
     };
 
-    const getAnswerByQuestion = (idQuestion: number, idx: number) => 
+    const choiceByQuestion = (idQuestion: number, idx: number) => 
     {
-        let answer;
+        let answerChoices = answers.find(a => a.idQuestion === idQuestion);
+        if (!answerChoices)  return false;
+        
         switch (idx) 
         {
-        case 1: answer = answers.find(a => a.idQuestion === idQuestion)?.answer1Choice; break;
-        case 2: answer = answers.find(a => a.idQuestion === idQuestion)?.answer2Choice; break;
-        case 3: answer = answers.find(a => a.idQuestion === idQuestion)?.answer3Choice; break;
-        default: answer = false;
+        case 1: return Boolean(answerChoices.answer1Choice);
+        case 2: return Boolean(answerChoices.answer2Choice);
+        case 3: return Boolean(answerChoices.answer3Choice);
+        default: return false;
         }
-        return answer ? Boolean(answer) : false;
-        
     };
 
     const handleClickValidate = async () => 
@@ -148,7 +149,7 @@ const QuizzPage: NextPage<IProps> = ({ quizzQuestions, quizzAnswers }) =>
                     </Typography> }
 
                     {completed && <Typography className={classes.explainations}>
-                        Vous avez obtenu XY% de bonnes réponses au quizz ! GG
+                        Vous avez obtenu XY% de bonnes réponses au quizz ! GG. Réponses en vert
                     </Typography>
                     }
                     { answers && <Grid container spacing={3}>
@@ -157,19 +158,17 @@ const QuizzPage: NextPage<IProps> = ({ quizzQuestions, quizzAnswers }) =>
                                 <FormControl component="fieldset" className={classes.formControl}>
                                     <FormLabel component="legend">{i + 1}. {qq.question}</FormLabel>
                                     <FormGroup>
-                                        <FormControlLabel
-                                            className={classes.rightAnswer}
-                                            control={<Checkbox disabled={completed} checked={getAnswerByQuestion(qq.id, 1)} onChange={() => handleChange(qq.id, 1)} />}
-                                            label={qq.answer1}
-                                        />
-                                        <FormControlLabel
-                                            control={<Checkbox disabled={completed} checked={getAnswerByQuestion(qq.id, 2)} onChange={() => handleChange(qq.id, 2)} />}
-                                            label={qq.answer2}
-                                        />
-                                        <FormControlLabel
-                                            control={<Checkbox disabled={completed} checked={getAnswerByQuestion(qq.id, 3)} onChange={() => handleChange(qq.id, 3)} />}
-                                            label={qq.answer3}
-                                        />
+                                        {[1,2,3].map(idx =>
+                                            <QuizzCheckboxAnswer 
+                                                key={idx}
+                                                question={qq} 
+                                                checked={choiceByQuestion(qq.id, idx)} 
+                                                disabled={completed} 
+                                                answer={questionAnswerByIdx(qq, idx)}
+                                                right={completed && answersOk(qq).includes(idx)}
+                                                onChange={() => handleChange(qq.id, idx)}
+                                            />
+                                        )}
                                     </FormGroup>
                                     <FormHelperText>PSE{qq.level} - Difficulté {qq.difficulty} </FormHelperText>
                                     {qq.explaination &&  <FormHelperText className={classes.explainations}>
