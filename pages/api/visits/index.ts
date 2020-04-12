@@ -24,10 +24,8 @@ module.exports = async (req: express.Request, res: express.Response) =>
         {
 
             await insertUser(user);
-            const response = await insertVisit(visit);
-
-
-            return res.status(200).json({ msg: response });
+            await insertVisit(visit);
+            return res.status(200).json( {idUser : visit.idUser} );
         }
         catch (e) 
         {

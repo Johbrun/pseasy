@@ -6,12 +6,8 @@ export interface QuizzAnswerCreation {
     answer3Choice : boolean;
   }
 
-export interface QuizzAnswer {
+export interface QuizzAnswer extends QuizzAnswerCreation{
     id : string;
-    idQuestion: string;
     idUser: string;
-    answer1Choice : boolean;
-    answer2Choice : boolean;
-    answer3Choice : boolean;
   }
   
