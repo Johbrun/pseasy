@@ -55,7 +55,16 @@ export default function ResultModal(props:IProps)
                     <h2>Résultats</h2>
                     <p>{props.value}%</p>
                     <p>
-                        Ouais ouais
+                        Vous avez obtenu un score de {props.value}% de bonnes réponses ! A savoir que toutes les cases valides doivent être cochées pour que la réponse soit acceptée.
+                    </p>
+                    <p>
+                        N'hésitez pas à revenir plus tard pour de nouveaux quizz, et merci d'avoir expérimenté PSEasy - Quizz !
+                    </p>
+                    <p>
+                        L'équipe PSEasy 
+                    </p>
+                    <p>
+                        Love
                     </p>
                     <Button variant="contained" color="primary" onClick={handleClose}>
                          Youhouuuu !

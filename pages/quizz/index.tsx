@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-undef */
 /* eslint-disable react/prop-types */
 import React from 'react';
 import { NextPage } from 'next';
@@ -16,9 +17,13 @@ import { Typography,
     FormGroup, 
     FormControlLabel, 
     Checkbox, 
+    Box,
     FormHelperText, 
     Grid, 
-    Button 
+    Button, 
+    Container,
+    Card,
+    CardContent
 } from '@material-ui/core';
 import theme from '../../theme';
 import AssignmentIcon from '@material-ui/icons/Assignment';
@@ -30,6 +35,8 @@ import ResultModal from '../../components/resultModal';
 import QuizzCheckboxAnswer from '../../components/quizzCheckboxAnswer';
 import { questionAnswerByIdx } from '../../lib/helpers/questionAnswerByIdx';
 import { answersOk } from '../../lib/helpers/answersOk';
+import QuizzExplaination from '../../components/quizzExplaination';
+import computeScore from '../../lib/helpers/computeScore';
 
 interface IProps {
     sheetsLight: SheetLight[];
@@ -63,6 +70,13 @@ const useStyles = makeStyles(() =>
             ...theme.mixins.toolbar,
             justifyContent: 'flex-end'
         },
+        gridQuizz : {
+            margin: '-24px'
+        },
+        divCompleted : {
+            backgroundColor : 'aliceblue',
+            marginBottom: '25px'
+        }
     })
 );
 
@@ -75,10 +89,8 @@ const QuizzPage: NextPage<IProps> = ({ quizzQuestions, quizzAnswers }) =>
     const [completed, setCompleted] = React.useState<boolean>(quizzAnswers.length > 0);
     const [displayModale, setDisplayModale] = React.useState<boolean>(false);
 
-    console.log(answers);
     if (answers.length === 0) 
     {
-        console.log('no answers');
         const tmp = quizzQuestions.map(qq => 
         {
             return { idQuestion: qq.id, answer1Choice: false, answer2Choice: false, answer3Choice: false } as QuizzAnswerCreation;
@@ -116,6 +128,17 @@ const QuizzPage: NextPage<IProps> = ({ quizzQuestions, quizzAnswers }) =>
         }
     };
 
+    const choicesAreOk = (question : QuizzQuestionFull) => 
+    {
+        let answer = answers.find(a => a.idQuestion === question.id);
+        if (!answer)  return false;
+
+        return (answer?.answer1Choice === Boolean(question.answer1IsOk)
+        && answer?.answer2Choice === Boolean(question.answer2IsOk) 
+        && answer?.answer3Choice === Boolean(question.answer3IsOk) );
+        
+    };
+
     const handleClickValidate = async () => 
     {
         const solutions = await insertQuizzAnswer(answers);
@@ -142,21 +165,24 @@ const QuizzPage: NextPage<IProps> = ({ quizzQuestions, quizzAnswers }) =>
                     <div className={classes.drawerHeader} />
                     <h1>Quizz</h1>
 
-                    { !completed && <Typography className={classes.explainations}>
-                        Vous pensez tout savoir du référenciel PSE ? Personne n'en sait autant que vous ? 
-                        Alors testez vos connaissance ci dessous. Notez que vous n'avez évidemment pas le droit de consulter le référenciel durant le quizz !  <br />
-                        <AssignmentIcon /> Veuillez ne pas quitter la page durant la complétion du quizz.
-                    </Typography> }
-
-                    {completed && <Typography className={classes.explainations}>
-                        Vous avez obtenu XY% de bonnes réponses au quizz ! GG. Réponses en vert
-                    </Typography>
+                  
+                    {completed && 
+                    <Card className={classes.divCompleted}>
+                        <CardContent>
+                            <Typography variant="body2" component="p">
+                      Vous avez obtenu {computeScore(quizzQuestions, answers)}% de bonnes réponses au quizz ! 
+                      Ci-dessous les réponses en vert, ainsi que les explications associées. 
+                      Pour plus de détail, cliquer sur "en savoir plus" pour ouvrir la fiche associée
+                            </Typography>
+                        </CardContent>
+                    </Card>
                     }
-                    { answers && <Grid container spacing={3}>
+                    { answers && <Grid container spacing={3} className={classes.gridQuizz}>
                         {quizzQuestions.map((qq: QuizzQuestionFull, i: number) =>
                             <Grid key={qq.id} item xs={12} sm={6} md={4}>
                                 <FormControl component="fieldset" className={classes.formControl}>
                                     <FormLabel component="legend">{i + 1}. {qq.question}</FormLabel>
+                                    <FormHelperText>PSE{qq.level} - Difficulté {qq.difficulty} </FormHelperText>
                                     <FormGroup>
                                         {[1,2,3].map(idx =>
                                             <QuizzCheckboxAnswer 
@@ -170,20 +196,17 @@ const QuizzPage: NextPage<IProps> = ({ quizzQuestions, quizzAnswers }) =>
                                             />
                                         )}
                                     </FormGroup>
-                                    <FormHelperText>PSE{qq.level} - Difficulté {qq.difficulty} </FormHelperText>
-                                    {qq.explaination &&  <FormHelperText className={classes.explainations}>
-                                        {qq.explaination}
-                                    </FormHelperText>
-                                    }
+                                    {completed && qq.explaination &&  <QuizzExplaination correct={choicesAreOk(qq)} text={qq.explaination}/>}
+                                  
                                 </FormControl>
                             </Grid>
                         )}
                     </Grid> }
 
-                    { !completed && <Button variant="contained" color="primary" onClick={handleClickValidate}>
+                    {!completed && <Button variant="contained" color="primary" onClick={handleClickValidate}>
                         Valider les réponses
                     </Button> }
-                    { displayModale && <ResultModal value={50}/> }
+                    { displayModale && <ResultModal value={computeScore(quizzQuestions, answers)}/> }
                 </main>
             </div>
             <Footer />

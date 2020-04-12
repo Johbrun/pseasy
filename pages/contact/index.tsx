@@ -72,6 +72,12 @@ const QuizzPage: NextPage<IProps> = ({  sheetsLight, categories  }) =>
 
                     <Typography className={classes.explainations}>
 
+Pourquoi PSeasy
+ENcore en dév et tout
+Public visé
+fonctionnalités futures
+Comment contacter
+Mettre Petit form de contact
                     Vous avez une idée pour améliorer le site ? Des questions pour le quizz ? Une proposition de partenariat ? <br/>
                     PSeasy est une application en plein développement ! N'hésitez pas à nous contacter à l'adresse suivante : 
                         <AssignmentIcon/> pseasy[at]protonmail.com

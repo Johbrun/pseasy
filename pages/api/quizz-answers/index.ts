@@ -35,8 +35,7 @@ module.exports = async (req: express.Request, res: express.Response) =>
         for (const quizzAnswer of body)
         {
             quizzAnswer.idUser = userId;
-            // TODO : UNCOMMENT
-            // await insertQuizzAnswers(quizzAnswer);
+            await insertQuizzAnswers(quizzAnswer);
         }
         const response = await getQuizzQuestionsFull();
         res.setHeader('Content-Type', 'application/json');
