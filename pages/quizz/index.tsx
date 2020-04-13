@@ -157,7 +157,7 @@ const QuizzPage: NextPage<IProps> = ({ quizzQuestions, quizzAnswers }) =>
             </Head>
             <CssBaseline />
             <div className={classes.content}>
-                <SearchAppBar open={open} setOpen={setOpen} title={'Référentiel PSE - Quizz'} />
+                <SearchAppBar open={open} setOpen={setOpen} title={'PSEasy - Quizz'} />
 
                 {/* <SideDrawer open={open} setOpen={setOpen} categories={categories} sheetsLight={sheetsLight} /> */}
 

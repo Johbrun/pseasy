@@ -33,13 +33,19 @@ const useStyles = makeStyles(() =>
         },
         content: {
             display: 'flex',
-            marginTop : 40,
             padding : 20
         },
         formControl: {
             margin: theme.spacing(3),
         },
         explainations : {
+        },
+        drawerHeader: {
+            display: 'flex',
+            alignItems: 'center',
+            padding: theme.spacing(0, 1),
+            ...theme.mixins.toolbar,
+            justifyContent: 'flex-end'
         }
     })
 );
@@ -48,9 +54,6 @@ const QuizzPage: NextPage<IProps> = ({  sheetsLight, categories  }) =>
 {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
-    
-   
-
     
     return (
         <div className={classes.root}>
@@ -62,48 +65,55 @@ const QuizzPage: NextPage<IProps> = ({  sheetsLight, categories  }) =>
             </Head>
             <CssBaseline />
             <div className={classes.content}>
-                <SearchAppBar open={open} setOpen={setOpen} title={'Référentiel PSE - Contact & Patch Notes'} />
+                <SearchAppBar open={open} setOpen={setOpen} title={'PSEasy - A propos'} />
              
                 {/* <SideDrawer open={open} setOpen={setOpen} categories={categories} sheetsLight={sheetsLight} /> */}
              
                 <main>
                     <div className={classes.drawerHeader} />
-                    <h1>Contacter l'équipe</h1>
+                    <h1>A propos de PSEasy</h1>
+                   
+                    <h2>Pourquoi cette application ?</h2>
+                    <p>
+                        <Typography className={classes.explainations}>
+                        PSEasy est né pour diverses raisons. Avant tout, elle est là pour permettre l'accès à l'information facilement,
+                        avec ou sans réseau, par n'importe quel secouriste. La connaissance étant quelle chose qui doit être travaillée,
+                        il faut alors pourvoir en tout temps y avoir accès.
+                        </Typography>
+                    </p>
 
+                    <h2>Public visé</h2>
+                    <p>
+                        <Typography className={classes.explainations}>
+                        En écriture...
+                        </Typography>
+                    </p>
+
+                    <h2>Avertissements</h2>
+                    <p>
+                        <Typography className={classes.explainations}>
+                        En écriture...
+                        </Typography>
+                    </p>
+
+                    <h2>Fonctionnalités futures</h2>
+                    <p>
+                        <Typography className={classes.explainations}>
+                        En écriture... Mais une chose est sûre : rendre ça un peu plus design :)
+                        </Typography>
+                    </p>
+
+
+                    <h2>Nous contacter</h2>
                     <Typography className={classes.explainations}>
 
-Pourquoi PSeasy
-ENcore en dév et tout
-Public visé
-fonctionnalités futures
-Comment contacter
-Mettre Petit form de contact
                     Vous avez une idée pour améliorer le site ? Des questions pour le quizz ? Une proposition de partenariat ? <br/>
                     PSeasy est une application en plein développement ! N'hésitez pas à nous contacter à l'adresse suivante : 
                         <AssignmentIcon/> pseasy[at]protonmail.com
 
                     </Typography>
                     
-                    <h1>Notes de mise à jour</h1>
-                    <Grid container spacing={3}>
-                        {[1,2,3,4].map(e => 
-                            <Grid key={e} item xs={12} sm={6} md={4}>
-                                <h2>04 Avril 2020</h2>
-                                <div>
-                                    <AssignmentIcon/> Correction d'un bug
-                                </div>
-                                <div>
-                                    <AssignmentIcon/> Ajout superbe feature 
-                                </div>
-                                <div>
-                                    <AssignmentIcon/> Correction du truc qui ne fonctionnement toujours pas
-                                </div>
-                                <div>
-                                    <AssignmentIcon/> Ajout du quizz
-                                </div>
-                            </Grid>
-                        )}
-                    </Grid>
+                   
                 </main>
             </div>
             <Footer />

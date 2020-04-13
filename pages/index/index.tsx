@@ -71,44 +71,44 @@ const cards: { title: string; content: string; icon: IconsCard, status: string }
         status: 'Opérationnel'
     },
     {
-        title: 'Recherche par mot clé',
-        content:
-            'Retrouvez toutes les fiches en lien avec un ou plusieurs mots clés',
-        icon: IconsCard.Recherche,
-        status: 'Prévu T1 2020'
-    },
-    {
-        title: 'Mode hors ligne',
-        content: 'Profitez de l\'application même sans connexion à l\'Internet',
-        icon: IconsCard.HorsLigne,
-        status: 'Prévu T1 2020'
-    },
-    {
-        title: 'Mode \'App\'',
-        content:
-            'Lancez l\'application directement depuis le menu de votre téléphone',
-        icon: IconsCard.App,
-        status: 'Prévu T1 2020'
-    },
-    {
         title: 'Historique',
         content: 'Consultez les anciennes versions des fiches facilement',
         icon: IconsCard.Historique,
-        status: 'Prévu T1 2020'
+        status: 'Opérationnel'
     },
     {
         title: 'Affichage des différences',
         content:
             'Affichez les nouveautés de contenu des fiches entre les différentes mises à jour',
         icon: IconsCard.Differences,
-        status: 'Prévu T2 2020'
+        status: 'Opérationnel'
     },
     {
         title: 'Quizz',
         content:
             'Testez vos connaissances du référentiel',
         icon: IconsCard.Quizz,
+        status: 'Opérationnel'
+    },
+    {
+        title: 'Mode hors ligne',
+        content: 'Profitez de l\'application même sans connexion à l\'Internet',
+        icon: IconsCard.HorsLigne,
         status: 'Prévu T2 2020'
+    },
+    {
+        title: 'Mode \'App\'',
+        content:
+            'Lancez l\'application directement depuis le menu de votre téléphone',
+        icon: IconsCard.App,
+        status: 'Prévu T2 2020'
+    },
+    {
+        title: 'Recherche par mot clé',
+        content:
+            'Retrouvez toutes les fiches en lien avec un ou plusieurs mots clés',
+        icon: IconsCard.Recherche,
+        status: 'Prévu T3 2020'
     },
     {
         title: 'Echangez',
@@ -309,53 +309,10 @@ const Home: NextPage<{}> = () =>
                         </Grid>
                     </Container>
                 </main>
-                {/* <footer className={classes.footer}>
-          <Typography variant="h6" align="center" gutterBottom>
-            PSEasy
-          </Typography>
-          <Typography
-            variant="subtitle1"
-            align="center"
-            color="textSecondary"
-            component="p"
-          >
-            PSEasy est une application autonome, qui n'est pas liée à {' '}
-            <Link href="https://interieur.gouv.fr">interieur.gouv.fr</Link>, ni à quelconque instution officelle.
-           <br />
-            <Link href="https://www.interieur.gouv.fr/Le-ministere/Securite-civile/Documentation-technique/Secourisme-et-associations/Les-recommandations-et-les-referentiels/">Consultez les documents officiels</Link>{" "}
-
-          </Typography>
-          <br />
-          <Copyright />
-        </footer> */}
+  
                 <Footer />
-                {/* End footer */}
             </React.Fragment>
-            {/* <CssBaseline />
-      <SearchAppBar title={"PSEasy"} />
-      <main className={classes.content}>
-        <div className={classes.drawerHeader} />
-        <Typography>
-          PSEasy est une plateforme de consultation des recommandations et
-          référentiel relatifs au secourisme en France. Destiné avant tout aux
-          secouristes formés, cette application a pour but de faciliter la
-          consultation, la recherche et les nouveautés des fiches officielles.
-        </Typography>
-        <br />
-        <Typography>
-          PSEasy est une application autonome qui n'est pas liée à
-          interieur.gouv.fr, ni à quelconque instution officelle.
-          https://www.interieur.gouv.fr/Le-ministere/Securite-civile/Documentation-technique/Secourisme-et-associations/Les-recommandations-et-les-referentiels
-        </Typography>
-        <br />
-        <Typography>Roadmap * sdfs *s dfsdsf</Typography>
-        <br />
-        <Typography>
-          Pour tout contact de quelque nature, que ce soit pour des questions,
-          des propositions de fonctionnalités ou encore pour signalier un bug,
-          n'hésitez pas à envoyer un mail à contact[at]pseasy.fr.
-        </Typography>
-      </main> */}
+           
         </div>
     );
 };

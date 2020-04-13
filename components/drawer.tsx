@@ -79,20 +79,24 @@ const useStyles = makeStyles((theme: Theme) =>
         },
     })
 );
-export default function SideDrawer(props: IProps) {
+export default function SideDrawer(props: IProps) 
+{
     const router = useRouter();
     const classes = useStyles();
     const [openedId, setOpenedId] = React.useState(-1);
 
-    const handleDrawerClose = () => {
+    const handleDrawerClose = () => 
+    {
         props.setOpen(false);
     };
 
-    const goAccueil = () => {
+    const goAccueil = () => 
+    {
         router.push('/index');
     };
 
-    const prefixFromReference = (reference: string) => {
+    const prefixFromReference = (reference: string) => 
+    {
         const type = refSheetToType(reference);
         return (<Chip
             key={reference}
@@ -104,8 +108,10 @@ export default function SideDrawer(props: IProps) {
         />);
     };
 
-    const handleClickCategory = (id: number) => {
-        if (id === openedId) {
+    const handleClickCategory = (id: number) => 
+    {
+        if (id === openedId) 
+        {
             // when click on selected
             id = -1;
         }
@@ -162,30 +168,18 @@ export default function SideDrawer(props: IProps) {
                     </ListItem>
                     <ListItem
                         button
-                        onClick={() => router.push('/contact')}
+                        onClick={() => router.push('/a-propos')}
                     >
                         <ListItemIcon>
-                            <ContactSupportIcon />
+                            <MenuBookIcon />
                         </ListItemIcon>
 
                         <ListItemText
-                            primary={'CONTACT / MISES A JOUR'}
+                            primary={'A PROPOS'}
                             className={classes.category}
                         />
                     </ListItem>
-                    <ListItem
-                        button
-                        onClick={() => router.push('/contact')}
-                    >
-                        <ListItemIcon>
-                            <ContactSupportIcon />
-                        </ListItemIcon>
-                        
-                        <ListItemText
-                            primary={'CONTACT / MISES A JOUR'}
-                            className={classes.category}
-                        />
-                    </ListItem>
+                   
                     <ListItem
                         button
                         onClick={() => router.push('/sheets')}
@@ -211,8 +205,8 @@ export default function SideDrawer(props: IProps) {
                                     {category.number.includes('1.') ? (
                                         <MenuBookIcon />
                                     ) : (
-                                            <PanToolIcon />
-                                        )}
+                                        <PanToolIcon />
+                                    )}
                                 </ListItemIcon>
 
                                 <ListItemText

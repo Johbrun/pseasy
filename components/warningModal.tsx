@@ -21,10 +21,11 @@ const useStyles = makeStyles(theme => ({
     },
     paper: {
         position: 'absolute',
-        width: 450,
+        width: '35%',
+        height: 'auto%',
         backgroundColor: theme.palette.background.paper,
         boxShadow: theme.shadows[5],
-        padding: theme.spacing(2, 4, 3),
+        padding: theme.spacing(2, 4, 3)
     },
 }));
 
@@ -58,7 +59,7 @@ export default function WarningModal()
                         La génération des fiches par l'IA peut induire quelques erreurs. Nous faisons notre maximun pour les éviter.
                     </p>
                     <p>
-                        Si vous souhaitez contacter l'équipe, pour aider, proposer des idées ou un partenariat, <Link href='/contact'>cliquez ici</Link>
+                        Si vous souhaitez contacter l'équipe, pour aider, proposer des idées ou un partenariat, <Link href='/a-propos'>cliquez ici</Link>
                     </p>
                     <Button variant="contained" color="primary" onClick={handleClose}>
                          Ca marche, je prends le risque
