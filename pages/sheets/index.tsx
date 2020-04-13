@@ -14,6 +14,7 @@ import Footer from '../../components/footer';
 import { fetchSheetByReference, fetchSheetsLight } from '../../services/sheet.service';
 import { fetchCategories } from '../../services/category.service';
 import { postVisit } from '../../services/visit.service';
+import theme from '../../theme';
 
 interface IProps {
     sheet?: SheetExtended;
@@ -32,11 +33,19 @@ const useStyles = makeStyles(() =>
         },
         content: {
             display: 'flex'
-        }
+        },
+        // drawerHeader: {
+        //     display: 'flex',
+        //     alignItems: 'center',
+        //     padding: theme.spacing(0, 1),
+        //     ...theme.mixins.toolbar,
+        //     justifyContent: 'flex-end'
+        // },
     })
 );
 
-const SheetPage: NextPage<IProps> = ({ sheet, sheetsLight, categories }) => {
+const SheetPage: NextPage<IProps> = ({ sheet, sheetsLight, categories }) => 
+{
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
     const [currentSheet, setCurrentSheet] = React.useState<SheetExtended | undefined>(sheet);
@@ -46,21 +55,25 @@ const SheetPage: NextPage<IProps> = ({ sheet, sheetsLight, categories }) => {
     // console.log('__ currentSheet version', currentSheet ?  currentSheet.version :  'no currentSheet');
     // console.log('__ compareSheet version', currentSheetCompare ?  currentSheetCompare.version : 'no sheet');
 
-    if (!sheet && currentSheet) {
+    if (!sheet && currentSheet) 
+    {
         setCurrentSheet(undefined);
     }
 
-    if (sheet && !currentSheet) {
+    if (sheet && !currentSheet) 
+    {
         setCurrentSheet(sheet);
     }
 
-    const onSelectVersion = async (version: string) => {
+    const onSelectVersion = async (version: string) => 
+    {
         console.log('onSelectVersion', version);
         setCurrentSheet(await fetchSheetByReference(currentSheet ? currentSheet.reference : '', version));
         // sheet = await fetchSheetByReference(sheet? sheet.reference : '', version);
     };
 
-    const onSelectCompare = async (version: string) => {
+    const onSelectCompare = async (version: string) => 
+    {
         console.log('onSelectCompare', version);
         setCurrentSheetCompare(await fetchSheetByReference(currentSheetCompare ? currentSheetCompare.reference : '', version));
     };
@@ -77,12 +90,14 @@ const SheetPage: NextPage<IProps> = ({ sheet, sheetsLight, categories }) => {
                 <SearchAppBar open={open} setOpen={setOpen} title={sheet ? sheet.title : undefined} />
 
                 <SideDrawer open={open} setOpen={setOpen} categories={categories} sheetsLight={sheetsLight} />
+               
+                {/* <div className={classes.drawerHeader} /> */}
 
-                {currentSheet ? <SheetContent
-                    open={open}
-                    sheet={currentSheet}
-                    sheetCompare={currentSheetCompare}
-                    onSelectVersion={onSelectVersion}
+                {currentSheet ? <SheetContent 
+                    open={open} 
+                    sheet={currentSheet} 
+                    sheetCompare={currentSheetCompare} 
+                    onSelectVersion={onSelectVersion} 
                     onSelectCompare={onSelectCompare} /> : null}
 
                 {!sheet ? <CategoriesSheetsList
@@ -95,14 +110,16 @@ const SheetPage: NextPage<IProps> = ({ sheet, sheetsLight, categories }) => {
     );
 };
 
-SheetPage.getInitialProps = async ({ req, query }) => {
+SheetPage.getInitialProps = async ({ req, query }) => 
+{
     console.log('GetInitialProps sheet');
     if (req) postVisit(req);
 
     const start = +new Date();
 
     const apiCalls: Promise<any>[] = [fetchSheetsLight(), fetchCategories()];
-    if (query.reference) {
+    if (query.reference) 
+    {
         apiCalls.push(fetchSheetByReference(query.reference));
     }
 

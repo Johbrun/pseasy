@@ -30,9 +30,11 @@ const useStyles = makeStyles({
     }
 });
 interface IProps {
-    text: string,
-    correct : boolean,
-    icon? : string
+    text: string;
+    reference : string;
+    correct : boolean;
+    handler : (ref: string) => void;
+    icon? : string;
 }
 
 export default function QuizzExplaination(props: IProps) 
@@ -53,7 +55,7 @@ export default function QuizzExplaination(props: IProps)
                 </Typography>
             </CardContent>
             <CardActions>
-                <Button size="small">En savoir plus</Button>
+                <Button size="small" onClick={() => props.handler(props.reference)}>En savoir plus</Button>
             </CardActions>
             
         </Card>

@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/jsx-no-undef */
 /* eslint-disable react/prop-types */
 import React from 'react';
@@ -6,10 +7,10 @@ import { makeStyles, createStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Head from 'next/head';
 import SearchAppBar from '../../components/nav';
-import { SheetLight } from '../../lib/interfaces/sheet.interface';
+import { SheetLight, SheetExtended } from '../../lib/interfaces/sheet.interface';
 import { Category } from '../../lib/interfaces/category.interface';
 import Footer from '../../components/footer';
-import { fetchSheetsLight } from '../../services/sheet.service';
+import { fetchSheetsLight, fetchSheetByReference } from '../../services/sheet.service';
 import { fetchCategories } from '../../services/category.service';
 import { Typography, 
     FormControl, 
@@ -37,6 +38,7 @@ import { questionAnswerByIdx } from '../../lib/helpers/questionAnswerByIdx';
 import { answersOk } from '../../lib/helpers/answersOk';
 import QuizzExplaination from '../../components/quizzExplaination';
 import computeScore from '../../lib/helpers/computeScore';
+import SheetModal from '../../components/sheetModal';
 
 interface IProps {
     sheetsLight: SheetLight[];
@@ -88,6 +90,7 @@ const QuizzPage: NextPage<IProps> = ({ quizzQuestions, quizzAnswers }) =>
     const [answers, setAnswers] = React.useState<QuizzAnswerCreation[]>(quizzAnswers);
     const [completed, setCompleted] = React.useState<boolean>(quizzAnswers.length > 0);
     const [displayModale, setDisplayModale] = React.useState<boolean>(false);
+    const [sheet, setSheet] = React.useState<SheetExtended|undefined>(undefined);
 
     if (answers.length === 0) 
     {
@@ -98,6 +101,7 @@ const QuizzPage: NextPage<IProps> = ({ quizzQuestions, quizzAnswers }) =>
         setAnswers(tmp);
     }
   
+    
     const handleChange = (idQuestion: number, idx: number) => 
     {
         let question = answers.find(a => a.idQuestion === idQuestion);
@@ -114,6 +118,19 @@ const QuizzPage: NextPage<IProps> = ({ quizzQuestions, quizzAnswers }) =>
        
     };
 
+    const handleClickValidate = async () => 
+    {
+        await insertQuizzAnswer(answers);
+        setCompleted(true);
+        setDisplayModale(true);
+    };
+
+    const handleOpenSheet = async(reference : string) => 
+    {
+        const sheet = await fetchSheetByReference(reference);
+        setSheet(sheet);
+    };
+
     const choiceByQuestion = (idQuestion: number, idx: number) => 
     {
         let answerChoices = answers.find(a => a.idQuestion === idQuestion);
@@ -128,24 +145,7 @@ const QuizzPage: NextPage<IProps> = ({ quizzQuestions, quizzAnswers }) =>
         }
     };
 
-    const choicesAreOk = (question : QuizzQuestionFull) => 
-    {
-        let answer = answers.find(a => a.idQuestion === question.id);
-        if (!answer)  return false;
 
-        return (answer?.answer1Choice === Boolean(question.answer1IsOk)
-        && answer?.answer2Choice === Boolean(question.answer2IsOk) 
-        && answer?.answer3Choice === Boolean(question.answer3IsOk) );
-        
-    };
-
-    const handleClickValidate = async () => 
-    {
-        const solutions = await insertQuizzAnswer(answers);
-        console.log(solutions);
-        setCompleted(true);
-        setDisplayModale(true);
-    };
 
     return (
         <div className={classes.root}>
@@ -165,7 +165,6 @@ const QuizzPage: NextPage<IProps> = ({ quizzQuestions, quizzAnswers }) =>
                     <div className={classes.drawerHeader} />
                     <h1>Quizz</h1>
 
-                  
                     {completed && 
                     <Card className={classes.divCompleted}>
                         <CardContent>
@@ -196,8 +195,14 @@ const QuizzPage: NextPage<IProps> = ({ quizzQuestions, quizzAnswers }) =>
                                             />
                                         )}
                                     </FormGroup>
-                                    {completed && qq.explaination &&  <QuizzExplaination correct={choicesAreOk(qq)} text={qq.explaination}/>}
-                                  
+                                    {completed && qq.explaination &&  
+                                        <QuizzExplaination 
+                                            correct={computeScore([qq], [answers.find(a => a.idQuestion === qq.id)]) === 100} 
+                                            text={qq.explaination}
+                                            reference={qq.sheetReference}
+                                            handler={(ref:string) => handleOpenSheet(ref)} 
+                                        />
+                                    }
                                 </FormControl>
                             </Grid>
                         )}
@@ -207,6 +212,7 @@ const QuizzPage: NextPage<IProps> = ({ quizzQuestions, quizzAnswers }) =>
                         Valider les réponses
                     </Button> }
                     { displayModale && <ResultModal value={computeScore(quizzQuestions, answers)}/> }
+                    { sheet && <SheetModal sheet={sheet} onClose={() => setSheet(undefined)}/> }
                 </main>
             </div>
             <Footer />
@@ -218,7 +224,7 @@ QuizzPage.getInitialProps = async ({req}) =>
 {
     const responseVisit = (await postVisit(req));
     const idUser = responseVisit ? responseVisit.idUser : '';
-    console.log('aa', responseVisit, idUser);
+
     const start = +new Date();
 
     const apiCalls: Promise<any>[] = [fetchSheetsLight(), fetchCategories(), fetchQuizzQuestions(), fetchQuizzAnswers(idUser)];

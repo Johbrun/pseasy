@@ -26,6 +26,13 @@ const useStyles = makeStyles(theme => ({
         boxShadow: theme.shadows[5],
         padding: theme.spacing(2, 4, 3),
     },
+    score : {
+        fontSize: '28px',
+        margin: '0px',
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        textAlign: 'center',
+    }
 }));
 
 interface IProps {
@@ -53,9 +60,9 @@ export default function ResultModal(props:IProps)
             >
                 <div style={modalStyle} className={classes.paper}>
                     <h2>Résultats</h2>
-                    <p>{props.value}%</p>
+                    <p className={classes.score}>{props.value}%</p>
                     <p>
-                        Vous avez obtenu un score de {props.value}% de bonnes réponses ! A savoir que toutes les cases valides doivent être cochées pour que la réponse soit acceptée.
+                        Ceci est votre taux de bonnes réponses ! A savoir que toutes les cases valides doivent être cochées pour que la réponse soit acceptée.
                     </p>
                     <p>
                         N'hésitez pas à revenir plus tard pour de nouveaux quizz, et merci d'avoir expérimenté PSEasy - Quizz !
@@ -67,7 +74,7 @@ export default function ResultModal(props:IProps)
                         Love
                     </p>
                     <Button variant="contained" color="primary" onClick={handleClose}>
-                         Youhouuuu !
+                         Valider
                     </Button>
                 </div>
             </Modal>

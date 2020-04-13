@@ -2,19 +2,22 @@ import { QuizzQuestionFull } from '../interfaces/quizz-question.interface';
 import { QuizzAnswerCreation } from '../interfaces/quizz-answer.interface';
 
 
-export default function computeScore(questions : QuizzQuestionFull[], answers : QuizzAnswerCreation[]) 
+export default function computeScore(questions : QuizzQuestionFull[], answers : Array<QuizzAnswerCreation|undefined>) 
 {
-    console.log(questions);
-    console.log(answers);
     let score = 0;
     questions.forEach(question => 
     {
-        const answer = answers.find(a => a.idQuestion === question.id);
-        if (answer?.answer1Choice === Boolean(question.answer1IsOk)
-            && answer?.answer2Choice === Boolean(question.answer2IsOk) 
-            && answer?.answer3Choice === Boolean(question.answer3IsOk) )
+        const answer = answers.find(a => a && a.idQuestion === question.id);
+        if (answer)
         {
-            score++;
+
+            console.log(question, answer, Boolean(answer?.answer1Choice), Boolean(question.answer1IsOk));
+            if (Boolean(answer?.answer1Choice) === Boolean(question.answer1IsOk)
+            && Boolean(answer?.answer2Choice) === Boolean(question.answer2IsOk) 
+            && Boolean(answer?.answer3Choice) === Boolean(question.answer3IsOk) )
+            {
+                score++;
+            }
         }
     });
     score = Math.floor((score / questions.length) * 100);
