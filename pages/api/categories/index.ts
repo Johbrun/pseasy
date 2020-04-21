@@ -2,6 +2,7 @@ import * as express from 'express';
 import getCategories from '../../../lib/query/getCategories';
 import saveNewVisitor from '../../../lib/actions/saveNewVisitor';
 import { queryToVisitUser } from '../../../lib/helpers/queryToUserVisit';
+import { ErrorCodes } from '../errorCodes';
 
 module.exports = async (req: express.Request, res: express.Response) => 
 {
