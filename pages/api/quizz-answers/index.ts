@@ -1,5 +1,5 @@
 import * as express from 'express';
-import { ErrorCodes } from '../errorCodes';
+import { ErrorCodes } from '../../../lib/interfaces/errorCodes';
 import { queryToVisitUser } from '../../../lib/helpers/queryToUserVisit';
 import saveNewVisitor from '../../../lib/actions/saveNewVisitor';
 import insertQuizzAnswers from '../../../lib/query/insertQuizzAnswers';

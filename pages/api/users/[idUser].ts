@@ -1,5 +1,5 @@
 import * as express from 'express';
-import { ErrorCodes } from '../errorCodes';
+import { ErrorCodes } from '../../../lib/interfaces/errorCodes';
 import { UsernameUpdate } from '../../../lib/interfaces/user.interface';
 import updateUserName from '../../../lib/query/updateUserName';
 

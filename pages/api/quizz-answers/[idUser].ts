@@ -1,5 +1,5 @@
 import * as express from 'express';
-import { ErrorCodes } from '../errorCodes';
+import { ErrorCodes } from '../../../lib/interfaces/errorCodes';
 import getQuizzAnswersByUserId from '../../../lib/query/getQuizzAnswersByUserId';
 
 module.exports = async (req: express.Request, res: express.Response) => 

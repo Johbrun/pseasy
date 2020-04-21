@@ -3,7 +3,7 @@ import getSummary from '../../../lib/query/getSummary';
 import * as parser from '../../../lib/parser';
 import saveNewVisitor from '../../../lib/actions/saveNewVisitor';
 import { queryToVisitUser } from '../../../lib/helpers/queryToUserVisit';
-import { ErrorCodes } from '../errorCodes';
+import { ErrorCodes } from '../../../lib/interfaces/errorCodes';
 
 module.exports = async (req: express.Request, res: express.Response) => 
 {

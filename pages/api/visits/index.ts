@@ -1,10 +1,10 @@
 import * as express from 'express';
 import { VisitUserCreation, VisitCreation } from '../../../lib/interfaces/visit.interface';
-import { ErrorCodes } from '../errorCodes';
 import { UserCreation } from '../../../lib/interfaces/user.interface';
 import insertUser from '../../../lib/query/insertUser';
 import insertVisit from '../../../lib/query/insertVisit';
 import crypto from 'crypto';
+import { ErrorCodes } from '../../../lib/interfaces/errorCodes';
 
 module.exports = async (req: express.Request, res: express.Response) => 
 {

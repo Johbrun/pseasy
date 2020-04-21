@@ -1,7 +1,7 @@
 import * as express from 'express';
 import getSheetByReference from '../../../lib/query/getLastSheetByReference';
 import getVersionsByReference from '../../../lib/query/getVersionsByReference';
-import { ErrorCodes } from '../errorCodes';
+import { ErrorCodes } from '../../../lib/interfaces/errorCodes';
 
 module.exports = async (req: express.Request, res: express.Response) => 
 {
