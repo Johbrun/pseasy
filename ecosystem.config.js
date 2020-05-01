@@ -17,7 +17,7 @@ module.exports = {
             ref  : 'origin/cicd',
             repo: 'git@github.com:Johbrun/pseasy.git',
             path : '/opt/pseasy/production',
-            'post-deploy': 'npm install && npm run build && pm2 reload ecosystem.config.js --env production'
+            'pre-deploy': 'npm install && npm run build && pm2 reload ecosystem.config.js --env production'
         }
     }
 };
