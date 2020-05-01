@@ -17,7 +17,7 @@ module.exports = {
             ref  : 'origin/master',
             repo: 'git@github.com:Johbrun/pseasy.git',
             path : '/opt/pseasy/production',
-            'post-deploy': 'npm install && npm build && pm2 reload ecosystem.config.js --env production'
+            'post-deploy': 'npm install && npm run build && pm2 reload ecosystem.config.js --env production'
         }
     }
 };
