@@ -1,7 +1,7 @@
 module.exports = {
     apps : [{
         name: 'pseasy',
-        script: 'index.js',
+        script: 'npm run start',
         watch: '.',
         env: {
             'NODE_ENV': 'development',
