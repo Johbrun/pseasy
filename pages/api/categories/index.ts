@@ -5,6 +5,7 @@ import { queryToVisitUser } from '../../../lib/helpers/queryToUserVisit';
 
 module.exports = async (req: express.Request, res: express.Response) => 
 {
+    console.log('SRV : ENV ? ', process.env.NODE_ENV, 'API ? ', process.env.API_URL);
     try 
     {
         saveNewVisitor(queryToVisitUser(req));

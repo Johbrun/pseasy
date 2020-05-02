@@ -1,3 +1,4 @@
+
 # This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
@@ -5,7 +6,7 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ cicd ]
+    branches: [ master ]
 
 jobs:
   build:
@@ -22,5 +23,19 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
+
+    # Install SSH private key
+    - name: Install SSH Key
+      uses: shimataro/ssh-key-action@v2.0.2
+      with:
+        # SSH private key
+       key: ${{secrets.PRIVATE_KEY}}
+        # public keys of SSH servers
+       known_hosts: ${{secrets.PUBLIC_KEY}}
+
+    # Generate and add SSH public key
+    - run: ssh-keygen -y -f ~/.ssh/id_rsa > ~/.ssh/id_rsa.pub
+
+    # Install pm2 and launch deploy
     - run: npm i -g pm2
     - run: pm2 deploy production update

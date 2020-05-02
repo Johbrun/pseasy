@@ -350,6 +350,8 @@ const Home: NextPage<{}> = () =>
 
 Home.getInitialProps = async ({ req }) => 
 {
+    console.log('FRONT : ENV ? ', process.env.NODE_ENV, 'API ? ', process.env.API_URL);
+
     console.log('GetInitialProps index');
     if (req) postVisit(req);
 
