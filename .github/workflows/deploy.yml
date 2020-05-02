@@ -24,7 +24,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
-    # Install SSH private key
+    # Install SSH private key
     - name: Install SSH Key
       uses: shimataro/ssh-key-action@v2.0.2
       with:
@@ -33,7 +33,7 @@ jobs:
         # public keys of SSH servers
        known_hosts: ${{secrets.PUBLIC_KEY}}
 
-    # Generate and add SSH public key
+    # Generate and add SSH public key
     - run: ssh-keygen -y -f ~/.ssh/id_rsa > ~/.ssh/id_rsa.pub
 
     # Install pm2 and launch deploy
