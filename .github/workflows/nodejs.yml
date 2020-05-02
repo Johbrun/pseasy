@@ -22,5 +22,15 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
+
+    - name: Install SSH Key
+      uses: shimataro/ssh-key-action@v2.0.2
+      with:
+        # SSH private key
+        key: ${{secrets.PRIVATE_KEY}}
+        # public keys of SSH servers
+        known_hosts: ${{secrets.HOST}}
+    
     - run: npm i -g pm2
+      
     - run: pm2 deploy production update
