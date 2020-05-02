@@ -29,10 +29,18 @@ jobs:
         # SSH private key
         key: ${{secrets.PRIVATE_KEY}}
         # public keys of SSH servers
-       # known_hosts: ${{secrets.PUBLIC_KEY}}
+        known_hosts: ${{secrets.PUBLIC_KEY}}
+    
+    - name: webfactory/ssh-agent
+      uses: webfactory/ssh-agent@v0.2.0
+      with:
+        # Private SSH key to register in the SSH agent
+        ssh-private-key: ${{secrets.PRIVATE_KEY}}
+        # Where to place the SSH Agent auth socket
+        # ssh-auth-sock: # optional, default is /tmp/ssh-auth.sock
     
     - run: cat ~/.ssh/id_rsa
-    - run: cat ~/.ssh/id_rsa.pub
+    - run: cat ~/.ssh/known_hosts
       
     - run: npm i -g pm2
       
