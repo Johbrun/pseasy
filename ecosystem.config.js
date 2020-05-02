@@ -14,6 +14,7 @@ module.exports = {
         production : {
             user : 'ubuntu',
             host : ['vps-decdc4fd.vps.ovh.net'],
+            'ssh_options': "StrictHostKeyChecking=no",
             ref  : 'origin/cicd',
             repo: 'git@github.com:Johbrun/pseasy.git',
             path : '/opt/pseasy/production',
