@@ -23,13 +23,13 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
-    - name: Install SSH Key
-      uses: shimataro/ssh-key-action@v2.0.2
-      with:
+    # - name: Install SSH Key
+   #    uses: shimataro/ssh-key-action@v2.0.2
+   #    with:
         # SSH private key
-        key: ${{secrets.PRIVATE_KEY}}
+  #       key: ${{secrets.PRIVATE_KEY}}
         # public keys of SSH servers
-        known_hosts: ${{secrets.PUBLIC_KEY}}
+   #      known_hosts: ${{secrets.PUBLIC_KEY}}
     
     - name: webfactory/ssh-agent
       uses: webfactory/ssh-agent@v0.2.0
@@ -39,6 +39,9 @@ jobs:
         # Where to place the SSH Agent auth socket
         # ssh-auth-sock: # optional, default is /tmp/ssh-auth.sock
     
+    
+    - run: ssh-keygen -y -f ~/.ssh/id_rsa > ~/.ssh/id_rsa.pub
+    - run: ssh-keygen -y -f ~/.ssh/id_rsa
     - run: cat ~/.ssh/id_rsa
     - run: cat ~/.ssh/known_hosts
       
