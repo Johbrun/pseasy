@@ -24,7 +24,7 @@ module.exports = {
             user : 'ubuntu',
             host : ['vps-decdc4fd.vps.ovh.net'],
             'ssh_options': 'StrictHostKeyChecking=no',
-            ref  : 'origin/develop',
+            ref  : 'origin/master',
             repo: 'git@github.com:Johbrun/pseasy.git',
             path : '/opt/pseasy/production',
             'pre-deploy': 'npm install && npm run build && pm2 reload ecosystem.config.js --env production'
