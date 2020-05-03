@@ -7,7 +7,7 @@ module.exports = {
         name: `pseasy-${ENV}`,
         script: 'npm run start -- --port=$PORT',
         // will erase confs in .env
-        env_develop: {
+        env_qa: {
             PORT : '3000',
             NODE_ENV: 'development',
         },
@@ -21,14 +21,14 @@ module.exports = {
         }
     }],
     deploy : {
-        develop : {
+        qa : {
             user : 'ubuntu',
             host : ['vps-decdc4fd.vps.ovh.net'],
             'ssh_options': 'StrictHostKeyChecking=no',
             ref  : 'origin/develop',
             repo: 'git@github.com:Johbrun/pseasy.git',
-            path : '/opt/pseasy/develop',
-            'pre-deploy': 'git pull && cp .env.develop .env && npm i && npm run build && pm2 reload ecosystem.config.js --env develop'
+            path : '/opt/pseasy/qa',
+            'pre-deploy': 'git pull && cp .env.qa .env && npm i && npm run build && pm2 reload ecosystem.config.js --env qa'
         },
         candidate : {
             user : 'ubuntu',
