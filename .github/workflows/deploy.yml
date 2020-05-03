@@ -43,4 +43,9 @@ jobs:
 
     # Install pm2 and launch deploy
     - run: npm i -g pm2
-    - run: pm2 deploy ${{ steps.extract_branch.outputs.branch }} update
+
+    - run: pm2 deploy production update
+      if: contains(github.ref, "master")
+
+    - run: pm2 deploy qa update
+      if: contains(github.ref, "develop")
