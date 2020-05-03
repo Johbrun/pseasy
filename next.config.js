@@ -4,8 +4,9 @@ const withOffline = require('next-offline');
 
 module.exports = withOffline(withCSS({
     env: {
-        API_URL: process.env.API_URL || 'https://pseasy.now.sh',
-        TEST: process.env.TEST
+        API_URL: process.env.API_URL,
+        ENV: process.env.ENV,
+        BUILD_DATE: new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString()
     },
     cssModules: true,
     cssLoaderOptions: {
