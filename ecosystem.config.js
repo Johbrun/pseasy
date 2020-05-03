@@ -1,6 +1,10 @@
+const ENV = process.argv.indexOf('--env') === -1 ? '' :
+    '' + process.argv[process.argv.indexOf('--env')+1];
+
+
 module.exports = {
     apps : [{
-        name: 'pseasy',
+        name: `pseasy-${ENV}`,
         script: 'npm run start -- --port=$PORT',
         // will erase confs in .env
         env: {
@@ -24,7 +28,7 @@ module.exports = {
             ref  : 'origin/candidate',
             repo: 'git@github.com:Johbrun/pseasy.git',
             path : '/opt/pseasy/candidate',
-            'pre-deploy': 'git pull && ls -al && cp .env.candidate .env && npm install && npm run build && pm2 reload ecosystem.config.js --env candidate'
+            'pre-deploy': 'git pull && cp .env.candidate .env && npm i && npm run build && pm2 reload ecosystem.config.js --env candidate'
         },
         production : {
             user : 'ubuntu',
