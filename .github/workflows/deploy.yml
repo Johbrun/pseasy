@@ -38,16 +38,24 @@ jobs:
         # public keys of SSH servers
        known_hosts: ${{secrets.PUBLIC_KEY}}
 
-    # Generate and add SSH public key
-    - run: ssh-keygen -y -f ~/.ssh/id_rsa > ~/.ssh/id_rsa.pub
+    - name: Generate and add SSH public key
+      run: ssh-keygen -y -f ~/.ssh/id_rsa > ~/.ssh/id_rsa.pub
 
     # Install pm2 and launch deploy
-    - run: npm i -g pm2
+    - name : Install pm2
+      run: npm i -g pm2
+
+    - name: Deploy QA
+      if: contains(github.ref, 'develop')
+      run: pm2 deploy qa update
+
+    - name: Deploy Candidate
+      if: contains(github.ref, 'candidate')
+      run: pm2 deploy candidate update
 
     - name: Deploy Production
       if: contains(github.ref, 'master')
       run: pm2 deploy production update
 
-    - name: Deploy QA
-      if: contains(github.ref, 'develop')
-      run: pm2 deploy qa update
+
+    
