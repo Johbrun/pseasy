@@ -175,7 +175,7 @@ export default function SearchAppBar(props: IProps)
                         />
                     </div> */}
                     <div className={classes.version}>
-                        <span>PSEasy - Bêta v0.3 {process.env.TEST}</span>
+                        <span>PSEasy - Bêta v0.9999 {process.env.TEST} ddd</span>
                     </div>
                 </Toolbar>
             </AppBar>

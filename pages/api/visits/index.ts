@@ -5,6 +5,7 @@ import saveNewVisitor from '../../../lib/actions/saveNewVisitor';
 
 module.exports = async (req: express.Request, res: express.Response) => 
 {
+    console.log('TEST visit', process.env.TEST);
     res.setHeader('Content-Type', 'application/json');
 
     if (req.method === 'POST') 

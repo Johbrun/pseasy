@@ -13,6 +13,7 @@ const db = mysql({
 
 const query = async (query: SQLStatement) => 
 {
+    console.log('MYSQL_DATABASE : ' , process.env.MYSQL_DATABASE, process.env.MYSQL_USER, process.env.MYSQL_PASSWORD);
     try 
     {
         // TODO : add protection against injections ?

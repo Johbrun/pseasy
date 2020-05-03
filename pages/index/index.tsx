@@ -350,6 +350,7 @@ const Home: NextPage<{}> = () =>
 
 Home.getInitialProps = async ({ req }) => 
 {
+    console.log('TEST', process.env.TEST);
     console.log('GetInitialProps index');
     if (req) postVisit(req);
 
