@@ -16,20 +16,15 @@ import { Typography,
     FormControl, 
     FormLabel, 
     FormGroup, 
-    FormControlLabel, 
-    Checkbox, 
-    Box,
     FormHelperText, 
     Grid, 
     Button, 
-    Container,
     Card,
     CardContent
 } from '@material-ui/core';
 import theme from '../../theme';
-import AssignmentIcon from '@material-ui/icons/Assignment';
 import { fetchQuizzQuestions, insertQuizzAnswer, fetchQuizzAnswers } from '../../services/quizz.service';
-import { QuizzQuestion, QuizzQuestionFull } from '../../lib/interfaces/quizz-question.interface';
+import { QuizzQuestionFull } from '../../lib/interfaces/quizz-question.interface';
 import { QuizzAnswer, QuizzAnswerCreation } from '../../lib/interfaces/quizz-answer.interface';
 import { postVisit } from '../../services/visit.service';
 import ResultModal from '../../components/resultModal';
@@ -222,22 +217,24 @@ const QuizzPage: NextPage<IProps> = ({ quizzQuestions, quizzAnswers }) =>
 
 QuizzPage.getInitialProps = async ({req}) => 
 {
-    const responseVisit = (await postVisit(req));
-    const idUser = responseVisit ? responseVisit.idUser : '';
+    if (req) postVisit(req);
+    /* const responseVisit = (await postVisit(req));
+    const idUser = responseVisit ? responseVisit.idUser : '';*/
 
     const start = +new Date();
 
-    const apiCalls: Promise<any>[] = [fetchSheetsLight(), fetchCategories(), fetchQuizzQuestions(), fetchQuizzAnswers(idUser)];
-    const [sheetsLight, categories, quizzQuestions, quizzAnswers] = await Promise.all(apiCalls);
+    const apiCalls: Promise<any>[] = [fetchSheetsLight(), fetchCategories(), fetchQuizzQuestions()/*, fetchQuizzAnswers(idUser)*/];
+    const [sheetsLight, categories, quizzQuestions/*, quizzAnswers*/] = await Promise.all(apiCalls);
 
     const end = +new Date();
-    console.log(`Data fetched Count: ${quizzQuestions.length} /${quizzAnswers.length} in ${(end - start) / 1000} seconds`);
+    // console.log(`Data fetched Count: ${quizzQuestions.length} /${quizzAnswers.length} in ${(end - start) / 1000} seconds`);
+    console.log(`Data fetched Count: ${quizzQuestions.length} in ${(end - start) / 1000} seconds`);
 
     return {
         sheetsLight: sheetsLight,
         categories,
         quizzQuestions: quizzQuestions as QuizzQuestionFull[],
-        quizzAnswers: quizzAnswers as QuizzAnswer[]
+        quizzAnswers: [] //quizzAnswers as QuizzAnswer[]
     };
 };
 

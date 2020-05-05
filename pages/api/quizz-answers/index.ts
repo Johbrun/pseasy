@@ -25,18 +25,19 @@ module.exports = async (req: express.Request, res: express.Response) =>
     
     if (req.method === 'POST') 
     {
-        const answers = await getQuizzAnswersByUserId(userId);
-        if (answers.length !== 0)
-        {
-            res.status(400).json({ error: ErrorCodes.Quizz_Already_Completed });
-            return;
-        }
+        // const answers = await getQuizzAnswersByUserId(userId);
+        // if (answers.length !== 0)
+        // {
+        //res.status(400).json({ error: ErrorCodes.Quizz_Already_Completed });
+        //return;
+        // }
         const body = req.body as QuizzAnswerCreation[];
         for (const quizzAnswer of body)
         {
             quizzAnswer.idUser = userId;
             await insertQuizzAnswers(quizzAnswer);
         }
+       
         const response = await getQuizzQuestionsFull();
         res.setHeader('Content-Type', 'application/json');
         res.status(200).json(response);
