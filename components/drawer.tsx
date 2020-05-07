@@ -12,15 +12,10 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import PanToolIcon from '@material-ui/icons/PanTool';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
-import HomeIcon from '@material-ui/icons/Home';
 import { useRouter } from 'next/router';
-import ListIcon from '@material-ui/icons/List';
 import { refSheetToType } from '../lib/helpers/refSheetToType';
 import clsx from 'clsx';
-import ContactSupportIcon from '@material-ui/icons/ContactSupport';
 import AssignmentIcon from '@material-ui/icons/Assignment';
-
-
 
 interface IProps {
     categories: Category[];
@@ -90,11 +85,6 @@ export default function SideDrawer(props: IProps)
         props.setOpen(false);
     };
 
-    const goAccueil = () => 
-    {
-        router.push('/index');
-    };
-
     const prefixFromReference = (reference: string) => 
     {
         const type = refSheetToType(reference);
@@ -131,55 +121,12 @@ export default function SideDrawer(props: IProps)
                 }}
             >
                 <div className={classes.drawerHeader}>
-                    <IconButton onClick={goAccueil}>
-                        <HomeIcon />
-                    </IconButton>
                     <IconButton onClick={handleDrawerClose}>
                         <ChevronLeftIcon />
                     </IconButton>
                 </div>
 
                 <List>
-                    <ListItem
-                        button
-                        onClick={() => router.push('/')}
-                    >
-                        <ListItemIcon>
-                            < HomeIcon />
-                        </ListItemIcon>
-
-                        <ListItemText
-                            primary={'ACCUEIL'}
-                            className={classes.category}
-                        />
-                    </ListItem>
-                    <ListItem
-                        button
-                        onClick={() => router.push('/quizz')}
-                    >
-                        <ListItemIcon>
-                            <ContactSupportIcon />
-                        </ListItemIcon>
-
-                        <ListItemText
-                            primary={'QUIZZ'}
-                            className={classes.category}
-                        />
-                    </ListItem>
-                    <ListItem
-                        button
-                        onClick={() => router.push('/a-propos')}
-                    >
-                        <ListItemIcon>
-                            <MenuBookIcon />
-                        </ListItemIcon>
-
-                        <ListItemText
-                            primary={'A PROPOS'}
-                            className={classes.category}
-                        />
-                    </ListItem>
-                   
                     <ListItem
                         button
                         onClick={() => router.push('/sheets')}
@@ -232,7 +179,7 @@ export default function SideDrawer(props: IProps)
                                                     <>
                                                         {prefixFromReference(s.reference)}
                                                         <Link href={`/sheets?reference=${s.reference}`}>
-                                                            {s.title ? s.title : 'Aucun titre renseigné'}
+                                                            <a>{s.title ? s.title : 'Aucun titre renseigné'}</a>
                                                         </Link>
                                                     </>
                                                 }

@@ -121,7 +121,9 @@ const cards: { title: string; content: string; icon: IconsCard, status: string }
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
-        root: {},
+        root: {
+            background : 'rgba(62, 72, 110, 0.05)'
+        },
         drawerHeader: {
             display: 'flex',
             alignItems: 'center',
@@ -146,10 +148,21 @@ const useStyles = makeStyles((theme: Theme) =>
         card: {
             height: '100%',
             display: 'flex',
-            flexDirection: 'column'
+            flexDirection: 'column',
+            padding: '10px',
+            textAlign: 'center',
+            '&:hover': {
+                color:' rgb(62, 72, 110)',
+                boxShadow: 'rgba(121, 148, 212, 0.4) 0px 1rem 2rem',
+                transform: 'translateY(-2px)'
+            }
+        },
+        cardTitle: {
+            fontSize: '15px',
+            fontWeight: 800,
+            textTransform: 'uppercase'
         },
         cardMedia: {
-            // paddingTop: "56.25%" // 16:9
             paddingTop: '0.25%',
             height: '115px !important',
             fontSize: '82px !important',
@@ -202,11 +215,6 @@ const Home: NextPage<{}> = () =>
     const handleClickSheets = () => 
     {
         router.push('/sheets');
-    };
-
-    const handleClickQuizz = () => 
-    {
-        router.push('/quizz');
     };
 
     return (
@@ -265,11 +273,7 @@ const Home: NextPage<{}> = () =>
                                                 Consulter les fiches
                                             </Button>
                                         </Grid>
-                                        <Grid item>
-                                            <Button variant="contained" color="primary" onClick={handleClickQuizz}>
-                                                Affronter le quizz
-                                            </Button>
-                                        </Grid>
+                                       
                                     </Grid>
                                 </div>
                             </Container>
@@ -291,7 +295,7 @@ const Home: NextPage<{}> = () =>
                       title="Image title"
                     /> */}
                                         <CardContent className={classes.cardContent}>
-                                            <Typography gutterBottom variant="h5" component="h2">
+                                            <Typography gutterBottom className={classes.cardTitle}>
                                                 {card.title}
                                             </Typography>
                                             <Typography>{card.content}</Typography>

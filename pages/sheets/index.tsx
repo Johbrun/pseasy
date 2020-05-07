@@ -14,7 +14,6 @@ import Footer from '../../components/footer';
 import { fetchSheetByReference, fetchSheetsLight } from '../../services/sheet.service';
 import { fetchCategories } from '../../services/category.service';
 import { postVisit } from '../../services/visit.service';
-import theme from '../../theme';
 
 interface IProps {
     sheet?: SheetExtended;
@@ -87,7 +86,7 @@ const SheetPage: NextPage<IProps> = ({ sheet, sheetsLight, categories }) =>
             </Head>
             <CssBaseline />
             <div className={classes.content}>
-                <SearchAppBar open={open} setOpen={setOpen} title={sheet ? sheet.title : undefined} />
+                <SearchAppBar open={open} setOpen={setOpen} /*title={sheet ? sheet.title : undefined} *//>
 
                 <SideDrawer open={open} setOpen={setOpen} categories={categories} sheetsLight={sheetsLight} />
                

@@ -11,8 +11,9 @@ import {
     makeStyles
 } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 import SearchIcon from '@material-ui/icons/Search';
-import { Button } from '@material-ui/core';
+import { Button, Link } from '@material-ui/core';
 import clsx from 'clsx';
 
 interface IProps {
@@ -25,13 +26,15 @@ const drawerWidth = 400;
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
-            display: 'flex'
+            display: 'flex',
         },
         appBar: {
             transition: theme.transitions.create(['margin', 'width'], {
                 easing: theme.transitions.easing.sharp,
                 duration: theme.transitions.duration.leavingScreen
-            })
+            }),
+            height:'64px'
+
         },
         appBarShift: {
             width: `calc(100% - ${drawerWidth}px)`,
@@ -52,13 +55,61 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         title: {
             flexGrow: 1,
-            marginLeft: "30px",
-            fontSize: "25px"
+            marginLeft: '30px',
+            fontSize: '25px'
+        },
+        items : {
+            flexGrow: 1,
+            justifyContent: 'left',
+            display: 'flex',
+            fontWeight : 500,
+            
         },
         item : {
-            fontSize : "20px",
+            fontSize : '17px',
+            marginLeft : '30px',
+            textTransform: 'uppercase',
+            color : 'rgba(255, 255, 255, 0.7)',
+            '&:hover': {
+                color: 'rgba(255, 255, 255, 1)',
+                cursor : 'pointer',
+                textDecoration: 'none'
+            },
+            [theme.breakpoints.down('xs')]: {
+                display: 'none'
+            }
         },
-        version: {
+        mobileMenu: {
+            position: 'relative',
+            '&:hover': {
+                backgroundColor: fade(theme.palette.common.white, 0.25)
+            },
+
+            marginRight: theme.spacing(5),
+            [theme.breakpoints.up('sm')]: {
+                display: 'none'
+            }
+
+            // [theme.breakpoints.up('md')]: {
+            //     marginRight: theme.spacing(2),
+            //     backgroundColor: fade(theme.palette.common.white, 0.15),
+            //     width: 'auto'
+            // },
+            // [theme.breakpoints.between('xs', 'sm')]: {
+            //     width: 'auto',
+            //     backgroundColor: fade(theme.palette.common.white, 0)
+            //}
+        },
+        mobileMenuIcon: {
+            width: theme.spacing(7),
+            height: '100%',
+            position: 'absolute',
+            pointerEvents: 'none',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+        },
+        /* version: {
             width: 'auto',
             fontSize : '1rem',
             marginLeft: theme.spacing(1),
@@ -69,8 +120,8 @@ const useStyles = makeStyles((theme: Theme) =>
             [theme.breakpoints.between('xs', 'sm')]: {
                 marginRight: theme.spacing(0),
             }
-        },
-        search: {
+        },*/
+        /* search: {
             position: 'relative',
             borderRadius: theme.shape.borderRadius,
 
@@ -89,8 +140,6 @@ const useStyles = makeStyles((theme: Theme) =>
             [theme.breakpoints.between('xs', 'sm')]: {
                 width: 'auto',
                 backgroundColor: fade(theme.palette.common.white, 0)
-                // display: "none"
-                // width: 20
             }
         },
         searchIcon: {
@@ -101,9 +150,18 @@ const useStyles = makeStyles((theme: Theme) =>
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center'
+        },*/
+        logo : {
+            width : '170px',
+            '& img': {
+                display: 'block',
+                width: '80%'
+            }
         },
-
-        inputRoot: {
+        extraLeftMargin: {
+            marginLeft: '50px',
+        },
+        /* inputRoot: {
             color: 'inherit'
         },
         inputInput: {
@@ -122,14 +180,15 @@ const useStyles = makeStyles((theme: Theme) =>
                     width: 120
                 }
             }
-        },
+        },*/
         contentShift: {
             transition: theme.transitions.create('margin', {
                 easing: theme.transitions.easing.easeOut,
                 duration: theme.transitions.duration.enteringScreen
             }),
             marginLeft: 0
-        }
+        },
+        
     })
 );
 export default function SearchAppBar(props: IProps) 
@@ -161,21 +220,27 @@ export default function SearchAppBar(props: IProps)
                     >
                         <MenuIcon />
                     </IconButton>
-                    <div>
-                    <img src="logo.png"/>
+                    <div className={clsx(classes.logo, {
+                        [classes.extraLeftMargin]: typeof props.open === 'undefined'
+                    })}>
+                        <img src="logo.png"/>
                     </div>
                     {/* <Typography className={classes.title} variant="h6" noWrap>
                         PSEasy
                     </Typography> */}
 
-                    <div>
-                        <Typography className={classes.item} variant="h4" noWrap>
-                            PSEasy
-                        </Typography>
-                        <Typography className={classes.item} variant="h4" noWrap>
-                            PSEasy
-                        </Typography>
+                    <div className={classes.items}>
+                        <Link className={classes.item}><a>Fiches PSE</a></Link>
+                        <Link className={classes.item}><a>Quizz</a></Link>
+                        <Link className={classes.item}><a>A propos</a></Link>
                     </div>
+
+
+                    <div className={classes.mobileMenu}>
+                        <div className={classes.mobileMenuIcon}>
+                            <MoreVertIcon />
+                        </div>
+                    </div> 
                     {/* <div className={classes.search}>
                         <div className={classes.searchIcon}>
                             <SearchIcon />
@@ -189,9 +254,7 @@ export default function SearchAppBar(props: IProps)
                             inputProps={{ 'aria-label': 'search' }}
                         />
                     </div> */}
-                    <div className={classes.version}>
-                        <span>PSEasy - Bêta</span>
-                    </div>
+                  
                 </Toolbar>
             </AppBar>
         </div>
