@@ -16,7 +16,6 @@ import { Button } from '@material-ui/core';
 import clsx from 'clsx';
 
 interface IProps {
-  title?: string;
   open?: boolean;
   setOpen?: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -52,7 +51,12 @@ const useStyles = makeStyles((theme: Theme) =>
             display: 'none'
         },
         title: {
-            flexGrow: 1
+            flexGrow: 1,
+            marginLeft: "30px",
+            fontSize: "25px"
+        },
+        item : {
+            fontSize : "20px",
         },
         version: {
             width: 'auto',
@@ -157,10 +161,21 @@ export default function SearchAppBar(props: IProps)
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Typography className={classes.title} variant="h6" noWrap>
-                        {props.title ? props.title : 'PSEasy - Référentiel PSE'}
-                    </Typography>
+                    <div>
+                    <img src="logo.png"/>
+                    </div>
+                    {/* <Typography className={classes.title} variant="h6" noWrap>
+                        PSEasy
+                    </Typography> */}
 
+                    <div>
+                        <Typography className={classes.item} variant="h4" noWrap>
+                            PSEasy
+                        </Typography>
+                        <Typography className={classes.item} variant="h4" noWrap>
+                            PSEasy
+                        </Typography>
+                    </div>
                     {/* <div className={classes.search}>
                         <div className={classes.searchIcon}>
                             <SearchIcon />
@@ -175,7 +190,7 @@ export default function SearchAppBar(props: IProps)
                         />
                     </div> */}
                     <div className={classes.version}>
-                        <span>PSEasy - Bêta v0.9 {process.env.ENV} {process.env.BUILD_DATE}</span>
+                        <span>PSEasy - Bêta</span>
                     </div>
                 </Toolbar>
             </AppBar>

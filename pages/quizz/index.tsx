@@ -82,7 +82,6 @@ const QuizzPage: NextPage<IProps> = ({ quizzQuestions }) =>
     const isClientSide = (typeof window !== 'undefined');
    
     const classes = useStyles();
-    const [open, setOpen] = React.useState(false);
 
     const localAnswers = isClientSide ? localStorage.getItem('answers') : 0;
     const quizzAnswers = localAnswers ? JSON.parse(localAnswers) : [];
@@ -168,9 +167,7 @@ const QuizzPage: NextPage<IProps> = ({ quizzQuestions }) =>
             </Head>
             <CssBaseline />
             <div className={classes.content}>
-                <SearchAppBar open={open} setOpen={setOpen} title={'PSEasy - Quizz'} />
-
-                {/* <SideDrawer open={open} setOpen={setOpen} categories={categories} sheetsLight={sheetsLight} /> */}
+                <SearchAppBar />
 
                 <main>
                     <div className={classes.drawerHeader} />

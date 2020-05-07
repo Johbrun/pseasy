@@ -225,7 +225,7 @@ const Home: NextPage<{}> = () =>
             </Head>
             <React.Fragment>
                 <CssBaseline />
-                <SearchAppBar title={'PSEasy - Fiches PSE'} />
+                <SearchAppBar />
 
                 <WarningModal />
                 <main>

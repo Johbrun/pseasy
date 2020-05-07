@@ -6,11 +6,16 @@ import { makeStyles, Theme, createStyles, Link, Typography } from '@material-ui/
 function Copyright() 
 {
     return (
+        <>
         <Typography variant="body2" color="textSecondary" align="center">
+         Build {process.env.ENV} {process.env.BUILD_DATE}
+         </Typography>
+         <Typography variant="body2" color="textSecondary" align="center">
             {'Copyright © '} PSEasy {' '}
             {new Date().getFullYear()}
             {'.'}
         </Typography>
+         </>
     );
 }
 
