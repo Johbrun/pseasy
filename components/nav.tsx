@@ -1,9 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import InputBase from '@material-ui/core/InputBase';
 import {
     createStyles,
     fade,
@@ -12,13 +10,13 @@ import {
 } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import SearchIcon from '@material-ui/icons/Search';
-import { Button, Link } from '@material-ui/core';
 import clsx from 'clsx';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 interface IProps {
   open?: boolean;
-  setOpen?: React.Dispatch<React.SetStateAction<boolean>>;
+  setOpen?: React.Dispatch<React.SetStateAction<boolean>>; // drawer for sheets
 }
 
 const drawerWidth = 400;
@@ -48,7 +46,7 @@ const useStyles = makeStyles((theme: Theme) =>
             display: 'none'
         },
         menuButton: {
-            marginRight: theme.spacing(2)
+            //marginRight: theme.spacing(2)
         },
         hide: {
             display: 'none'
@@ -63,64 +61,59 @@ const useStyles = makeStyles((theme: Theme) =>
             justifyContent: 'left',
             display: 'flex',
             fontWeight : 500,
-            
-        },
-        item : {
-            fontSize : '17px',
-            marginLeft : '30px',
-            textTransform: 'uppercase',
-            color : 'rgba(255, 255, 255, 0.7)',
-            '&:hover': {
-                color: 'rgba(255, 255, 255, 1)',
-                cursor : 'pointer',
-                textDecoration: 'none'
-            },
-            [theme.breakpoints.down('xs')]: {
-                display: 'none'
+            '& a' : {
+                fontSize : '17px',
+                marginLeft : '30px',
+                textTransform: 'uppercase',
+                color : 'rgba(255, 255, 255, 0.7)',
+                textDecoration: 'none',
+                '&:hover': {
+                    color: 'rgba(255, 255, 255, 1)',
+                    cursor : 'pointer',
+                },
+                [theme.breakpoints.down('xs')]: {
+                    display: 'none'
+                }
             }
         },
         mobileMenu: {
+            width: '20px',
+            height : '20px',
             position: 'relative',
-            '&:hover': {
-                backgroundColor: fade(theme.palette.common.white, 0.25)
-            },
-
-            marginRight: theme.spacing(5),
+            marginRight: theme.spacing(1),
             [theme.breakpoints.up('sm')]: {
                 display: 'none'
             }
-
-            // [theme.breakpoints.up('md')]: {
-            //     marginRight: theme.spacing(2),
-            //     backgroundColor: fade(theme.palette.common.white, 0.15),
-            //     width: 'auto'
-            // },
-            // [theme.breakpoints.between('xs', 'sm')]: {
-            //     width: 'auto',
-            //     backgroundColor: fade(theme.palette.common.white, 0)
-            //}
         },
         mobileMenuIcon: {
-            width: theme.spacing(7),
-            height: '100%',
-            position: 'absolute',
-            pointerEvents: 'none',
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'center'
+            justifyContent: 'center',
+            pointer : 'cursor'
         },
-        /* version: {
-            width: 'auto',
-            fontSize : '1rem',
-            marginLeft: theme.spacing(1),
-
-            [theme.breakpoints.up('md')]: {
-                marginRight: theme.spacing(2),
+        mobileMenuPanel : {
+            background : 'white',
+            justifyContent: 'flex-start',
+            position: 'absolute',
+            zIndex: 400,
+            top: '25px',
+            color:'black',
+            right: 0,
+            flexDirection: 'column',
+            width: '116px',
+            fontSize: '15px',
+            backgroundColor: 'white',
+            boxShadow: '0 2px 5px 0 rgba(0, 0, 0, 0.1)',
+            padding: '10px 20px',
+            '& a' : {
+                color : theme.palette.primary.main,
+                paddingTop : '5px',
+                paddingBottom : '5px',
+                cursor : 'pointer',
+                textDecoration : 'none'
             },
-            [theme.breakpoints.between('xs', 'sm')]: {
-                marginRight: theme.spacing(0),
-            }
-        },*/
+            display: (menuOpened:boolean) => menuOpened ? 'flex' : 'none'
+        },
         /* search: {
             position: 'relative',
             borderRadius: theme.shape.borderRadius,
@@ -159,7 +152,10 @@ const useStyles = makeStyles((theme: Theme) =>
             }
         },
         extraLeftMargin: {
-            marginLeft: '50px',
+            marginLeft: '0px',
+            [theme.breakpoints.up('sm')]: {
+                marginLeft: '35px',
+            }
         },
         /* inputRoot: {
             color: 'inherit'
@@ -193,8 +189,10 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 export default function SearchAppBar(props: IProps) 
 {
-    const classes = useStyles();
-
+    const [menuOpened, setMenuOpened] = useState(false);
+    const classes = useStyles(menuOpened);
+    const router = useRouter();
+    
     const handleDrawerOpen = () => 
     {
         if (props.setOpen) props.setOpen(true);
@@ -222,7 +220,7 @@ export default function SearchAppBar(props: IProps)
                     </IconButton>
                     <div className={clsx(classes.logo, {
                         [classes.extraLeftMargin]: typeof props.open === 'undefined'
-                    })}>
+                    })} onClick={() => router.push('/')}>
                         <img src="logo.png"/>
                     </div>
                     {/* <Typography className={classes.title} variant="h6" noWrap>
@@ -230,17 +228,23 @@ export default function SearchAppBar(props: IProps)
                     </Typography> */}
 
                     <div className={classes.items}>
-                        <Link className={classes.item}><a>Fiches PSE</a></Link>
-                        <Link className={classes.item}><a>Quizz</a></Link>
-                        <Link className={classes.item}><a>A propos</a></Link>
+                        <Link href="/sheets"><a>Fiches PSE</a></Link>
+                        <Link href="/quizz"><a>Quizz</a></Link>
+                        <Link href="/about"><a>A propos</a></Link>
                     </div>
 
 
-                    <div className={classes.mobileMenu}>
-                        <div className={classes.mobileMenuIcon}>
+                    <div className={classes.mobileMenu} onClick={() => setMenuOpened(!menuOpened)}>
+                        <div className={classes.mobileMenuIcon} >
                             <MoreVertIcon />
                         </div>
+                        <div className={classes.mobileMenuPanel}>
+                            <Link href="/sheets"><a>Fiches PSE</a></Link>
+                            <Link href="/quizz"><a>Quizz</a></Link>
+                            <Link href="/about"><a>A propos</a></Link>
+                        </div>
                     </div> 
+                    
                     {/* <div className={classes.search}>
                         <div className={classes.searchIcon}>
                             <SearchIcon />

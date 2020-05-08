@@ -50,25 +50,21 @@ const useStyles = makeStyles(() =>
     })
 );
 
-const QuizzPage: NextPage<IProps> = ({  sheetsLight, categories  }) => 
+const AboutPage: NextPage<IProps> = () => 
 {
     const classes = useStyles();
-    const [open, setOpen] = React.useState(false);
     
     return (
         <div className={classes.root}>
             <Head>
-                <title>PSEasy - Fiches PSE</title>
+                <title>PSEasy</title>
                 <link rel="icon" href="/favicon.ico" />
                 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
                 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
             </Head>
             <CssBaseline />
             <div className={classes.content}>
-                <SearchAppBar open={open} setOpen={setOpen} title={'PSEasy - A propos'} />
-             
-                {/* <SideDrawer open={open} setOpen={setOpen} categories={categories} sheetsLight={sheetsLight} /> */}
-             
+                <SearchAppBar />
                 <main>
                     <div className={classes.drawerHeader} />
                     <h1>A propos de PSEasy</h1>
@@ -85,7 +81,7 @@ const QuizzPage: NextPage<IProps> = ({  sheetsLight, categories  }) =>
                     <h2>Public visé</h2>
                     <p>
                         <Typography className={classes.explainations}>
-                        En écriture...
+                        
                         </Typography>
                     </p>
 
@@ -121,7 +117,7 @@ const QuizzPage: NextPage<IProps> = ({  sheetsLight, categories  }) =>
     );
 };
 
-QuizzPage.getInitialProps = async ({ query }) => 
+AboutPage.getInitialProps = async ({ query }) => 
 {
     const start = +new Date();
 
@@ -138,4 +134,4 @@ QuizzPage.getInitialProps = async ({ query }) =>
     };
 };
 
-export default QuizzPage;
+export default AboutPage;

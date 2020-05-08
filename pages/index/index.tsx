@@ -235,7 +235,6 @@ const Home: NextPage<{}> = () =>
                 <CssBaseline />
                 <SearchAppBar />
 
-                <WarningModal />
                 <main>
                     <div className={classes.drawerHeader} />
                     {/* Hero unit */}

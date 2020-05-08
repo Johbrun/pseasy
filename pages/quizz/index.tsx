@@ -68,7 +68,7 @@ const useStyles = makeStyles(() =>
             justifyContent: 'flex-end',
         },
         gridQuizz: {
-            margin: '-24px',
+            //margin: '-24px',
         },
         divCompleted: {
             backgroundColor: 'aliceblue',
@@ -185,7 +185,7 @@ const QuizzPage: NextPage<IProps> = ({ quizzQuestions }) =>
                         </Card>
                     )}
                     {answers && (
-                        <Grid container spacing={3} className={classes.gridQuizz}>
+                        <Grid container spacing={2} className={classes.gridQuizz}>
                             {quizzQuestions.map((qq: QuizzQuestionFull, i: number) => (
                                 <Grid key={qq.id} item xs={12} sm={6} md={4}>
                                     <FormControl component="fieldset" className={classes.formControl}>
