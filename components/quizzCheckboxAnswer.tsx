@@ -15,6 +15,11 @@ interface IProps {
 
 const useStyles = makeStyles(() =>
     createStyles({
+        root : {
+            '&:hover' : {
+                color: 'gray'
+            },
+        },
         rightAnswer : {
             color : 'green',
         },
@@ -34,14 +39,16 @@ export default function QuizzCheckboxAnswer(props: IProps)
         [classes.disabled] : props.disabled
     });
     return (
-        <FormControlLabel
-            className={className}
-            control={<Checkbox 
-                className={className}
-                disabled={props.disabled && !props.right} 
-                checked={props.checked} 
-                onChange={!props.disabled ? props.onChange : () => {}} 
-            />}
-            label={props.answer}
-        />);
+        
+        <div className={classes.root}>
+            <FormControlLabel
+                control={<Checkbox 
+                    className={className}
+                    disabled={props.disabled && !props.right} 
+                    checked={props.checked} 
+                    onChange={!props.disabled ? props.onChange : () => {}} 
+                />}
+                label={props.answer}
+            />
+        </div>);
 }

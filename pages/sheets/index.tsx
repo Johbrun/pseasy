@@ -28,7 +28,8 @@ const useStyles = makeStyles(() =>
             fontFamily: '\'Avenir\', \'Roboto\', \'Helvetica\', \'Arial\', sans-serif',
             fontWeight: 400,
             lineHeight: '1.73',
-            letterSpacing: '0.01071em'
+            letterSpacing: '0.01071em',
+            background: 'rgba(62, 72, 110, 0.05)',
         },
         content: {
             display: 'flex'

@@ -55,7 +55,7 @@ export default function QuizzExplaination(props: IProps)
                 </Typography>
             </CardContent>
             <CardActions>
-                <Button size="small" onClick={() => props.handler(props.reference)}>En savoir plus</Button>
+                <Button size="small" onClick={() => props.handler(props.reference)}>Consulter la fiche</Button>
             </CardActions>
             
         </Card>

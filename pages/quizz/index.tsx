@@ -14,27 +14,20 @@ import { fetchSheetsLight, fetchSheetByReference } from '../../services/sheet.se
 import { fetchCategories } from '../../services/category.service';
 import {
     Typography,
-    FormControl,
-    FormLabel,
-    FormGroup,
-    FormHelperText,
     Grid,
     Button,
     Card,
     CardContent,
 } from '@material-ui/core';
 import theme from '../../theme';
-import { fetchQuizzQuestions, insertQuizzAnswer, fetchQuizzAnswers } from '../../services/quizz.service';
+import { fetchQuizzQuestions, insertQuizzAnswer } from '../../services/quizz.service';
 import { QuizzQuestionFull } from '../../lib/interfaces/quizz-question.interface';
 import { QuizzAnswer, QuizzAnswerCreation } from '../../lib/interfaces/quizz-answer.interface';
 import { postVisit } from '../../services/visit.service';
 import ResultModal from '../../components/resultModal';
-import QuizzCheckboxAnswer from '../../components/quizzCheckboxAnswer';
-import { questionAnswerByIdx } from '../../lib/helpers/questionAnswerByIdx';
-import { answersOk } from '../../lib/helpers/answersOk';
-import QuizzExplaination from '../../components/quizzExplaination';
 import computeScore from '../../lib/helpers/computeScore';
 import SheetModal from '../../components/sheetModal';
+import QuizzQuestion from '../../components/quizzQuestion';
 
 interface IProps {
   sheetsLight: SheetLight[];
@@ -51,13 +44,11 @@ const useStyles = makeStyles(() =>
             fontWeight: 400,
             lineHeight: '1.73',
             letterSpacing: '0.01071em',
+            background : 'rgba(62, 72, 110, 0.05)'
         },
         content: {
             display: 'flex',
             padding: 20,
-        },
-        formControl: {
-            margin: theme.spacing(3),
         },
         explainations: {},
         drawerHeader: {
@@ -68,7 +59,9 @@ const useStyles = makeStyles(() =>
             justifyContent: 'flex-end',
         },
         gridQuizz: {
-            //margin: '-24px',
+            margin: 'auto',
+            //   maxWidth: '60vw',
+            //   width: '640px',
         },
         divCompleted: {
             backgroundColor: 'aliceblue',
@@ -139,24 +132,6 @@ const QuizzPage: NextPage<IProps> = ({ quizzQuestions }) =>
         setSheet(sheet);
     };
 
-    const choiceByQuestion = (idQuestion: number, idx: number) => 
-    {
-        let answerChoices = answers.find((a) => a.idQuestion === idQuestion);
-        if (!answerChoices) return false;
-
-        switch (idx) 
-        {
-        case 1:
-            return Boolean(answerChoices.answer1Choice);
-        case 2:
-            return Boolean(answerChoices.answer2Choice);
-        case 3:
-            return Boolean(answerChoices.answer3Choice);
-        default:
-            return false;
-        }
-    };
-
     return (
         <div className={classes.root}>
             <Head>
@@ -178,48 +153,30 @@ const QuizzPage: NextPage<IProps> = ({ quizzQuestions }) =>
                             <CardContent>
                                 <Typography variant="body2" component="p">
                   Vous avez obtenu {computeScore(quizzQuestions, answers)}% de bonnes réponses au quizz ! Ci-dessous les
-                  réponses en vert, ainsi que les explications associées. Pour plus de détail, cliquer sur "en savoir
-                  plus" pour ouvrir la fiche associée
+                  réponses en vert, ainsi que les explications associées. Pour plus de détail, cliquer sur "Consulter la fiche" pour ouvrir la fiche associée
                                 </Typography>
                             </CardContent>
                         </Card>
                     )}
                     {answers && (
-                        <Grid container spacing={2} className={classes.gridQuizz}>
-                            {quizzQuestions.map((qq: QuizzQuestionFull, i: number) => (
-                                <Grid key={qq.id} item xs={12} sm={6} md={4}>
-                                    <FormControl component="fieldset" className={classes.formControl}>
-                                        <FormLabel component="legend">
-                                            {i + 1}. {qq.question}
-                                        </FormLabel>
-                                        <FormHelperText>
-                      PSE{qq.level} - Difficulté {qq.difficulty}{' '}
-                                        </FormHelperText>
-                                        <FormGroup>
-                                            {[1, 2, 3].map((idx) => (
-                                                <QuizzCheckboxAnswer
-                                                    key={idx}
-                                                    question={qq}
-                                                    checked={choiceByQuestion(qq.id, idx)}
-                                                    disabled={completed}
-                                                    answer={questionAnswerByIdx(qq, idx)}
-                                                    right={completed && answersOk(qq).includes(idx)}
-                                                    onChange={() => handleChange(qq.id, idx)}
-                                                />
-                                            ))}
-                                        </FormGroup>
-                                        {completed && qq.explaination && (
-                                            <QuizzExplaination
-                                                correct={computeScore([qq], [answers.find((a) => a.idQuestion === qq.id)]) === 100}
-                                                text={qq.explaination}
-                                                reference={qq.sheetReference}
-                                                handler={(ref: string) => handleOpenSheet(ref)}
-                                            />
-                                        )}
-                                    </FormControl>
-                                </Grid>
-                            ))}
-                        </Grid>
+                        <div>
+                            <Grid container spacing={2} className={classes.gridQuizz}>
+                                {quizzQuestions.map((qq: QuizzQuestionFull) => (
+                                    <Grid container
+                                        direction="column"
+                                        justify="center"
+                                        alignItems="center" key={qq.id} item xs={12} sm={12} md={12}>
+                                        <QuizzQuestion 
+                                            question={qq} 
+                                            answers={answers.find((a) => a.idQuestion === qq.id)}
+                                            completed= {completed}
+                                            handleChange={handleChange}
+                                            handleOpenSheet = {handleOpenSheet}
+                                        />
+                                    </Grid>
+                                ))}
+                            </Grid>
+                        </div>
                     )}
 
                     {!completed && (
