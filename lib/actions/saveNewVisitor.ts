@@ -1,6 +1,6 @@
 import { VisitCreation, VisitUserCreation } from '../interfaces/visit.interface';
 import crypto from 'crypto';
-import { UserCreation } from '../interfaces/user.interface';
+import { UserCreation, User } from '../interfaces/user.interface';
 import insertUser from '../query/insertUser';
 import insertVisit from '../query/insertVisit';
 
@@ -14,8 +14,9 @@ const saveNewVisitor = async (visitUser: VisitUserCreation) =>
     };
 
     const user: UserCreation = { id: visit.idUser, ip: visitUser.ip, userAgent: visitUser.userAgent };
-    await insertUser(user);
-    return await insertVisit(visit);
+    await insertUser(user) as User;
+    await insertVisit(visit);
+    return user.id;
 };
 
 export default saveNewVisitor;

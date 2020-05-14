@@ -9,7 +9,7 @@ module.exports = {
         // will erase confs in .env
         env_qa: {
             PORT : '3000',
-            NODE_ENV: 'development',
+            NODE_ENV: 'production',
         },
         env_candidate : {
             PORT : '3001',

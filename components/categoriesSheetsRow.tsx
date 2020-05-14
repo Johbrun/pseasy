@@ -28,7 +28,7 @@ interface IProps {
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
-            width: '54px'
+            margin: '30px 0px',
         },
         table: {},
         r: {
@@ -38,12 +38,8 @@ const useStyles = makeStyles((theme: Theme) =>
             fontSize: '30px',
             textTransform: 'uppercase',
             fontWeight: 600,
-            [theme.breakpoints.down('sm')]: {
-                fontSize: '24px'
-            }
         },
         container: {
-            margin: '10px 20px 30px 20px',
             [theme.breakpoints.down('sm')]: {
                 margin: '10px 00px 30px 0px;'
             }
@@ -104,7 +100,7 @@ export default function CategoriesSheetsRow(props: IProps)
     if (props.sheetsLight.length === 0) return <></>;
 
     return (
-        <div key={'div-' + props.category.id}>
+        <div key={'div-' + props.category.id} className={classes.root}>
             <span key={props.category.id} className={classes.titleCategory}>
                 {props.category.number} {props.category.name}
             </span>

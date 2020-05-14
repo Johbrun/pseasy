@@ -1,7 +1,7 @@
 import React from 'react';
 import IconButton from '@material-ui/core/IconButton';
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
-import { Link, List, ListItemIcon, Collapse } from '@material-ui/core';
+import { Link, List, ListItemIcon, Collapse, Chip } from '@material-ui/core';
 import Drawer from '@material-ui/core/Drawer';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -12,15 +12,16 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import PanToolIcon from '@material-ui/icons/PanTool';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
-import HomeIcon from '@material-ui/icons/Home';
 import { useRouter } from 'next/router';
-import ListIcon from '@material-ui/icons/List';
+import { refSheetToType } from '../lib/helpers/refSheetToType';
+import clsx from 'clsx';
+import AssignmentIcon from '@material-ui/icons/Assignment';
 
 interface IProps {
-  categories: Category[];
-  sheetsLight: SheetLight[];
-  open: boolean;
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+    categories: Category[];
+    sheetsLight: SheetLight[];
+    open: boolean;
+    setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const drawerWidth = 400;
@@ -54,7 +55,23 @@ const useStyles = makeStyles((theme: Theme) =>
         nested: {
             paddingLeft: theme.spacing(4),
             fontSize: '0.9rem'
-        }
+        },
+        chip: {
+            color: 'white',
+            backgroundColor: theme.palette.grey[800],
+            height: '20px',
+            width: '20px',
+            marginRight: '4px',
+        },
+        chipConnaissance: {
+            backgroundColor: 'blueviolet'
+        },
+        chipProcedure: {
+            backgroundColor: 'royalblue'
+        },
+        chipTechnique: {
+            backgroundColor: 'orange'
+        },
     })
 );
 export default function SideDrawer(props: IProps) 
@@ -68,25 +85,19 @@ export default function SideDrawer(props: IProps)
         props.setOpen(false);
     };
 
-    const goAccueil = () => 
-    {
-        router.push('/index');
-    };
-
     const prefixFromReference = (reference: string) => 
     {
-        switch (reference.substring(0, 2)) 
-        {
-        case 'AC':
-            return '(C) ';
-        case 'PR':
-            return '(P) ';
-        case 'FT':
-            return '(G) ';
-        default:
-            return '';
-        }
+        const type = refSheetToType(reference);
+        return (<Chip
+            key={reference}
+            className={clsx(classes.chip, {
+                [classes.chipConnaissance]: type === 'Connaissances',
+                [classes.chipProcedure]: type === 'Procédures',
+                [classes.chipTechnique]: type === 'Techniques'
+            })}
+        />);
     };
+
     const handleClickCategory = (id: number) => 
     {
         if (id === openedId) 
@@ -97,6 +108,7 @@ export default function SideDrawer(props: IProps)
         setOpenedId(id);
     };
 
+    console.log('waaa', props.open);
     return (
         <div className={classes.root}>
             <Drawer
@@ -109,9 +121,6 @@ export default function SideDrawer(props: IProps)
                 }}
             >
                 <div className={classes.drawerHeader}>
-                    <IconButton onClick={goAccueil}>
-                        <HomeIcon />
-                    </IconButton>
                     <IconButton onClick={handleDrawerClose}>
                         <ChevronLeftIcon />
                     </IconButton>
@@ -123,10 +132,11 @@ export default function SideDrawer(props: IProps)
                         onClick={() => router.push('/sheets')}
                     >
                         <ListItemIcon>
-                            <ListIcon />
+                            <AssignmentIcon />
                         </ListItemIcon>
+
                         <ListItemText
-                            primary={'0. SOMMAIRE'}
+                            primary={'INDEX DES FICHES'}
                             className={classes.category}
                         />
                     </ListItem>
@@ -169,7 +179,7 @@ export default function SideDrawer(props: IProps)
                                                     <>
                                                         {prefixFromReference(s.reference)}
                                                         <Link href={`/sheets?reference=${s.reference}`}>
-                                                            {s.title ? s.title : 'Aucun titre renseigné'}
+                                                            <a>{s.title ? s.title : 'Aucun titre renseigné'}</a>
                                                         </Link>
                                                     </>
                                                 }
