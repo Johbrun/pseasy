@@ -12,10 +12,10 @@ const drawerWidth = 400;
 
 interface IProps {
     sheet: SheetExtended;
-    sheetCompare?: SheetExtended;
     open: boolean;
-    onSelectVersion: (id:string) => void;
-    onSelectCompare: (id:string) => void;
+    sheetCompare?: SheetExtended;
+    onSelectVersion?: (id:string) => void;
+    onSelectCompare?: (id:string) => void;
 
 }
 const useStyles = makeStyles((theme: Theme) =>
@@ -109,7 +109,7 @@ export default function SheetContent(props: IProps)
     const onSelectCurrentVersion = (event: React.ChangeEvent<{ value: unknown }>) => 
     {
         setId(event.target.value as string);
-        if (props.sheet.history)
+        if (props.sheet.history && props.onSelectVersion)
         {
             props.onSelectVersion( props.sheet.history.find(s => s.id === event.target.value as string)!.version);
         }
@@ -117,7 +117,7 @@ export default function SheetContent(props: IProps)
     const onSelectCompareVersion = (event: React.ChangeEvent<{ value: unknown }>) => 
     {
         setIdC(event.target.value as string);
-        if (props.sheet.history)
+        if (props.sheet.history && props.onSelectCompare)
         {
             props.onSelectCompare( props.sheet.history.find(s => s.id === event.target.value as string)!.version);
         }
@@ -130,7 +130,8 @@ export default function SheetContent(props: IProps)
                     [classes.contentShift]: props.open
                 })}
             >
-                <div className={classes.drawerHeader} />
+                {/* Yeah, very ugly but it is to not display space in the modale */}
+                {props.onSelectCompare && <div className={classes.drawerHeader} />}
                 {/* {loading && <span>Chargement en cours...</span> } */}
                 <h1 className={classes.title}>{ props.sheet.title}</h1>
                 <div className={classes.metadata}>
@@ -145,37 +146,38 @@ export default function SheetContent(props: IProps)
                         [classes.chipProcedure]: (type === 'Procédures'),
                         [classes.chipTechnique]: (type === 'Techniques'),
                     })} />
+                {props.onSelectCompare && 
+                    <div className={classes.diffDates}>
+                        <FormControl className={classes.formControl}>
+                            <InputLabel id="demo-simple-select-label">Vers. Sélectionnée</InputLabel>
+                            <Select
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={id}
+                                onChange={onSelectCurrentVersion}
+                            >
+                                {props.sheet.history.map(h =>
+                                    <MenuItem key={h.version} value={h.id}>{toDateFormated(new Date(h.updatedDate))}</MenuItem> 
+                                )}
+                            </Select>
+                        </FormControl>
 
-                <div className={classes.diffDates}>
-                    <FormControl className={classes.formControl}>
-                        <InputLabel id="demo-simple-select-label">Vers. Sélectionnée</InputLabel>
-                        <Select
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            value={id}
-                            onChange={onSelectCurrentVersion}
-                        >
-                            {props.sheet.history.map(h =>
-                                <MenuItem key={h.version} value={h.id}>{toDateFormated(new Date(h.updatedDate))}</MenuItem> 
-                            )}
-                        </Select>
-                    </FormControl>
-
-                    <FormControl className={classes.formControl}>
-                        <InputLabel id="demo-simple-select-label">Vers. Comparée</InputLabel>
-                        <Select
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            value={idC}
-                            onChange={onSelectCompareVersion}
-                        >
-                            {/* <MenuItem key={5} value={5}>Non disponible</MenuItem> */}
-                            {props.sheet.history.map(h => 
-                                <MenuItem key={h.version} value={h.id}>{toDateFormated(new Date(h.updatedDate))}</MenuItem> 
-                            )}
-                        </Select>
-                    </FormControl>
-                </div>
+                        <FormControl className={classes.formControl}>
+                            <InputLabel id="demo-simple-select-label">Vers. Comparée</InputLabel>
+                            <Select
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={idC}
+                                onChange={onSelectCompareVersion}
+                            >
+                                {/* <MenuItem key={5} value={5}>Non disponible</MenuItem> */}
+                                {props.sheet.history.map(h => 
+                                    <MenuItem key={h.version} value={h.id}>{toDateFormated(new Date(h.updatedDate))}</MenuItem> 
+                                )}
+                            </Select>
+                        </FormControl>
+                    </div> 
+                }
                
                 
                 <ReactMarkdown source={ txt} escapeHtml={false}/>

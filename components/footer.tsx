@@ -1,23 +1,29 @@
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/react-in-jsx-scope */
-import { makeStyles, Theme, createStyles, Link, Typography } from '@material-ui/core';
+import { makeStyles, Theme, createStyles, Typography } from '@material-ui/core';
+import Link from 'next/link';
 
 
 function Copyright() 
 {
     return (
-        <Typography variant="body2" color="textSecondary" align="center">
-            {'Copyright © '} PSEasy {' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
+        <>
+            <Typography variant="body2" color="textSecondary" align="center">
+         Build {process.env.ENV} {process.env.BUILD_DATE}
+            </Typography>
+            <Typography variant="body2" color="textSecondary" align="center">
+                {'Copyright © '} PSEasy {' '}
+                {new Date().getFullYear()}
+                {'.'}
+            </Typography>
+        </>
     );
 }
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         footer: {
-            backgroundColor: theme.palette.grey[100],
+            backgroundColor: theme.palette.grey[200],
             padding: theme.spacing(6)
         },
     }));
@@ -39,10 +45,10 @@ export default function Footer()
                 component="p"
             >
                 PSEasy n'est pas liée à {' '}
-                <Link href="https://interieur.gouv.fr">interieur.gouv.fr</Link>, ni à quelconque institution officielle.
+                <Link href="https://interieur.gouv.fr"><a>interieur.gouv.fr</a></Link>, ni à quelconque institution officielle.
                 <br />
                 <Link href="https://www.interieur.gouv.fr/Le-ministere/Securite-civile/Documentation-technique/Secourisme-et-associations/Les-recommandations-et-les-referentiels/">
-                    Consultez ici les documents officiels</Link>
+                    <a>Consultez ici les documents officiels</a></Link>
             </Typography>
             <br />
             <Copyright />

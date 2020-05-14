@@ -6,6 +6,7 @@ import theme from '../theme';
 import NProgress from 'nprogress';
 import Router from 'next/router';
 import Head from 'next/head';
+import WarningModal from '../components/warningModal';
 
 Router.events.on('routeChangeStart', url => 
 {
@@ -41,6 +42,7 @@ export default class MyApp extends App
                 <ThemeProvider theme={theme}>
                     {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
                     <CssBaseline />
+                    <WarningModal />
                     <Component {...pageProps} />
                 </ThemeProvider>
             </React.Fragment>

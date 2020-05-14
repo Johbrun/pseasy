@@ -32,6 +32,7 @@ import CommentIcon from '@material-ui/icons/Comment';
 import { useRouter } from 'next/router';
 import Footer from '../../components/footer';
 import { postVisit } from '../../services/visit.service';
+import WarningModal from '../../components/warningModal';
 
 const getIconElementFromName = (icon: IconsCard, classes: any) => 
 {
@@ -70,44 +71,44 @@ const cards: { title: string; content: string; icon: IconsCard, status: string }
         status: 'Opérationnel'
     },
     {
-        title: 'Recherche par mot clé',
-        content:
-            'Retrouvez toutes les fiches en lien avec un ou plusieurs mots clés',
-        icon: IconsCard.Recherche,
-        status: 'Prévu T1 2020'
-    },
-    {
-        title: 'Mode hors ligne',
-        content: 'Profitez de l\'application même sans connexion à l\'Internet',
-        icon: IconsCard.HorsLigne,
-        status: 'Prévu T1 2020'
-    },
-    {
-        title: 'Mode \'App\'',
-        content:
-            'Lancez l\'application directement depuis le menu de votre téléphone',
-        icon: IconsCard.App,
-        status: 'Prévu T1 2020'
-    },
-    {
         title: 'Historique',
         content: 'Consultez les anciennes versions des fiches facilement',
         icon: IconsCard.Historique,
-        status: 'Prévu T1 2020'
+        status: 'Opérationnel'
     },
     {
         title: 'Affichage des différences',
         content:
             'Affichez les nouveautés de contenu des fiches entre les différentes mises à jour',
         icon: IconsCard.Differences,
-        status: 'Prévu T2 2020'
+        status: 'Opérationnel'
     },
     {
         title: 'Quizz',
         content:
             'Testez vos connaissances du référentiel',
         icon: IconsCard.Quizz,
+        status: 'Opérationnel'
+    },
+    {
+        title: 'Mode hors ligne',
+        content: 'Profitez de l\'application même sans connexion à l\'Internet',
+        icon: IconsCard.HorsLigne,
         status: 'Prévu T2 2020'
+    },
+    {
+        title: 'Mode \'App\'',
+        content:
+            'Lancez l\'application directement depuis le menu de votre téléphone',
+        icon: IconsCard.App,
+        status: 'Prévu T2 2020'
+    },
+    {
+        title: 'Recherche par mot clé',
+        content:
+            'Retrouvez toutes les fiches en lien avec un ou plusieurs mots clés',
+        icon: IconsCard.Recherche,
+        status: 'Prévu T3 2020'
     },
     {
         title: 'Echangez',
@@ -120,7 +121,9 @@ const cards: { title: string; content: string; icon: IconsCard, status: string }
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
-        root: {},
+        root: {
+            background : 'rgba(62, 72, 110, 0.05)'
+        },
         drawerHeader: {
             display: 'flex',
             alignItems: 'center',
@@ -145,10 +148,21 @@ const useStyles = makeStyles((theme: Theme) =>
         card: {
             height: '100%',
             display: 'flex',
-            flexDirection: 'column'
+            flexDirection: 'column',
+            padding: '10px',
+            textAlign: 'center',
+            '&:hover': {
+                color:' rgb(62, 72, 110)',
+                boxShadow: 'rgba(121, 148, 212, 0.4) 0px 1rem 2rem',
+                transform: 'translateY(-2px)'
+            }
+        },
+        cardTitle: {
+            fontSize: '15px',
+            fontWeight: 800,
+            textTransform: 'uppercase'
         },
         cardMedia: {
-            // paddingTop: "56.25%" // 16:9
             paddingTop: '0.25%',
             height: '115px !important',
             fontSize: '82px !important',
@@ -189,7 +203,7 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         statusChipNok: {
             backgroundColor: 'red'
-        }
+        },
     })
 );
 
@@ -219,7 +233,7 @@ const Home: NextPage<{}> = () =>
             </Head>
             <React.Fragment>
                 <CssBaseline />
-                <SearchAppBar title={'PSEasy - Fiches PSE'} />
+                <SearchAppBar />
 
                 <main>
                     <div className={classes.drawerHeader} />
@@ -258,6 +272,7 @@ const Home: NextPage<{}> = () =>
                                                 Consulter les fiches
                                             </Button>
                                         </Grid>
+                                       
                                     </Grid>
                                 </div>
                             </Container>
@@ -279,7 +294,7 @@ const Home: NextPage<{}> = () =>
                       title="Image title"
                     /> */}
                                         <CardContent className={classes.cardContent}>
-                                            <Typography gutterBottom variant="h5" component="h2">
+                                            <Typography gutterBottom className={classes.cardTitle}>
                                                 {card.title}
                                             </Typography>
                                             <Typography>{card.content}</Typography>
@@ -297,60 +312,16 @@ const Home: NextPage<{}> = () =>
                         </Grid>
                     </Container>
                 </main>
-                {/* <footer className={classes.footer}>
-          <Typography variant="h6" align="center" gutterBottom>
-            PSEasy
-          </Typography>
-          <Typography
-            variant="subtitle1"
-            align="center"
-            color="textSecondary"
-            component="p"
-          >
-            PSEasy est une application autonome, qui n'est pas liée à {' '}
-            <Link href="https://interieur.gouv.fr">interieur.gouv.fr</Link>, ni à quelconque instution officelle.
-           <br />
-            <Link href="https://www.interieur.gouv.fr/Le-ministere/Securite-civile/Documentation-technique/Secourisme-et-associations/Les-recommandations-et-les-referentiels/">Consultez les documents officiels</Link>{" "}
-
-          </Typography>
-          <br />
-          <Copyright />
-        </footer> */}
+  
                 <Footer />
-                {/* End footer */}
             </React.Fragment>
-            {/* <CssBaseline />
-      <SearchAppBar title={"PSEasy"} />
-      <main className={classes.content}>
-        <div className={classes.drawerHeader} />
-        <Typography>
-          PSEasy est une plateforme de consultation des recommandations et
-          référentiel relatifs au secourisme en France. Destiné avant tout aux
-          secouristes formés, cette application a pour but de faciliter la
-          consultation, la recherche et les nouveautés des fiches officielles.
-        </Typography>
-        <br />
-        <Typography>
-          PSEasy est une application autonome qui n'est pas liée à
-          interieur.gouv.fr, ni à quelconque instution officelle.
-          https://www.interieur.gouv.fr/Le-ministere/Securite-civile/Documentation-technique/Secourisme-et-associations/Les-recommandations-et-les-referentiels
-        </Typography>
-        <br />
-        <Typography>Roadmap * sdfs *s dfsdsf</Typography>
-        <br />
-        <Typography>
-          Pour tout contact de quelque nature, que ce soit pour des questions,
-          des propositions de fonctionnalités ou encore pour signalier un bug,
-          n'hésitez pas à envoyer un mail à contact[at]pseasy.fr.
-        </Typography>
-      </main> */}
+           
         </div>
     );
 };
 
 Home.getInitialProps = async ({ req }) => 
 {
-    console.log('TEST', process.env.TEST);
     console.log('GetInitialProps index');
     if (req) postVisit(req);
 

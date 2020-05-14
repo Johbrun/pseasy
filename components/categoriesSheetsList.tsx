@@ -51,7 +51,11 @@ const useStyles = makeStyles((theme: Theme) =>
             display: 'flex',
             [theme.breakpoints.down('xs')]: {
                 display: 'inherit'
-            }
+            },
+            border: '1px solid #dadce0',
+            borderRadius : '8px',
+            background: 'white',
+            padding: '10px'
         }
     })
 );
