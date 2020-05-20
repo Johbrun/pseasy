@@ -3,7 +3,7 @@
   "short_name": "Pseasy",
   "theme_color": "#00298a",
   "background_color": "#2196f3",
-  "display": "fullscreen",
+  "display": "standalone",
   "orientation": "portrait",
   "Scope": "/",
   "start_url": "/sheets",

@@ -22,7 +22,7 @@ import {
 import theme from '../../theme';
 import { fetchQuizzQuestions, insertQuizzAnswer } from '../../services/quizz.service';
 import { QuizzQuestionFull } from '../../lib/interfaces/quizz-question.interface';
-import { QuizzAnswer, QuizzAnswerCreation } from '../../lib/interfaces/quizz-answer.interface';
+import { QuizzAnswerCreation } from '../../lib/interfaces/quizz-answer.interface';
 import { postVisit } from '../../services/visit.service';
 import ResultModal from '../../components/resultModal';
 import computeScore from '../../lib/helpers/computeScore';
@@ -33,7 +33,6 @@ interface IProps {
   sheetsLight: SheetLight[];
   categories: Category[];
   quizzQuestions: QuizzQuestionFull[];
-  quizzAnswers: QuizzAnswer[];
 }
 
 const useStyles = makeStyles(() =>
@@ -153,7 +152,8 @@ const QuizzPage: NextPage<IProps> = ({ quizzQuestions }) =>
                             <CardContent>
                                 <Typography variant="body2" component="p">
                   Vous avez obtenu {computeScore(quizzQuestions, answers)}% de bonnes réponses au quizz ! Ci-dessous les
-                  réponses en vert, ainsi que les explications associées. Pour plus de détail, cliquer sur "Consulter la fiche" pour ouvrir la fiche associée
+                  réponses en vert, ainsi que les explications associées. Pour plus de détail, cliquer sur "Consulter la fiche" 
+                  pour ouvrir la fiche associée
                                 </Typography>
                             </CardContent>
                         </Card>
@@ -210,8 +210,7 @@ QuizzPage.getInitialProps = async ({ req }) =>
     return {
         sheetsLight: sheetsLight,
         categories,
-        quizzQuestions: quizzQuestions as QuizzQuestionFull[],
-        quizzAnswers: [],
+        quizzQuestions: quizzQuestions as QuizzQuestionFull[]
     };
 };
 
