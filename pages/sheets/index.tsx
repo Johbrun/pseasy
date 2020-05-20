@@ -48,14 +48,15 @@ const SheetPage: NextPage<IProps> = ({ sheet, sheetsLight, categories }) =>
 {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
-    const [currentSheet, setCurrentSheet] = React.useState<SheetExtended | undefined>(sheet);
-    const [currentSheetCompare, setCurrentSheetCompare] = React.useState(sheet);
+    //const [currentSheet, setCurrentSheet] = React.useState<SheetExtended | undefined>(sheet);
+    //const [currentSheetCompare, setCurrentSheetCompare] = React.useState(sheet);
 
+    console.log(sheet? sheet.reference : 'no sheet received');
     // console.log('__        sheet version', sheet ?  sheet.version : 'no sheet');
     // console.log('__ currentSheet version', currentSheet ?  currentSheet.version :  'no currentSheet');
     // console.log('__ compareSheet version', currentSheetCompare ?  currentSheetCompare.version : 'no sheet');
 
-    if (!sheet && currentSheet) 
+    /* if (!sheet && currentSheet) 
     {
         setCurrentSheet(undefined);
     }
@@ -63,19 +64,19 @@ const SheetPage: NextPage<IProps> = ({ sheet, sheetsLight, categories }) =>
     if (sheet && !currentSheet) 
     {
         setCurrentSheet(sheet);
-    }
+    }*/
 
     const onSelectVersion = async (version: string) => 
     {
-        console.log('onSelectVersion', version);
-        setCurrentSheet(await fetchSheetByReference(currentSheet ? currentSheet.reference : '', version));
+        // console.log('onSelectVersion', version);
+        // setCurrentSheet(await fetchSheetByReference(currentSheet ? currentSheet.reference : '', version));
         // sheet = await fetchSheetByReference(sheet? sheet.reference : '', version);
     };
 
     const onSelectCompare = async (version: string) => 
     {
-        console.log('onSelectCompare', version);
-        setCurrentSheetCompare(await fetchSheetByReference(currentSheetCompare ? currentSheetCompare.reference : '', version));
+        //console.log('onSelectCompare', version);
+        //setCurrentSheetCompare(await fetchSheetByReference(currentSheetCompare ? currentSheetCompare.reference : '', version));
     };
     return (
         <div className={classes.root}>
@@ -87,16 +88,14 @@ const SheetPage: NextPage<IProps> = ({ sheet, sheetsLight, categories }) =>
             </Head>
             <CssBaseline />
             <div className={classes.content}>
-                <SearchAppBar open={open} setOpen={setOpen} /*title={sheet ? sheet.title : undefined} *//>
+                <SearchAppBar open={open} setOpen={setOpen} />
 
                 <SideDrawer open={open} setOpen={setOpen} categories={categories} sheetsLight={sheetsLight} />
                
-                {/* <div className={classes.drawerHeader} /> */}
-
-                {currentSheet ? <SheetContent 
+                {sheet ? <SheetContent 
                     open={open} 
-                    sheet={currentSheet} 
-                    sheetCompare={currentSheetCompare} 
+                    sheet={sheet} 
+                    sheetCompare={undefined} 
                     onSelectVersion={onSelectVersion} 
                     onSelectCompare={onSelectCompare} /> : null}
 

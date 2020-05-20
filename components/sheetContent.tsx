@@ -89,8 +89,10 @@ export default function SheetContent(props: IProps)
 {
     const classes = useStyles();
     const type = refSheetToType( props.sheet.reference );
-    const [id, setId] = React.useState(props.sheet.id);
-    const [idC, setIdC] = React.useState(props.sheet.id);
+    //const [idSheet, setIdSheet] = React.useState(props.sheet.id);
+    // const [idC, setIdC] = React.useState(props.sheet.id);
+
+    console.log(props.sheet.history.map(h => h.id));
 
     // const [loading, setLoading] = React.useState(false);
     let diff;
@@ -108,19 +110,19 @@ export default function SheetContent(props: IProps)
 
     const onSelectCurrentVersion = (event: React.ChangeEvent<{ value: unknown }>) => 
     {
-        setId(event.target.value as string);
-        if (props.sheet.history && props.onSelectVersion)
-        {
-            props.onSelectVersion( props.sheet.history.find(s => s.id === event.target.value as string)!.version);
-        }
+        // setIdSheet(event.target.value as string);
+        // if (props.sheet.history && props.onSelectVersion)
+        // {
+        //     props.onSelectVersion( props.sheet.history.find(s => s.id === event.target.value as string)!.version);
+        // }
     };
     const onSelectCompareVersion = (event: React.ChangeEvent<{ value: unknown }>) => 
     {
-        setIdC(event.target.value as string);
-        if (props.sheet.history && props.onSelectCompare)
-        {
-            props.onSelectCompare( props.sheet.history.find(s => s.id === event.target.value as string)!.version);
-        }
+        // setIdC(event.target.value as string);
+        // if (props.sheet.history && props.onSelectCompare)
+        // {
+        //     props.onSelectCompare( props.sheet.history.find(s => s.id === event.target.value as string)!.version);
+        // }
     };
 
     return (
@@ -153,7 +155,7 @@ export default function SheetContent(props: IProps)
                             <Select
                                 labelId="demo-simple-select-label"
                                 id="demo-simple-select"
-                                value={id}
+                                value={props.sheet.id}
                                 onChange={onSelectCurrentVersion}
                             >
                                 {props.sheet.history.map(h =>
@@ -167,7 +169,7 @@ export default function SheetContent(props: IProps)
                             <Select
                                 labelId="demo-simple-select-label"
                                 id="demo-simple-select"
-                                value={idC}
+                                value={props.sheet.id}
                                 onChange={onSelectCompareVersion}
                             >
                                 {/* <MenuItem key={5} value={5}>Non disponible</MenuItem> */}
