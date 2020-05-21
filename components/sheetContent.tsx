@@ -92,7 +92,7 @@ export default function SheetContent(props: IProps)
     //const [idSheet, setIdSheet] = React.useState(props.sheet.id);
     // const [idC, setIdC] = React.useState(props.sheet.id);
 
-    console.log(props.sheet.history.map(h => h.id));
+    console.log('sheet version ? ' , props.sheet.version);
 
     // const [loading, setLoading] = React.useState(false);
     let diff;
@@ -111,10 +111,16 @@ export default function SheetContent(props: IProps)
     const onSelectCurrentVersion = (event: React.ChangeEvent<{ value: unknown }>) => 
     {
         // setIdSheet(event.target.value as string);
-        // if (props.sheet.history && props.onSelectVersion)
-        // {
-        //     props.onSelectVersion( props.sheet.history.find(s => s.id === event.target.value as string)!.version);
-        // }
+        if (props.sheet.history && props.onSelectVersion)
+        {
+            console.log(props.sheet.history, event.target.value);
+            const hSelected =  props.sheet.history.find(s => s.id === event.target.value as string);
+            if (hSelected)
+                props.onSelectVersion( hSelected.version);
+            else
+
+                console.error('no history ? ');
+        }
     };
     const onSelectCompareVersion = (event: React.ChangeEvent<{ value: unknown }>) => 
     {

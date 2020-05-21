@@ -14,6 +14,7 @@ import Footer from '../../components/footer';
 import { fetchSheetByReference, fetchSheetsLight } from '../../services/sheet.service';
 import { fetchCategories } from '../../services/category.service';
 import { postVisit } from '../../services/visit.service';
+import { useRouter } from 'next/router';
 
 interface IProps {
     sheet?: SheetExtended;
@@ -51,7 +52,14 @@ const SheetPage: NextPage<IProps> = ({ sheet, sheetsLight, categories }) =>
     //const [currentSheet, setCurrentSheet] = React.useState<SheetExtended | undefined>(sheet);
     //const [currentSheetCompare, setCurrentSheetCompare] = React.useState(sheet);
 
-    console.log(sheet? sheet.reference : 'no sheet received');
+    /*if (!currentSheet || sheet?.reference !== currentSheet.reference || sheet?.updatedDate !== currentSheet.updatedDate) 
+    {
+        console.log('update current sheet');
+        setCurrentSheet(sheet);
+    }*/
+
+    //console.log('index current', currentSheet? currentSheet.version : 'no sheet received');
+    console.log('index sheet', sheet? sheet.version : 'no sheet received');
     // console.log('__        sheet version', sheet ?  sheet.version : 'no sheet');
     // console.log('__ currentSheet version', currentSheet ?  currentSheet.version :  'no currentSheet');
     // console.log('__ compareSheet version', currentSheetCompare ?  currentSheetCompare.version : 'no sheet');
@@ -59,18 +67,18 @@ const SheetPage: NextPage<IProps> = ({ sheet, sheetsLight, categories }) =>
     /* if (!sheet && currentSheet) 
     {
         setCurrentSheet(undefined);
-    }
-
-    if (sheet && !currentSheet) 
-    {
-        setCurrentSheet(sheet);
     }*/
+
+    const router = useRouter();
+  
 
     const onSelectVersion = async (version: string) => 
     {
-        // console.log('onSelectVersion', version);
-        // setCurrentSheet(await fetchSheetByReference(currentSheet ? currentSheet.reference : '', version));
-        // sheet = await fetchSheetByReference(sheet? sheet.reference : '', version);
+        console.log('onSelectVersion', version);
+        router.push(`/sheets?reference=${sheet?.reference}&version=${version}`, undefined);
+        //setCurrentSheet(await fetchSheetByReference(currentSheet ? currentSheet.reference : '', version));
+        //sheet = await fetchSheetByReference(sheet? sheet.reference : '', version);
+        //setCurrentSheet(sheet);
     };
 
     const onSelectCompare = async (version: string) => 
@@ -119,7 +127,7 @@ SheetPage.getInitialProps = async ({ req, query }) =>
     const apiCalls: Promise<any>[] = [fetchSheetsLight(), fetchCategories()];
     if (query.reference) 
     {
-        apiCalls.push(fetchSheetByReference(query.reference));
+        apiCalls.push(fetchSheetByReference(query.reference, query.version));
     }
 
     const [sheetsLight, categories, sheetExtended] = await Promise.all(apiCalls);
