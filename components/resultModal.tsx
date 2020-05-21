@@ -18,6 +18,7 @@ const useStyles = makeStyles(theme => ({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
+        
     },
     paper: {
         position: 'absolute',
@@ -25,6 +26,10 @@ const useStyles = makeStyles(theme => ({
         backgroundColor: theme.palette.background.paper,
         boxShadow: theme.shadows[5],
         padding: theme.spacing(2, 4, 3),
+        [theme.breakpoints.down('sm')]: {
+            width: '80%',
+            fontSize: '17px'
+        }
     },
     score : {
         fontSize: '28px',
