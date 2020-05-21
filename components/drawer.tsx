@@ -179,7 +179,7 @@ export default function SideDrawer(props: IProps)
                                                 primary={
                                                     <>
                                                         {prefixFromReference(s.reference)}
-                                                        <Link href={`/sheets?reference=${s.reference}`}>
+                                                        <Link href={'/sheets/[reference]'} as={`/sheets/${s.reference}`}>
                                                             <a>{s.title ? s.title : 'Aucun titre renseigné'}</a>
                                                         </Link>
                                                     </>
