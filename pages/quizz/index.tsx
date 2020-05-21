@@ -43,13 +43,15 @@ const useStyles = makeStyles(() =>
             fontWeight: 400,
             lineHeight: '1.73',
             letterSpacing: '0.01071em',
-            background : 'rgba(62, 72, 110, 0.05)'
+            background : 'rgba(62, 72, 110, 0.05)',
+            flex : 1,
+            '& h1' : {
+                textAlign : 'center'
+            }
         },
         content: {
             display: 'flex',
-            padding: 20,
         },
-        explainations: {},
         drawerHeader: {
             display: 'flex',
             alignItems: 'center',
@@ -57,15 +59,16 @@ const useStyles = makeStyles(() =>
             ...theme.mixins.toolbar,
             justifyContent: 'flex-end',
         },
-        gridQuizz: {
-            margin: 'auto',
-            //   maxWidth: '60vw',
-            //   width: '640px',
-        },
         divCompleted: {
             backgroundColor: 'aliceblue',
             marginBottom: '25px',
         },
+        validate : {
+            margin: '30px'
+        },
+        quizzGrid : {
+            padding: '25px'
+        }
     })
 );
 
@@ -143,7 +146,7 @@ const QuizzPage: NextPage<IProps> = ({ quizzQuestions }) =>
             <div className={classes.content}>
                 <SearchAppBar />
 
-                <main>
+                <main className={classes.root}>
                     <div className={classes.drawerHeader} />
                     <h1>Quizz</h1>
 
@@ -160,30 +163,34 @@ const QuizzPage: NextPage<IProps> = ({ quizzQuestions }) =>
                     )}
                     {answers && (
                         <div>
-                            <Grid container spacing={2} className={classes.gridQuizz}>
+                            <Grid container
+                                direction="column"
+                                justify="center"
+                                alignItems="center" item xs={12} sm={12} md={12}
+                                className={classes.quizzGrid}
+                            >
                                 {quizzQuestions.map((qq: QuizzQuestionFull) => (
-                                    <Grid container
-                                        direction="column"
-                                        justify="center"
-                                        alignItems="center" key={qq.id} item xs={12} sm={12} md={12}>
-                                        <QuizzQuestion 
-                                            question={qq} 
-                                            answers={answers.find((a) => a.idQuestion === qq.id)}
-                                            completed= {completed}
-                                            handleChange={handleChange}
-                                            handleOpenSheet = {handleOpenSheet}
-                                        />
-                                    </Grid>
+                                        
+                                    <QuizzQuestion 
+                                        key={qq.id} 
+                                        question={qq} 
+                                        answers={answers.find((a) => a.idQuestion === qq.id)}
+                                        completed= {completed}
+                                        handleChange={handleChange}
+                                        handleOpenSheet = {handleOpenSheet}
+                                    />
                                 ))}
+                                {!completed && (
+                                    <Button className={classes.validate} variant="contained" color="primary" onClick={handleClickValidate}>
+              Valider les réponses
+                                    </Button>
+                                )}
                             </Grid>
+                            
                         </div>
                     )}
 
-                    {!completed && (
-                        <Button variant="contained" color="primary" onClick={handleClickValidate}>
-              Valider les réponses
-                        </Button>
-                    )}
+                   
                     {displayModale && <ResultModal value={computeScore(quizzQuestions, answers)} />}
                     {sheet && <SheetModal sheet={sheet} onClose={() => setSheet(undefined)} />}
                 </main>
