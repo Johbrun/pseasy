@@ -50,6 +50,10 @@ export default class MyApp extends App
                     <link href='/icons/icon-384x384.png' rel='icon' type='image/png' sizes='384x384' />
                     <link href='/icons/icon-512x512.png' rel='icon' type='image/png' sizes='512x512' />
 
+                    <link rel="icon" href="/favicon.ico" />
+                    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
+                    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+                
                     <link rel="apple-touch-icon" href="/apple-icon.png"></link>
                     
                     <meta httpEquiv="X-UA-Compatible" content="IE=edge"/>

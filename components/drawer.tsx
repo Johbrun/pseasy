@@ -103,13 +103,11 @@ export default function SideDrawer(props: IProps)
     {
         if (id === openedId) 
         {
-            // when click on selected
             id = -1;
         }
         setOpenedId(id);
     };
 
-    console.log('waaa', props.open);
     return (
         <div className={classes.root}>
             <Drawer

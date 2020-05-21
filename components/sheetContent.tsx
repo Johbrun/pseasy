@@ -89,12 +89,8 @@ export default function SheetContent(props: IProps)
 {
     const classes = useStyles();
     const type = refSheetToType( props.sheet.reference );
-    //const [idSheet, setIdSheet] = React.useState(props.sheet.id);
-    // const [idC, setIdC] = React.useState(props.sheet.id);
 
-    console.log('sheet version ? ' , props.sheet.version);
-
-    // const [loading, setLoading] = React.useState(false);
+    // compute txt with diffs
     let diff;
     if (props.sheetCompare && props.sheet.updatedDate < props.sheetCompare?.updatedDate)
     {
@@ -105,12 +101,10 @@ export default function SheetContent(props: IProps)
         diff = jsdiff.diffWords(props.sheetCompare ? props.sheetCompare.content : props.sheet.content, props.sheet.content );
     }
     const txt = diff.map(d => d.added ? `__${d.value}__` : d.removed ? `<s>${d.value}</s>` : d.value).join('');
-    // if (loading) setLoading(true); // how to loading ?
 
 
     const onSelectCurrentVersion = (event: React.ChangeEvent<{ value: unknown }>) => 
     {
-        // setIdSheet(event.target.value as string);
         if (props.sheet.history && props.onSelectVersion)
         {
             console.log(props.sheet.history, event.target.value);
@@ -118,17 +112,16 @@ export default function SheetContent(props: IProps)
             if (hSelected)
                 props.onSelectVersion( hSelected.version);
             else
-
                 console.error('no history ? ');
         }
     };
+
     const onSelectCompareVersion = (event: React.ChangeEvent<{ value: unknown }>) => 
     {
-        // setIdC(event.target.value as string);
-        // if (props.sheet.history && props.onSelectCompare)
-        // {
-        //     props.onSelectCompare( props.sheet.history.find(s => s.id === event.target.value as string)!.version);
-        // }
+        if (props.sheet.history && props.onSelectCompare)
+        {
+            props.onSelectCompare( props.sheet.history.find(s => s.id === event.target.value as string)!.version);
+        }
     };
 
     return (
@@ -140,7 +133,7 @@ export default function SheetContent(props: IProps)
             >
                 {/* Yeah, very ugly but it is to not display space in the modale */}
                 {props.onSelectCompare && <div className={classes.drawerHeader} />}
-                {/* {loading && <span>Chargement en cours...</span> } */}
+               
                 <h1 className={classes.title}>{ props.sheet.title}</h1>
                 <div className={classes.metadata}>
                     <span>Fiche { props.sheet.reference } ; </span>
@@ -175,10 +168,9 @@ export default function SheetContent(props: IProps)
                             <Select
                                 labelId="demo-simple-select-label"
                                 id="demo-simple-select"
-                                value={props.sheet.id}
+                                value={props.sheetCompare ? props.sheetCompare.id : undefined}
                                 onChange={onSelectCompareVersion}
                             >
-                                {/* <MenuItem key={5} value={5}>Non disponible</MenuItem> */}
                                 {props.sheet.history.map(h => 
                                     <MenuItem key={h.version} value={h.id}>{toDateFormated(new Date(h.updatedDate))}</MenuItem> 
                                 )}
@@ -187,7 +179,6 @@ export default function SheetContent(props: IProps)
                     </div> 
                 }
                
-                
                 <ReactMarkdown source={ txt} escapeHtml={false}/>
             </main>
         </>
