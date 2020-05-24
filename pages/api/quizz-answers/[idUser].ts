@@ -8,7 +8,7 @@ module.exports = async (req: express.Request, res: express.Response) =>
 
     if (req.method === 'GET') 
     {
-        console.log('quizz ansier asked id : ' + req.query.idUser);
+        console.log('quizz answer requested id : ' + req.query.idUser);
         const answers = await getQuizzAnswersByUserId(req.query.idUser);
         return res.status(200).json(answers);
     }
