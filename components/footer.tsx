@@ -9,7 +9,7 @@ function Copyright()
     return (
         <>
             <Typography variant="body2" color="textSecondary" align="center">
-         Build {process.env.ENV} {process.env.BUILD_DATE}
+         Build {process.env.ENV?.toLowerCase()} {process.env.BUILD_DATE}
             </Typography>
             <Typography variant="body2" color="textSecondary" align="center">
                 {'Copyright © '} PSEasy {' '}

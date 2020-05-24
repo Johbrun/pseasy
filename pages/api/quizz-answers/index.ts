@@ -5,8 +5,6 @@ import saveNewVisitor from '../../../lib/actions/saveNewVisitor';
 import insertQuizzAnswers from '../../../lib/query/insertQuizzAnswers';
 import { QuizzAnswerCreation } from '../../../lib/interfaces/quizz-answer.interface';
 import getQuizzQuestionsFull from '../../../lib/query/getQuizzQuestionsFull';
-import getQuizzAnswersByUserId from '../../../lib/query/getQuizzAnswersByUserId';
-import getQuizzQuestions from '../../../lib/query/getQuizzQuestions';
 import getQuizzStats from '../../../lib/query/getQuizzStats';
 import insertQuizzStat from '../../../lib/query/insertQuizzStat';
 import { QuizzStat } from '../../../lib/interfaces/quizz-stat.interface';

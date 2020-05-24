@@ -5,8 +5,9 @@ import ReactMarkdown from 'react-markdown';
 import { SheetExtended } from '../lib/interfaces/sheet.interface';
 import { refSheetToType } from '../lib/helpers/refSheetToType';
 import { toDateFormated } from '../lib/helpers/toDateFormated';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import * as jsdiff from 'diff';
+import DiffModal from './diffModal';
 
 const drawerWidth = 400;
 
@@ -89,6 +90,7 @@ export default function SheetContent(props: IProps)
 {
     const classes = useStyles();
     const type = refSheetToType( props.sheet.reference );
+    const [showModale, setShowModale] = useState<boolean>(false);
 
     // compute txt with diffs
     let diff;
@@ -101,6 +103,12 @@ export default function SheetContent(props: IProps)
         diff = jsdiff.diffWords(props.sheetCompare ? props.sheetCompare.content : props.sheet.content, props.sheet.content );
     }
     const txt = diff.map(d => d.added ? `__${d.value}__` : d.removed ? `<s>${d.value}</s>` : d.value).join('');
+
+    useEffect(() => 
+    {
+        setShowModale(false);
+    }, [props.sheetCompare]);
+
 
 
     const onSelectCurrentVersion = (event: React.ChangeEvent<{ value: unknown }>) => 
@@ -120,6 +128,10 @@ export default function SheetContent(props: IProps)
     {
         if (props.sheet.history && props.onSelectCompare)
         {
+            console.log('sdfljsdfkjsdfl');
+
+            setShowModale(true);
+
             props.onSelectCompare( props.sheet.history.find(s => s.id === event.target.value as string)!.version);
         }
     };
@@ -133,7 +145,9 @@ export default function SheetContent(props: IProps)
             >
                 {/* Yeah, very ugly but it is to not display space in the modale */}
                 {props.onSelectCompare && <div className={classes.drawerHeader} />}
-               
+              
+                {showModale && <DiffModal />}
+
                 <h1 className={classes.title}>{ props.sheet.title}</h1>
                 <div className={classes.metadata}>
                     <span>Fiche { props.sheet.reference } ; </span>
