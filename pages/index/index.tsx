@@ -32,7 +32,6 @@ import CommentIcon from '@material-ui/icons/Comment';
 import { useRouter } from 'next/router';
 import Footer from '../../components/footer';
 import { postVisit } from '../../services/visit.service';
-import WarningModal from '../../components/warningModal';
 
 const getIconElementFromName = (icon: IconsCard, classes: any) => 
 {

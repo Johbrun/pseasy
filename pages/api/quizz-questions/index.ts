@@ -21,9 +21,9 @@ module.exports = async (req: express.Request, res: express.Response) =>
     if (req.method === 'GET') 
     {
         console.log(visitUser);
-        const categories = await getQuizzQuestions();
+        const questions = await getQuizzQuestions();
         res.setHeader('Content-Type', 'application/json');
-        res.status(200).json(categories);
+        res.status(200).json(questions);
     }
     else 
     {

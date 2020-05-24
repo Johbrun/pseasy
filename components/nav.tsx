@@ -221,7 +221,7 @@ export default function SearchAppBar(props: IProps)
                     <div className={clsx(classes.logo, {
                         [classes.extraLeftMargin]: typeof props.open === 'undefined'
                     })} onClick={() => router.push('/')}>
-                        <img src="logo.png"/>
+                        <img src="/logo.png"/>
                     </div>
                     {/* <Typography className={classes.title} variant="h6" noWrap>
                         PSEasy
