@@ -22,7 +22,7 @@ export default class MyDocument extends Document
                         href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
                     />
                 </Head>
-                <script src="woopra.js"></script> 
+                {process.env.NODE_ENV.toLowerCase() === 'production' && <script src="woopra.js"></script> }
                 <body>
                     <Main />
                     <NextScript />

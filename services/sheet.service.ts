@@ -16,7 +16,7 @@ const fetchSheetsLight = async (noCache: boolean = false) =>
     return sheetsLight;
 };
 
-const fetchSheetByReference = async (reference: string | string[], version?:string) => 
+const fetchSheetByReference = async (reference: string | string[], version?:string| string[]) => 
 {
     if (!reference) 
     {

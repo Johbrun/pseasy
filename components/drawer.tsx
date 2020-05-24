@@ -1,7 +1,7 @@
 import React from 'react';
 import IconButton from '@material-ui/core/IconButton';
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
-import { Link, List, ListItemIcon, Collapse, Chip } from '@material-ui/core';
+import { List, ListItemIcon, Collapse, Chip } from '@material-ui/core';
 import Drawer from '@material-ui/core/Drawer';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -16,6 +16,7 @@ import { useRouter } from 'next/router';
 import { refSheetToType } from '../lib/helpers/refSheetToType';
 import clsx from 'clsx';
 import AssignmentIcon from '@material-ui/icons/Assignment';
+import Link from 'next/link';
 
 interface IProps {
     categories: Category[];
@@ -102,13 +103,11 @@ export default function SideDrawer(props: IProps)
     {
         if (id === openedId) 
         {
-            // when click on selected
             id = -1;
         }
         setOpenedId(id);
     };
 
-    console.log('waaa', props.open);
     return (
         <div className={classes.root}>
             <Drawer
@@ -178,7 +177,7 @@ export default function SideDrawer(props: IProps)
                                                 primary={
                                                     <>
                                                         {prefixFromReference(s.reference)}
-                                                        <Link href={`/sheets?reference=${s.reference}`}>
+                                                        <Link href={'/sheets/[reference]'} as={`/sheets/${s.reference}`}>
                                                             <a>{s.title ? s.title : 'Aucun titre renseigné'}</a>
                                                         </Link>
                                                     </>

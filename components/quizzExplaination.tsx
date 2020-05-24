@@ -1,13 +1,10 @@
 /* eslint-disable react/jsx-no-undef */
 /* eslint-disable react/react-in-jsx-scope */
-import { makeStyles, Theme, createStyles, Grid, TextField, Card, CardContent, Typography, CardActions, Button } from '@material-ui/core';
-import SearchRoundedIcon from '@material-ui/icons/SearchRounded';
-import { Dispatch, SetStateAction } from 'react';
+import { makeStyles, Card, CardContent, Typography, CardActions, Button } from '@material-ui/core';
 import clsx from 'clsx';
 
 const useStyles = makeStyles({
     root: {
-        minWidth: 275,
     },
     bullet: {
         display: 'inline-block',

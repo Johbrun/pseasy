@@ -20,8 +20,8 @@ const useStyles = makeStyles({
         marginTop: '12px',
         borderRadius: '8px',
         width: '640px',
-        [theme.breakpoints.down('xs')]: {
-            width: '100%'
+        [theme.breakpoints.down('sm')]: {
+            width: '100%',
         }
     },
     formControl: {

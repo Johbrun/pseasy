@@ -18,33 +18,21 @@ const useStyles = makeStyles(theme => ({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        
     },
     paper: {
         position: 'absolute',
-        width: 450,
+        width: '45%',
+        height: 'auto%',
         backgroundColor: theme.palette.background.paper,
         boxShadow: theme.shadows[5],
         padding: theme.spacing(2, 4, 3),
         [theme.breakpoints.down('sm')]: {
-            width: '80%',
-            fontSize: '17px'
+            width: '85%'
         }
     },
-    score : {
-        fontSize: '28px',
-        margin: '0px',
-        marginLeft: 'auto',
-        marginRight: 'auto',
-        textAlign: 'center',
-    }
 }));
 
-interface IProps {
-    value : number;
-}
-
-export default function ResultModal(props:IProps) 
+export default function DiffModal() 
 {
     const classes = useStyles();
     const [modalStyle] = React.useState(getModalStyle);
@@ -52,7 +40,7 @@ export default function ResultModal(props:IProps)
 
     const handleClose = () => 
     {
-        setOpen(false);
+
     };
 
     return (
@@ -64,23 +52,10 @@ export default function ResultModal(props:IProps)
                 onClose={handleClose}
             >
                 <div style={modalStyle} className={classes.paper}>
-                    <h2>Résultats</h2>
-                    <p className={classes.score}>{props.value}%</p>
+                    <h2>Travail en cours</h2>
                     <p>
-                        Ceci est votre taux de bonnes réponses ! A savoir que toutes les cases valides doivent être cochées pour que la réponse soit acceptée.
+                            Calcul des différences en cours, le processus ne devrait prendre que quelques secondes...
                     </p>
-                    <p>
-                        N'hésitez pas à revenir plus tard pour de nouveaux quizz, et merci d'avoir expérimenté PSEasy - Quizz !
-                    </p>
-                    <p>
-                        L'équipe PSEasy 
-                    </p>
-                    <p>
-                        Love
-                    </p>
-                    <Button variant="contained" color="primary" onClick={handleClose}>
-                         Valider
-                    </Button>
                 </div>
             </Modal>
         </div>

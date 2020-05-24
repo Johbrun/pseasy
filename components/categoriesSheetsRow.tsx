@@ -94,7 +94,7 @@ export default function CategoriesSheetsRow(props: IProps)
 
     const handleClick = (event: React.MouseEvent<unknown>, reference: string) => 
     {
-        router.push(`/sheets?reference=${reference}`);
+        router.push(`/sheets/${reference}`, `/sheets/${reference}`);
     };
 
     if (props.sheetsLight.length === 0) return <></>;
