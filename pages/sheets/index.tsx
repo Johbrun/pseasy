@@ -23,20 +23,19 @@ const useStyles = makeStyles(() =>
     createStyles({
         root: {
             fontSize: '0.875rem',
-            fontFamily: '\'Avenir\', \'Roboto\', \'Helvetica\', \'Arial\', sans-serif',
+            fontFamily: "'Avenir', 'Roboto', 'Helvetica', 'Arial', sans-serif",
             fontWeight: 400,
             lineHeight: '1.73',
             letterSpacing: '0.01071em',
             background: 'rgba(62, 72, 110, 0.05)',
         },
         content: {
-            display: 'flex'
+            display: 'flex',
         },
     })
 );
 
-const SheetPage: NextPage<IProps> = ({ sheetsLight, categories }) => 
-{
+const SheetPage: NextPage<IProps> = ({ sheetsLight, categories }) => {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
 
@@ -50,20 +49,25 @@ const SheetPage: NextPage<IProps> = ({ sheetsLight, categories }) =>
             <div className={classes.content}>
                 <SearchAppBar open={open} setOpen={setOpen} />
 
-                <SideDrawer open={open} setOpen={setOpen} categories={categories} sheetsLight={sheetsLight} />
-               
+                <SideDrawer
+                    open={open}
+                    setOpen={setOpen}
+                    categories={categories}
+                    sheetsLight={sheetsLight}
+                />
+
                 <CategoriesSheetsList
                     open={open}
                     categories={categories}
-                    sheetsLight={sheetsLight} />
+                    sheetsLight={sheetsLight}
+                />
             </div>
             <Footer />
         </div>
     );
 };
 
-SheetPage.getInitialProps = async ({ req }) => 
-{
+SheetPage.getInitialProps = async ({ req }) => {
     if (req) postVisit(req);
     const start = +new Date();
 
@@ -71,11 +75,15 @@ SheetPage.getInitialProps = async ({ req }) =>
     const [sheetsLight, categories] = await Promise.all(apiCalls);
 
     const end = +new Date();
-    console.log(`Data fetched ; Count: ${sheetsLight.length} in ${(end - start) / 1000} seconds`);
+    console.log(
+        `Data fetched ; Count: ${sheetsLight.length} in ${
+            (end - start) / 1000
+        } seconds`
+    );
 
     return {
         sheetsLight: sheetsLight,
-        categories
+        categories,
     };
 };
 

@@ -25,16 +25,16 @@ app.prepare().then(() => {
     });
 
     server.get('*', (req, res) => {
-        if (/*dev || */req.query.noCache) { // FIX THAAAAAAAAAAAAAAAT
+        if (/*dev || */ req.query.noCache) {
+            // FIX THAAAAAAAAAAAAAAAT
             res.setHeader('X-Cache-Status', 'DISABLED');
             defaultRequestHandler(req, res);
-        }
-        else {
+        } else {
             ssrCache({ req, res, pagePath: req.path });
         }
     });
 
-    server.listen(port, err => {
+    server.listen(port, (err) => {
         if (err) throw err;
         console.log(`> Ready on http://localhost:${port}`);
     });

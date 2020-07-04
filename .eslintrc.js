@@ -1,54 +1,42 @@
 module.exports = {
-    'env': {
-        'browser': true,
-        'es6': true,
-        'node': true
+    env: {
+        browser: true,
+        es6: true,
+        node: true,
     },
-    'extends': [
+    extends: [
         'eslint:recommended',
         'plugin:react/recommended',
-        'plugin:@typescript-eslint/eslint-recommended'
+        'plugin:@typescript-eslint/eslint-recommended',
     ],
-    'globals': {
-        'Atomics': 'readonly',
-        'SharedArrayBuffer': 'readonly'
+    globals: {
+        Atomics: 'readonly',
+        SharedArrayBuffer: 'readonly',
     },
-    'parser': '@typescript-eslint/parser',
-    'parserOptions': {
-        'ecmaFeatures': {
-            'jsx': true
+    parser: '@typescript-eslint/parser',
+    parserOptions: {
+        ecmaFeatures: {
+            jsx: true,
         },
-        'ecmaVersion': 2018,
-        'sourceType': 'module'
+        ecmaVersion: 2018,
+        sourceType: 'module',
     },
-    'plugins': [
-        'react',
-        '@typescript-eslint'
-    ],
-    'rules': {
-        'indent': [
-            'error',
-            4
-        ],
-        'linebreak-style': [
+    plugins: ['react', '@typescript-eslint'],
+    rules: {
+        indent: ['error', 4],
+        'linebreak-style': ['warn', 'unix'],
+        quotes: ['error', 'single'],
+        semi: ['error', 'always'],
+        'no-unused-vars': 'off',
+        '@typescript-eslint/no-unused-vars': [
             'warn',
-            'unix'
+            {
+                vars: 'all',
+                args: 'after-used',
+                ignoreRestSiblings: false,
+            },
         ],
-        'quotes': [
-            'error',
-            'single'
-        ],
-        'semi': [
-            'error',
-            'always'
-        ],
-        "no-unused-vars": "off",
-        "@typescript-eslint/no-unused-vars": ["warn", {
-          "vars": "all",
-          "args": "after-used",
-          "ignoreRestSiblings": false
-        }],
-        'brace-style' : ['error', 'allman', {'allowSingleLine' : true}],
-        'max-len' : ['error', {'code' : 130}]
-    }
+        'brace-style': ['error', 'allman', { allowSingleLine: true }],
+        'max-len': ['error', { code: 130 }],
+    },
 };

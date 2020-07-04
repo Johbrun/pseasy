@@ -5,10 +5,9 @@ import Link from 'next/link';
 import SheetContent from './sheetContent';
 import { SheetExtended } from '../lib/interfaces/sheet.interface';
 
-function getModalStyle() 
-{
-    const top = 4  ;
-    const left = 4  ;
+function getModalStyle() {
+    const top = 4;
+    const left = 4;
     return {
         top: `${top}%`,
         left: `${left}%`,
@@ -16,7 +15,7 @@ function getModalStyle()
     };
 }
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
     modal: {
         display: 'flex',
         alignItems: 'center',
@@ -28,30 +27,28 @@ const useStyles = makeStyles(theme => ({
         height: '90%',
         backgroundColor: theme.palette.background.paper,
         boxShadow: theme.shadows[5],
-        padding: theme.spacing(2, 4, 3)
+        padding: theme.spacing(2, 4, 3),
     },
     container: {
-        marginTop : '20px',
+        marginTop: '20px',
         marginLeft: '-35px',
         marginRight: '-35px',
         overflow: 'auto',
-        height: 'inherit'
-    }
+        height: 'inherit',
+    },
 }));
 
 interface IProps {
-    sheet : SheetExtended;
-    onClose : () => void
+    sheet: SheetExtended;
+    onClose: () => void;
 }
 
-export default function SheetModal(props:IProps) 
-{
+export default function SheetModal(props: IProps) {
     const classes = useStyles();
     const [modalStyle] = React.useState(getModalStyle);
     const [open, setOpen] = React.useState(true);
 
-    const handleClose = () => 
-    {
+    const handleClose = () => {
         setOpen(false);
     };
 
@@ -64,11 +61,15 @@ export default function SheetModal(props:IProps)
                 onClose={handleClose}
             >
                 <div style={modalStyle} className={classes.paper}>
-                    <Button variant="contained" color="primary" onClick={props.onClose}>
-                         Fermer
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={props.onClose}
+                    >
+                        Fermer
                     </Button>
                     <div className={classes.container}>
-                        <SheetContent sheet={props.sheet} open={true}/>
+                        <SheetContent sheet={props.sheet} open={true} />
                     </div>
                 </div>
             </Modal>

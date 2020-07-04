@@ -2,12 +2,17 @@ import query from '../db';
 import escape from 'sql-template-strings';
 import { Sheet } from '../interfaces/sheet.interface';
 
-const getSheetByReference = async (reference: string, version?:string) : Promise<Sheet[]>=> 
-{
-    console.debug(`getSheetByReference() called ; reference : ${reference} ; version : ${version}`);
+const getSheetByReference = async (
+    reference: string,
+    version?: string
+): Promise<Sheet[]> => {
+    console.debug(
+        `getSheetByReference() called ; reference : ${reference} ; version : ${version}`
+    );
 
-    const q = typeof version !== 'undefined' && version !== 'undefined'?
-        escape`
+    const q =
+        typeof version !== 'undefined' && version !== 'undefined'
+            ? escape`
           SELECT id, reference, version, updatedDate, title, content, level, createdAdminDate, idCategory
           FROM sheet
           WHERE reference = ${reference}
@@ -15,8 +20,7 @@ const getSheetByReference = async (reference: string, version?:string) : Promise
           ORDER BY updatedDate DESC
           LIMIT 1
         `
-        :
-        escape`
+            : escape`
           SELECT id, reference, version, updatedDate, title, content, level, createdAdminDate, idCategory
           FROM sheet
           WHERE reference = ${reference}
@@ -26,7 +30,7 @@ const getSheetByReference = async (reference: string, version?:string) : Promise
 
     console.log(q);
 
-    return await query(q).catch(e => console.error(e)) as Sheet[];
+    return (await query(q).catch((e) => console.error(e))) as Sheet[];
 };
 
 export default getSheetByReference;

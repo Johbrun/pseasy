@@ -11,24 +11,18 @@ import { QuizzStat } from '../../../lib/interfaces/quizz-stat.interface';
 import computeScore from '../../../lib/helpers/computeScore';
 import updateQuizzStat from '../../../lib/query/updateQuizzStat';
 
-module.exports = async (req: express.Request, res: express.Response) => 
-{
+module.exports = async (req: express.Request, res: express.Response) => {
     let userId = '';
-    try 
-    {
-        userId = await saveNewVisitor( queryToVisitUser(req));
-    }
-    catch (e) 
-    {
+    try {
+        userId = await saveNewVisitor(queryToVisitUser(req));
+    } catch (e) {
         console.error(e);
     }
     console.log('userId', userId);
 
     res.setHeader('Content-Type', 'application/json');
 
-    
-    if (req.method === 'POST') 
-    {
+    if (req.method === 'POST') {
         // uncomment when accounts
         // const answers = await getQuizzAnswersByUserId(userId);
         // if (answers.length !== 0)
@@ -41,40 +35,39 @@ module.exports = async (req: express.Request, res: express.Response) =>
         const questions = await getQuizzQuestionsFull();
         const stats = await getQuizzStats();
 
-
         const body = req.body as QuizzAnswerCreation[];
-        for (const quizzAnswer of body)
-        {
+        for (const quizzAnswer of body) {
             quizzAnswer.idUser = userId;
             await insertQuizzAnswers(quizzAnswer);
 
             // add stat first response
-            const question = questions.find(q => q.id === quizzAnswer.idQuestion);
-            if (question)
-            {
-                let stat = stats.find(s => s.idQuestion === question.id);
-                if (!stat)
-                {
-                    stat = {idQuestion : question.id, nbAnswers:0, nbFirstOk:0} as QuizzStat;
+            const question = questions.find(
+                (q) => q.id === quizzAnswer.idQuestion
+            );
+            if (question) {
+                let stat = stats.find((s) => s.idQuestion === question.id);
+                if (!stat) {
+                    stat = {
+                        idQuestion: question.id,
+                        nbAnswers: 0,
+                        nbFirstOk: 0,
+                    } as QuizzStat;
                     await insertQuizzStat(stat);
                 }
                 stat.nbAnswers++;
                 const score = computeScore([question], [quizzAnswer]);
-                if (score === 100) 
-                {
+                if (score === 100) {
                     stat.nbFirstOk++;
                 }
                 // no need to wait
                 updateQuizzStat(stat);
             }
         }
-       
+
         const response = await getQuizzQuestionsFull();
         res.setHeader('Content-Type', 'application/json');
         res.status(200).json(response);
-    }
-    else 
-    {
+    } else {
         res.status(405).json({ error: ErrorCodes.Method_Not_Allowed });
     }
 };

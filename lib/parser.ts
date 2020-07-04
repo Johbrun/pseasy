@@ -6,70 +6,74 @@ import { fromDateFormated } from './helpers/fromDateFormated';
 const fs = require('fs');
 const path = require('path');
 
-const parseSheets = async (body: string, year : string) => 
-{
-
+const parseSheets = async (body: string, year: string) => {
     const r1 = body.match(/Référence :/g)!.length;
     console.log(`Received ${r1} sheets`);
 
     await cleanByUpdateYear(year);
     // add end for next regex
-    body+= '<table>\n<tbody>\n<tr class="odd">\n<td><blockquote>\n<p>Référence :';
+    body +=
+        '<table>\n<tbody>\n<tr class="odd">\n<td><blockquote>\n<p>Référence :';
 
     // extract sheets
-    const sheets = [...body.matchAll(/<table>.*?(?=<table>\n<tbody>\n<tr class="odd">\n<td><blockquote>\n<p>Référence :)/gmis)]
-        .map(m => m[0]);
-    let nbErr=0;
+    const sheets = [
+        ...body.matchAll(
+            /<table>.*?(?=<table>\n<tbody>\n<tr class="odd">\n<td><blockquote>\n<p>Référence :)/gims
+        ),
+    ].map((m) => m[0]);
+    let nbErr = 0;
     let header;
     let i = 0;
-    for (let sheet of sheets)
-    {
+    for (let sheet of sheets) {
         i++;
-        try
-        {
-            sheet = sheet.replace(/ \u00a0+/g, ' ') // delete supp spaces
+        try {
+            sheet = sheet
+                .replace(/ \u00a0+/g, ' ') // delete supp spaces
                 .trim();
-            const matches = [...sheet.matchAll(/<table>((.|\n)*)?(?=^# )((.|\n)*)/gmi)];
+            const matches = [
+                ...sheet.matchAll(/<table>((.|\n)*)?(?=^# )((.|\n)*)/gim),
+            ];
 
-            header = matches[0][1] ;
+            header = matches[0][1];
             let content = matches[0][3];
 
-            let [, reference, , version, , updatedDate] = header.match(/<p>(.*)<\/p>/gmi)!
-                .map(h => h.replace('<p>', '').replace('</p>', ''));
+            let [, reference, , version, , updatedDate] = header
+                .match(/<p>(.*)<\/p>/gim)!
+                .map((h) => h.replace('<p>', '').replace('</p>', ''));
             const title = content.match(/^# (.*)/gm);
-            if (!title)
-            {
+            if (!title) {
                 throw new Error('Sheet with no title');
             }
-        
+
             content = content.replace(title[0], '').replace(/^\n*/, '');
 
             const sheetCreation: SheetCreation = {
-                title : title[0].replace('# ', '').trim(),
+                title: title[0].replace('# ', '').trim(),
                 content,
-                reference:reference.replace(/ /gi, ''),
-                version:version.replace(/N/gi, ''),
-                updatedDate: fromDateFormated(updatedDate)
+                reference: reference.replace(/ /gi, ''),
+                version: version.replace(/N/gi, ''),
+                updatedDate: fromDateFormated(updatedDate),
             };
             await insertSheet(sheetCreation);
-        }
-        catch(e)
-        {
-            console.error(i,e);
+        } catch (e) {
+            console.error(i, e);
             nbErr++;
-            let outputFilePath = './debug/' + year + '-' +i + '.md';
+            let outputFilePath = './debug/' + year + '-' + i + '.md';
             console.log(`Writing to ${outputFilePath}...`);
-      
-            fs.writeFileSync(path.resolve(outputFilePath), e+'\n\n\n'+sheet);
+
+            fs.writeFileSync(
+                path.resolve(outputFilePath),
+                e + '\n\n\n' + sheet
+            );
         }
     }
 
     await updateSheetsCategory();
 
-    return {r1, r2 :sheets.length, err : nbErr};
+    return { r1, r2: sheets.length, err: nbErr };
 };
 
-// const parser = async () => 
+// const parser = async () =>
 // {
 //     console.log('Launch PDF parsing...');
 //     const startDate = new Date();
@@ -81,21 +85,21 @@ const parseSheets = async (body: string, year : string) =>
 
 //     let i = 1;
 //     pdf2md(pdfBuffer, undefined)
-//         .then(async (text: string) => 
+//         .then(async (text: string) =>
 //         {
 //             const matchs = [...text.matchAll(/^(#{4}\s[A-Z](.|\n)*?(?=[A-Z]|#{5}))((.|\n)*?(?=^####\s))/gm)];
 //             console.log(`PDF parsed with success. ${matchs ? matchs.length : '0'} regex matchs founds`);
 
 //             // regroup titles on several lines
 //             // matchs.forEach(m => {
-//             for (const m of matchs) 
+//             for (const m of matchs)
 //             {
 //                 nbSheet++;
 //                 const title = m[1]
 //                     .replace(/[#\n]*/g, '')
 //                     .replace(/-$/g, '')
 //                     .trim();
-//                 try 
+//                 try
 //                 {
 //                     // regroup titles on several lines
 //                     const id = i++;
@@ -129,7 +133,7 @@ const parseSheets = async (body: string, year : string) =>
 //                     };
 //                     //await insertSheet(sheet).catch(e => nbErr++);
 //                 }
-//                 catch (e) 
+//                 catch (e)
 //                 {
 //                     nbErr++;
 //                     console.error(`Error on sheet '${title}' (${i}) : ${e}`);
@@ -170,7 +174,7 @@ const parseSheets = async (body: string, year : string) =>
 //         .then(() =>
 //             console.log(`Process ended in ${(+new Date() - +startDate) / 1000} sec for ${nbSheet} sheets and ${nbErr} errors`)
 //         )
-//         .catch((err: any) => 
+//         .catch((err: any) =>
 //         {
 //             nbErr++;
 //             console.error(err);

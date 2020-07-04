@@ -7,13 +7,28 @@ import Head from 'next/head';
 import SearchAppBar from '../../components/nav';
 import SideDrawer from '../../components/drawer';
 import SheetContent from '../../components/sheetContent';
-import { SheetLight, SheetExtended } from '../../lib/interfaces/sheet.interface';
+import {
+    SheetLight,
+    SheetExtended,
+} from '../../lib/interfaces/sheet.interface';
 import { Category } from '../../lib/interfaces/category.interface';
 import CategoriesSheetsList from '../../components/categoriesSheetsList';
 import Footer from '../../components/footer';
-import { fetchSheetByReference, fetchSheetsLight } from '../../services/sheet.service';
+import {
+    fetchSheetByReference,
+    fetchSheetsLight,
+} from '../../services/sheet.service';
 import { fetchCategories } from '../../services/category.service';
-import { Typography, FormControl, FormLabel, FormGroup, FormControlLabel, Checkbox, FormHelperText, Grid } from '@material-ui/core';
+import {
+    Typography,
+    FormControl,
+    FormLabel,
+    FormGroup,
+    FormControlLabel,
+    Checkbox,
+    FormHelperText,
+    Grid,
+} from '@material-ui/core';
 import theme from '../../theme';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 
@@ -26,41 +41,45 @@ const useStyles = makeStyles(() =>
     createStyles({
         root: {
             fontSize: '0.875rem',
-            fontFamily: '\'Avenir\', \'Roboto\', \'Helvetica\', \'Arial\', sans-serif',
+            fontFamily: "'Avenir', 'Roboto', 'Helvetica', 'Arial', sans-serif",
             fontWeight: 400,
             lineHeight: '1.73',
-            letterSpacing: '0.01071em'
+            letterSpacing: '0.01071em',
         },
         content: {
             display: 'flex',
-            padding : 20
+            padding: 20,
         },
         formControl: {
             margin: theme.spacing(3),
         },
-        explainations : {
-        },
+        explainations: {},
         drawerHeader: {
             display: 'flex',
             alignItems: 'center',
             padding: theme.spacing(0, 1),
             ...theme.mixins.toolbar,
-            justifyContent: 'flex-end'
-        }
+            justifyContent: 'flex-end',
+        },
     })
 );
 
-const AboutPage: NextPage<IProps> = () => 
-{
+const AboutPage: NextPage<IProps> = () => {
     const classes = useStyles();
-    
+
     return (
         <div className={classes.root}>
             <Head>
                 <title>PSEasy</title>
                 <link rel="icon" href="/favicon.ico" />
-                <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
-                <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+                <link
+                    rel="stylesheet"
+                    href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+                />
+                <link
+                    rel="stylesheet"
+                    href="https://fonts.googleapis.com/icon?family=Material+Icons"
+                />
             </Head>
             <CssBaseline />
             <div className={classes.content}>
@@ -68,48 +87,50 @@ const AboutPage: NextPage<IProps> = () =>
                 <main>
                     <div className={classes.drawerHeader} />
                     <h1>A propos de PSEasy</h1>
-                   
+
                     <h2>Pourquoi cette application ?</h2>
                     <p>
                         <Typography className={classes.explainations}>
-                        PSEasy est né pour diverses raisons. Avant tout, elle est là pour permettre l'accès à l'information facilement,
-                        avec ou sans réseau, par n'importe quel secouriste. La connaissance étant quelle chose qui doit être travaillée,
-                        il faut alors pourvoir en tout temps y avoir accès.
+                            PSEasy est né pour diverses raisons. Avant tout,
+                            elle est là pour permettre l'accès à l'information
+                            facilement, avec ou sans réseau, par n'importe quel
+                            secouriste. La connaissance étant quelle chose qui
+                            doit être travaillée, il faut alors pourvoir en tout
+                            temps y avoir accès.
                         </Typography>
                     </p>
 
                     <h2>Public visé</h2>
                     <p>
-                        <Typography className={classes.explainations}>
-                        
-                        </Typography>
+                        <Typography
+                            className={classes.explainations}
+                        ></Typography>
                     </p>
 
                     <h2>Avertissements</h2>
                     <p>
                         <Typography className={classes.explainations}>
-                        En écriture...
+                            En écriture...
                         </Typography>
                     </p>
 
                     <h2>Fonctionnalités futures</h2>
                     <p>
                         <Typography className={classes.explainations}>
-                        En écriture... Mais une chose est sûre : rendre ça un peu plus design :)
+                            En écriture... Mais une chose est sûre : rendre ça
+                            un peu plus design :)
                         </Typography>
                     </p>
 
-
                     <h2>Nous contacter</h2>
                     <Typography className={classes.explainations}>
-
-                    Vous avez une idée pour améliorer le site ? Des questions pour le quizz ? Une proposition de partenariat ? <br/>
-                    PSeasy est une application en plein développement ! N'hésitez pas à nous contacter à l'adresse suivante : 
-                        <AssignmentIcon/> pseasy[at]protonmail.com
-
+                        Vous avez une idée pour améliorer le site ? Des
+                        questions pour le quizz ? Une proposition de partenariat
+                        ? <br />
+                        PSeasy est une application en plein développement !
+                        N'hésitez pas à nous contacter à l'adresse suivante :
+                        <AssignmentIcon /> pseasy[at]protonmail.com
                     </Typography>
-                    
-                   
                 </main>
             </div>
             <Footer />
@@ -117,8 +138,7 @@ const AboutPage: NextPage<IProps> = () =>
     );
 };
 
-AboutPage.getInitialProps = async ({ query }) => 
-{
+AboutPage.getInitialProps = async ({ query }) => {
     const start = +new Date();
 
     const apiCalls: Promise<any>[] = [fetchSheetsLight(), fetchCategories()];
@@ -126,11 +146,15 @@ AboutPage.getInitialProps = async ({ query }) =>
     const [sheetsLight, categories] = await Promise.all(apiCalls);
 
     const end = +new Date();
-    console.log(`Data fetchedc Count: ${sheetsLight.length} in ${(end - start) / 1000} seconds`);
+    console.log(
+        `Data fetchedc Count: ${sheetsLight.length} in ${
+            (end - start) / 1000
+        } seconds`
+    );
 
     return {
-        sheetsLight : sheetsLight,
-        categories
+        sheetsLight: sheetsLight,
+        categories,
     };
 };
 

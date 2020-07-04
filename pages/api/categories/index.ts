@@ -4,24 +4,17 @@ import saveNewVisitor from '../../../lib/actions/saveNewVisitor';
 import { queryToVisitUser } from '../../../lib/helpers/queryToUserVisit';
 import { ErrorCodes } from '../../../lib/interfaces/errorCodes';
 
-module.exports = async (req: express.Request, res: express.Response) => 
-{
-    try 
-    {
+module.exports = async (req: express.Request, res: express.Response) => {
+    try {
         saveNewVisitor(queryToVisitUser(req));
-    }
-    catch (e) 
-    {
+    } catch (e) {
         console.error(e);
     }
-    if (req.method === 'GET') 
-    {
+    if (req.method === 'GET') {
         const categories = await getCategories();
         res.setHeader('Content-Type', 'application/json');
         res.status(200).json(categories);
-    }
-    else 
-    {
+    } else {
         res.status(405).json({ error: ErrorCodes.Internal_Server_Error });
     }
 };

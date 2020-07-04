@@ -14,15 +14,15 @@ import { toDateFormated } from '../lib/helpers/toDateFormated';
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         margin: {
-            marginLeft: '32px'
+            marginLeft: '32px',
         },
         formControl: {
             margin: theme.spacing(1),
-            minWidth: 180
+            minWidth: 180,
         },
         selectEmpty: {
-            marginTop: theme.spacing(2)
-        }
+            marginTop: theme.spacing(2),
+        },
     })
 );
 
@@ -32,23 +32,31 @@ interface IProps {
     setDateSelected: Dispatch<SetStateAction<number>>;
 }
 
-export default function DateSelect(props: IProps) 
-{
+export default function DateSelect(props: IProps) {
     const classes = useStyles();
 
     return (
         <div className={classes.margin}>
             <FormControl className={classes.formControl}>
-                <InputLabel id="demo-simple-select-helper-label">Filtre par mise à jour</InputLabel>
+                <InputLabel id="demo-simple-select-helper-label">
+                    Filtre par mise à jour
+                </InputLabel>
                 <Select
                     labelId="demo-simple-select-helper-label"
                     id="demo-simple-select-helper"
                     value={props.dateSelected}
-                    onChange={event => props.setDateSelected(event.target.value as number)}
+                    onChange={(event) =>
+                        props.setDateSelected(event.target.value as number)
+                    }
                 >
-                    <MenuItem key={0} value={0}>Aucun filtre</MenuItem>
-                    {props.dates.map(d => <MenuItem key={d} value={d}>{toDateFormated(new Date(d))}</MenuItem>)}
-                    
+                    <MenuItem key={0} value={0}>
+                        Aucun filtre
+                    </MenuItem>
+                    {props.dates.map((d) => (
+                        <MenuItem key={d} value={d}>
+                            {toDateFormated(new Date(d))}
+                        </MenuItem>
+                    ))}
                 </Select>
             </FormControl>
         </div>

@@ -8,14 +8,14 @@ export interface User {
     id: string;
     ip: string;
     userAgent: string;
-    name : string;
+    name: string;
 }
 
 export interface UsernameUpdate {
-    name: string
+    name: string;
 }
 
 export interface UserScore {
-    name : string;
-    score : number;
+    name: string;
+    score: number;
 }

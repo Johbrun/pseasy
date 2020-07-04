@@ -4,29 +4,22 @@ import getQuizzQuestions from '../../../lib/query/getQuizzQuestions';
 import { queryToVisitUser } from '../../../lib/helpers/queryToUserVisit';
 import saveNewVisitor from '../../../lib/actions/saveNewVisitor';
 
-module.exports = async (req: express.Request, res: express.Response) => 
-{
+module.exports = async (req: express.Request, res: express.Response) => {
     const visitUser = queryToVisitUser(req);
-    try 
-    {
+    try {
         saveNewVisitor(queryToVisitUser(req));
-    }
-    catch (e) 
-    {
+    } catch (e) {
         console.error(e);
     }
 
     res.setHeader('Content-Type', 'application/json');
 
-    if (req.method === 'GET') 
-    {
+    if (req.method === 'GET') {
         console.log(visitUser);
         const questions = await getQuizzQuestions();
         res.setHeader('Content-Type', 'application/json');
         res.status(200).json(questions);
-    }
-    else 
-    {
+    } else {
         res.status(405).json({ error: ErrorCodes.Method_Not_Allowed });
     }
 };

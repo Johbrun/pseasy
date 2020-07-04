@@ -6,7 +6,7 @@ import {
     createStyles,
     fade,
     Theme,
-    makeStyles
+    makeStyles,
 } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
@@ -15,8 +15,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 interface IProps {
-  open?: boolean;
-  setOpen?: React.Dispatch<React.SetStateAction<boolean>>; // drawer for sheets
+    open?: boolean;
+    setOpen?: React.Dispatch<React.SetStateAction<boolean>>; // drawer for sheets
 }
 
 const drawerWidth = 400;
@@ -29,75 +29,74 @@ const useStyles = makeStyles((theme: Theme) =>
         appBar: {
             transition: theme.transitions.create(['margin', 'width'], {
                 easing: theme.transitions.easing.sharp,
-                duration: theme.transitions.duration.leavingScreen
+                duration: theme.transitions.duration.leavingScreen,
             }),
-            height:'64px'
-
+            height: '64px',
         },
         appBarShift: {
             width: `calc(100% - ${drawerWidth}px)`,
             marginLeft: drawerWidth,
             transition: theme.transitions.create(['margin', 'width'], {
                 easing: theme.transitions.easing.easeOut,
-                duration: theme.transitions.duration.enteringScreen
-            })
+                duration: theme.transitions.duration.enteringScreen,
+            }),
         },
         drawerButtonShift: {
-            display: 'none'
+            display: 'none',
         },
         menuButton: {
             //marginRight: theme.spacing(2)
         },
         hide: {
-            display: 'none'
+            display: 'none',
         },
         title: {
             flexGrow: 1,
             marginLeft: '30px',
-            fontSize: '25px'
+            fontSize: '25px',
         },
-        items : {
+        items: {
             flexGrow: 1,
             justifyContent: 'left',
             display: 'flex',
-            fontWeight : 500,
-            '& a' : {
-                fontSize : '17px',
-                marginLeft : '30px',
+            fontWeight: 500,
+            '& a': {
+                fontSize: '17px',
+                marginLeft: '30px',
                 textTransform: 'uppercase',
-                color : 'rgba(255, 255, 255, 0.7)',
+                color: 'rgba(255, 255, 255, 0.7)',
                 textDecoration: 'none',
                 '&:hover': {
                     color: 'rgba(255, 255, 255, 1)',
-                    cursor : 'pointer',
+                    cursor: 'pointer',
                 },
                 [theme.breakpoints.down('xs')]: {
-                    display: 'none'
-                }
-            }
+                    display: 'none',
+                },
+            },
         },
         mobileMenu: {
             width: '20px',
-            height : '20px',
+            height: '20px',
             position: 'relative',
             marginRight: theme.spacing(1),
             [theme.breakpoints.up('sm')]: {
-                display: 'none'
-            }
+                display: 'none',
+            },
         },
         mobileMenuIcon: {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            pointer : 'cursor'
+            pointer: 'cursor',
         },
-        mobileMenuPanel : {
-            background : 'white',
+        mobileMenuPanel: {
+            background: 'white',
             justifyContent: 'flex-start',
             position: 'absolute',
             zIndex: 400,
             top: '25px',
-            color:'black',
+            color: 'black',
             right: 0,
             flexDirection: 'column',
             width: '116px',
@@ -105,14 +104,14 @@ const useStyles = makeStyles((theme: Theme) =>
             backgroundColor: 'white',
             boxShadow: '0 2px 5px 0 rgba(0, 0, 0, 0.1)',
             padding: '10px 20px',
-            '& a' : {
-                color : theme.palette.primary.main,
-                paddingTop : '5px',
-                paddingBottom : '5px',
-                cursor : 'pointer',
-                textDecoration : 'none'
+            '& a': {
+                color: theme.palette.primary.main,
+                paddingTop: '5px',
+                paddingBottom: '5px',
+                cursor: 'pointer',
+                textDecoration: 'none',
             },
-            display: (menuOpened:boolean) => menuOpened ? 'flex' : 'none'
+            display: (menuOpened: boolean) => (menuOpened ? 'flex' : 'none'),
         },
         /* search: {
             position: 'relative',
@@ -144,18 +143,18 @@ const useStyles = makeStyles((theme: Theme) =>
             alignItems: 'center',
             justifyContent: 'center'
         },*/
-        logo : {
-            width : '170px',
+        logo: {
+            width: '170px',
             '& img': {
                 display: 'block',
-                width: '80%'
-            }
+                width: '80%',
+            },
         },
         extraLeftMargin: {
             marginLeft: '0px',
             [theme.breakpoints.up('sm')]: {
                 marginLeft: '35px',
-            }
+            },
         },
         /* inputRoot: {
             color: 'inherit'
@@ -180,21 +179,18 @@ const useStyles = makeStyles((theme: Theme) =>
         contentShift: {
             transition: theme.transitions.create('margin', {
                 easing: theme.transitions.easing.easeOut,
-                duration: theme.transitions.duration.enteringScreen
+                duration: theme.transitions.duration.enteringScreen,
             }),
-            marginLeft: 0
+            marginLeft: 0,
         },
-        
     })
 );
-export default function SearchAppBar(props: IProps) 
-{
+export default function SearchAppBar(props: IProps) {
     const [menuOpened, setMenuOpened] = useState(false);
     const classes = useStyles(menuOpened);
     const router = useRouter();
-    
-    const handleDrawerOpen = () => 
-    {
+
+    const handleDrawerOpen = () => {
         if (props.setOpen) props.setOpen(true);
     };
 
@@ -203,7 +199,7 @@ export default function SearchAppBar(props: IProps)
             <AppBar
                 position="fixed"
                 className={clsx(classes.appBar, {
-                    [classes.appBarShift]: props.open
+                    [classes.appBarShift]: props.open,
                 })}
             >
                 <Toolbar>
@@ -212,39 +208,62 @@ export default function SearchAppBar(props: IProps)
                         aria-label="open drawer"
                         onClick={handleDrawerOpen}
                         edge="start"
-                        className={clsx(classes.menuButton, props.open && classes.hide, {
-                            [classes.drawerButtonShift]: typeof props.open === 'undefined'
-                        })}
+                        className={clsx(
+                            classes.menuButton,
+                            props.open && classes.hide,
+                            {
+                                [classes.drawerButtonShift]:
+                                    typeof props.open === 'undefined',
+                            }
+                        )}
                     >
                         <MenuIcon />
                     </IconButton>
-                    <div className={clsx(classes.logo, {
-                        [classes.extraLeftMargin]: typeof props.open === 'undefined'
-                    })} onClick={() => router.push('/')}>
-                        <img src="/logo.png"/>
+                    <div
+                        className={clsx(classes.logo, {
+                            [classes.extraLeftMargin]:
+                                typeof props.open === 'undefined',
+                        })}
+                        onClick={() => router.push('/')}
+                    >
+                        <img src="/logo.png" />
                     </div>
                     {/* <Typography className={classes.title} variant="h6" noWrap>
                         PSEasy
                     </Typography> */}
 
                     <div className={classes.items}>
-                        <Link href="/sheets"><a>Fiches PSE</a></Link>
-                        <Link href="/quizz"><a>Quizz</a></Link>
-                        <Link href="/about"><a>A propos</a></Link>
+                        <Link href="/sheets">
+                            <a>Fiches PSE</a>
+                        </Link>
+                        <Link href="/quizz">
+                            <a>Quizz</a>
+                        </Link>
+                        <Link href="/about">
+                            <a>A propos</a>
+                        </Link>
                     </div>
 
-
-                    <div className={classes.mobileMenu} onClick={() => setMenuOpened(!menuOpened)}>
-                        <div className={classes.mobileMenuIcon} >
+                    <div
+                        className={classes.mobileMenu}
+                        onClick={() => setMenuOpened(!menuOpened)}
+                    >
+                        <div className={classes.mobileMenuIcon}>
                             <MoreVertIcon />
                         </div>
                         <div className={classes.mobileMenuPanel}>
-                            <Link href="/sheets"><a>Fiches PSE</a></Link>
-                            <Link href="/quizz"><a>Quizz</a></Link>
-                            <Link href="/about"><a>A propos</a></Link>
+                            <Link href="/sheets">
+                                <a>Fiches PSE</a>
+                            </Link>
+                            <Link href="/quizz">
+                                <a>Quizz</a>
+                            </Link>
+                            <Link href="/about">
+                                <a>A propos</a>
+                            </Link>
                         </div>
-                    </div> 
-                    
+                    </div>
+
                     {/* <div className={classes.search}>
                         <div className={classes.searchIcon}>
                             <SearchIcon />
