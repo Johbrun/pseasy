@@ -31,6 +31,7 @@ import ResultModal from '../../components/resultModal';
 import computeScore from '../../lib/helpers/computeScore';
 import SheetModal from '../../components/sheetModal';
 import QuizzQuestion from '../../components/quizzQuestion';
+import { IncomingMessage } from 'http';
 
 interface IProps {
     sheetsLight: SheetLight[];
@@ -230,10 +231,8 @@ const QuizzPage: NextPage<IProps> = ({ quizzQuestions }) => {
     );
 };
 
-QuizzPage.getInitialProps = async ({ req }) => {
+const getServiceSideProps = async ( req : IncomingMessage) => {
     if (req) postVisit(req);
-    /* const responseVisit = (await postVisit(req));
-    const idUser = responseVisit ? responseVisit.idUser : '';*/
 
     const start = +new Date();
 
@@ -253,11 +252,12 @@ QuizzPage.getInitialProps = async ({ req }) => {
         } seconds`
     );
 
-    return {
+    return {props : {
         sheetsLight: sheetsLight,
         categories,
         quizzQuestions: quizzQuestions as QuizzQuestionFull[],
-    };
+    }};
 };
 
+export { getServiceSideProps };
 export default QuizzPage;

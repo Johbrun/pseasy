@@ -17,24 +17,31 @@ const ssrCache = cacheableResponse({
     send: ({ data, res }) => res.send(data),
 });
 
-app.prepare().then(() => {
+app.prepare().then(() => 
+{
     const server = express();
 
-    server.get('/_next/*', (req, res) => {
+    server.get('/_next/*', (req, res) => 
+    {
         defaultRequestHandler(req, res);
     });
 
-    server.get('*', (req, res) => {
-        if (/*dev || */ req.query.noCache) {
+    server.get('*', (req, res) => 
+    {
+        if (/*dev || */ req.query.noCache) 
+        {
             // FIX THAAAAAAAAAAAAAAAT
             res.setHeader('X-Cache-Status', 'DISABLED');
             defaultRequestHandler(req, res);
-        } else {
+        }
+        else 
+        {
             ssrCache({ req, res, pagePath: req.path });
         }
     });
 
-    server.listen(port, (err) => {
+    server.listen(port, (err) => 
+    {
         if (err) throw err;
         console.log(`> Ready on http://localhost:${port}`);
     });

@@ -32,6 +32,7 @@ import CommentIcon from '@material-ui/icons/Comment';
 import { useRouter } from 'next/router';
 import Footer from '../../components/footer';
 import { postVisit } from '../../services/visit.service';
+import { IncomingMessage } from 'http';
 
 const getIconElementFromName = (icon: IconsCard, classes: any) => {
     switch (icon) {
@@ -361,11 +362,12 @@ const Home: NextPage<{}> = () => {
     );
 };
 
-Home.getInitialProps = async ({ req }) => {
+const getServerSideProps = async ( req : IncomingMessage ) => {
     console.log('GetInitialProps index');
     if (req) postVisit(req);
 
-    return { userAgent: req ? req.headers['userAgent'] : null };
+    return { props: {} };
 };
 
+export { getServerSideProps }
 export default Home;

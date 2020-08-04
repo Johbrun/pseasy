@@ -24,7 +24,6 @@ module.exports = {
     plugins: ['react', '@typescript-eslint'],
     rules: {
         indent: ['error', 4],
-        'linebreak-style': ['warn', 'unix'],
         quotes: ['error', 'single'],
         semi: ['error', 'always'],
         'no-unused-vars': 'off',
@@ -38,5 +37,6 @@ module.exports = {
         ],
         'brace-style': ['error', 'allman', { allowSingleLine: true }],
         'max-len': ['error', { code: 130 }],
+        'linebreak-style' : ["warn", "windows"]
     },
 };

@@ -31,7 +31,7 @@ const useStyles = makeStyles(() =>
     createStyles({
         root: {
             fontSize: '0.875rem',
-            fontFamily: "'Avenir', 'Roboto', 'Helvetica', 'Arial', sans-serif",
+            fontFamily: '\'Avenir\', \'Roboto\', \'Helvetica\', \'Arial\', sans-serif',
             fontWeight: 400,
             lineHeight: '1.73',
             letterSpacing: '0.01071em',
@@ -43,7 +43,8 @@ const useStyles = makeStyles(() =>
     })
 );
 
-const SheetPage: NextPage<IProps> = ({ sheet, sheetsLight, categories }) => {
+const SheetPage: NextPage<IProps> = ({ sheet, sheetsLight, categories }) => 
+{
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
     const [sheetCompare, setSheetCompare] = React.useState<
@@ -51,14 +52,16 @@ const SheetPage: NextPage<IProps> = ({ sheet, sheetsLight, categories }) => {
     >(undefined);
     const router = useRouter();
 
-    const onSelectVersion = async (version: string) => {
+    const onSelectVersion = async (version: string) => 
+    {
         router.push(
             `/sheets/[reference]?version=${version}`,
             `/sheets/${sheet?.reference}?version=${version}`
         );
     };
 
-    const onSelectCompare = async (version: string) => {
+    const onSelectCompare = async (version: string) => 
+    {
         setSheetCompare(await fetchSheetByReference(sheet.reference, version));
     };
 
@@ -93,7 +96,8 @@ const SheetPage: NextPage<IProps> = ({ sheet, sheetsLight, categories }) => {
     );
 };
 
-SheetPage.getInitialProps = async ({ req, query }) => {
+const getServerSideProps = async ({ req, query }) =>  
+{
     if (req) postVisit(req);
     const start = +new Date();
 
@@ -103,8 +107,7 @@ SheetPage.getInitialProps = async ({ req, query }) => {
         fetchSheetByReference(query.reference, query.version),
     ];
     const [sheetsLight, categories, sheetExtended] = await Promise.all(
-        apiCalls
-    );
+        apiCalls );
 
     const end = +new Date();
     console.log(
@@ -114,10 +117,13 @@ SheetPage.getInitialProps = async ({ req, query }) => {
     );
 
     return {
-        sheet: sheetExtended,
-        sheetsLight: sheetsLight,
-        categories,
+        props: {
+            sheet: sheetExtended,
+            sheetsLight: sheetsLight,
+            categories,
+        }
     };
 };
 
+export { getServerSideProps };
 export default SheetPage;

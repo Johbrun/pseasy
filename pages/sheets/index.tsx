@@ -13,6 +13,7 @@ import { fetchSheetsLight } from '../../services/sheet.service';
 import { postVisit } from '../../services/visit.service';
 import { fetchCategories } from '../../services/category.service';
 import { SheetLight } from '../../lib/interfaces/sheet.interface';
+import { IncomingMessage } from 'http';
 
 interface IProps {
     sheetsLight: SheetLight[];
@@ -23,7 +24,7 @@ const useStyles = makeStyles(() =>
     createStyles({
         root: {
             fontSize: '0.875rem',
-            fontFamily: "'Avenir', 'Roboto', 'Helvetica', 'Arial', sans-serif",
+            fontFamily: '\'Avenir\', \'Roboto\', \'Helvetica\', \'Arial\', sans-serif',
             fontWeight: 400,
             lineHeight: '1.73',
             letterSpacing: '0.01071em',
@@ -35,7 +36,9 @@ const useStyles = makeStyles(() =>
     })
 );
 
-const SheetPage: NextPage<IProps> = ({ sheetsLight, categories }) => {
+const SheetPage: NextPage<IProps> = ({ sheetsLight, categories }) => 
+{
+    console.log(sheetsLight, categories)
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
 
@@ -67,7 +70,8 @@ const SheetPage: NextPage<IProps> = ({ sheetsLight, categories }) => {
     );
 };
 
-SheetPage.getInitialProps = async ({ req }) => {
+const getServerSideProps = async ( req : IncomingMessage) => 
+{
     if (req) postVisit(req);
     const start = +new Date();
 
@@ -81,10 +85,11 @@ SheetPage.getInitialProps = async ({ req }) => {
         } seconds`
     );
 
-    return {
+    return {props : {
         sheetsLight: sheetsLight,
         categories,
-    };
+    }};
 };
 
+export { getServerSideProps };
 export default SheetPage;

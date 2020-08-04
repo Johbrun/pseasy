@@ -138,7 +138,7 @@ const AboutPage: NextPage<IProps> = () => {
     );
 };
 
-AboutPage.getInitialProps = async ({ query }) => {
+const getServerSideProps = async () => {
     const start = +new Date();
 
     const apiCalls: Promise<any>[] = [fetchSheetsLight(), fetchCategories()];
@@ -158,4 +158,5 @@ AboutPage.getInitialProps = async ({ query }) => {
     };
 };
 
+export { getServerSideProps }
 export default AboutPage;
