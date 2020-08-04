@@ -28,3 +28,7 @@ yarn-error.log*
 file0.md
 REF.md
 debug/*
+public/sw.js
+public/sw.js.map
+public/workbox-3b38d5bd.js
+public/workbox-3b38d5bd.js.map
