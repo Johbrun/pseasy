@@ -1,9 +1,9 @@
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/react-in-jsx-scope */
 import { makeStyles, Theme, createStyles, Typography } from '@material-ui/core';
-import Link from 'next/link';
 
-function Copyright() {
+function Copyright() 
+{
     return (
         <>
             <Typography variant="body2" color="textSecondary" align="center">
@@ -26,7 +26,8 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 );
 
-export default function Footer() {
+export default function Footer() 
+{
     const classes = useStyles();
 
     return (
@@ -42,12 +43,13 @@ export default function Footer() {
             >
                 PSEasy n'est pas liée à{' '}
                 <a href="https://interieur.gouv.fr">
-                    <a>interieur.gouv.fr</a>
+                    interieur.gouv.fr
                 </a>
                 , ni à quelconque institution officielle.
                 <br />
+                {/* eslint-disable-next-line max-len*/}
                 <a href="https://www.interieur.gouv.fr/Le-ministere/Securite-civile/Documentation-technique/Secourisme-et-associations/Les-recommandations-et-les-referentiels/">
-                    <a>Consultez ici les documents officiels</a>
+                    Consultez ici les documents officiels
                 </a>
             </Typography>
             <br />

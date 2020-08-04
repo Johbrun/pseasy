@@ -43,7 +43,7 @@ const useStyles = makeStyles(() =>
     createStyles({
         root: {
             fontSize: '0.875rem',
-            fontFamily: "'Avenir', 'Roboto', 'Helvetica', 'Arial', sans-serif",
+            fontFamily: '\'Avenir\', \'Roboto\', \'Helvetica\', \'Arial\', sans-serif',
             fontWeight: 400,
             lineHeight: '1.73',
             letterSpacing: '0.01071em',
@@ -76,7 +76,8 @@ const useStyles = makeStyles(() =>
     })
 );
 
-const QuizzPage: NextPage<IProps> = ({ quizzQuestions }) => {
+const QuizzPage: NextPage<IProps> = ({ quizzQuestions }) => 
+{
     const isClientSide = typeof window !== 'undefined';
 
     const classes = useStyles();
@@ -94,8 +95,10 @@ const QuizzPage: NextPage<IProps> = ({ quizzQuestions }) => {
         undefined
     );
 
-    if (answers.length === 0) {
-        const tmp = quizzQuestions.map((qq) => {
+    if (answers.length === 0) 
+    {
+        const tmp = quizzQuestions.map((qq) => 
+        {
             return {
                 idQuestion: qq.id,
                 answer1Choice: false,
@@ -106,25 +109,29 @@ const QuizzPage: NextPage<IProps> = ({ quizzQuestions }) => {
         setAnswers(tmp);
     }
 
-    const handleChange = (idQuestion: number, idx: number) => {
+    const handleChange = (idQuestion: number, idx: number) => 
+    {
         let question = answers.find((a) => a.idQuestion === idQuestion);
-        if (question) {
-            switch (idx) {
-                case 1:
-                    question.answer1Choice = !question.answer1Choice;
-                    break;
-                case 2:
-                    question.answer2Choice = !question.answer2Choice;
-                    break;
-                case 3:
-                    question.answer3Choice = !question.answer3Choice;
-                    break;
+        if (question) 
+        {
+            switch (idx) 
+            {
+            case 1:
+                question.answer1Choice = !question.answer1Choice;
+                break;
+            case 2:
+                question.answer2Choice = !question.answer2Choice;
+                break;
+            case 3:
+                question.answer3Choice = !question.answer3Choice;
+                break;
             }
             setAnswers([...answers]);
         }
     };
 
-    const handleClickValidate = async () => {
+    const handleClickValidate = async () => 
+    {
         await insertQuizzAnswer(answers);
         setCompleted(true);
         setDisplayModale(true);
@@ -132,7 +139,8 @@ const QuizzPage: NextPage<IProps> = ({ quizzQuestions }) => {
             localStorage.setItem('answers', JSON.stringify(answers));
     };
 
-    const handleOpenSheet = async (reference: string) => {
+    const handleOpenSheet = async (reference: string) => 
+    {
         const sheet = await fetchSheetByReference(reference);
         setSheet(sheet);
     };
@@ -231,7 +239,8 @@ const QuizzPage: NextPage<IProps> = ({ quizzQuestions }) => {
     );
 };
 
-const getServiceSideProps = async ( req : IncomingMessage) => {
+const getServerSideProps = async ( req : IncomingMessage) => 
+{
     if (req) postVisit(req);
 
     const start = +new Date();
@@ -259,5 +268,5 @@ const getServiceSideProps = async ( req : IncomingMessage) => {
     }};
 };
 
-export { getServiceSideProps };
+export { getServerSideProps };
 export default QuizzPage;
