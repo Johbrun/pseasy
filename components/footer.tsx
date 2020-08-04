@@ -41,14 +41,14 @@ export default function Footer() {
                 component="p"
             >
                 PSEasy n'est pas liée à{' '}
-                <Link href="https://interieur.gouv.fr">
+                <a href="https://interieur.gouv.fr">
                     <a>interieur.gouv.fr</a>
-                </Link>
+                </a>
                 , ni à quelconque institution officielle.
                 <br />
-                <Link href="https://www.interieur.gouv.fr/Le-ministere/Securite-civile/Documentation-technique/Secourisme-et-associations/Les-recommandations-et-les-referentiels/">
+                <a href="https://www.interieur.gouv.fr/Le-ministere/Securite-civile/Documentation-technique/Secourisme-et-associations/Les-recommandations-et-les-referentiels/">
                     <a>Consultez ici les documents officiels</a>
-                </Link>
+                </a>
             </Typography>
             <br />
             <Copyright />
