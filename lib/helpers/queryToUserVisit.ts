@@ -13,7 +13,7 @@ export function queryToVisitUser(req: Request | IncomingMessage) {
         ip = req.connection?.remoteAddress ? req.connection.remoteAddress : '';
     }
     const url = req.url ? req.url : '';
-  /*  const userAgent = req.headers
+    /*  const userAgent = req.headers
         ? req.headers['user-agent']
         : navigator ? navigator.userAgent : 'undefined';*/
 

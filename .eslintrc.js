@@ -35,7 +35,7 @@ module.exports = {
                 ignoreRestSiblings: false,
             },
         ],
-        'brace-style': ['error', 'allman', { allowSingleLine: true }],
+        'brace-style': ['error', '1tbs', { allowSingleLine: true }],
         'max-len': ['error', { code: 130 }],
         'linebreak-style' : ["warn", "windows"]
     },
