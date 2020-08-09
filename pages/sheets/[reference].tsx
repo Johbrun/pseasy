@@ -20,6 +20,7 @@ import {
 import { fetchCategories } from '../../services/category.service';
 import { postVisit } from '../../services/visit.service';
 import { useRouter } from 'next/router';
+import { IncomingMessage } from 'http';
 
 interface IProps {
     sheet: SheetExtended;
@@ -43,8 +44,7 @@ const useStyles = makeStyles(() =>
     })
 );
 
-const SheetPage: NextPage<IProps> = ({ sheet, sheetsLight, categories }) => 
-{
+const SheetPage: NextPage<IProps> = ({ sheet, sheetsLight, categories }) => {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
     const [sheetCompare, setSheetCompare] = React.useState<
@@ -52,16 +52,14 @@ const SheetPage: NextPage<IProps> = ({ sheet, sheetsLight, categories }) =>
     >(undefined);
     const router = useRouter();
 
-    const onSelectVersion = async (version: string) => 
-    {
+    const onSelectVersion = async (version: string) => {
         router.push(
             `/sheets/[reference]?version=${version}`,
             `/sheets/${sheet?.reference}?version=${version}`
         );
     };
 
-    const onSelectCompare = async (version: string) => 
-    {
+    const onSelectCompare = async (version: string) => {
         setSheetCompare(await fetchSheetByReference(sheet.reference, version));
     };
 
@@ -96,8 +94,7 @@ const SheetPage: NextPage<IProps> = ({ sheet, sheetsLight, categories }) =>
     );
 };
 
-const getServerSideProps = async ({ req, query }) =>  
-{
+const getServerSideProps = async ( req : IncomingMessage, query :  Record<string, string>) => {
     if (req) postVisit(req);
     const start = +new Date();
 
