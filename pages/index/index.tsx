@@ -1,30 +1,19 @@
 import React from 'react';
 import Head from 'next/head';
 import { NextPage } from 'next';
-import Link from 'next/link';
-import CameraIcon from '@material-ui/icons/PhotoCamera';
 import PhoneIphoneIcon from '@material-ui/icons/PhoneIphone';
 import ClassIcon from '@material-ui/icons/Class';
 import BallotIcon from '@material-ui/icons/Ballot';
 import SearchIcon from '@material-ui/icons/Search';
 import CloudOffIcon from '@material-ui/icons/CloudOff';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
-import Chip from '@material-ui/core/Chip';
 import ScheduleIcon from '@material-ui/icons/Schedule';
-import clsx from 'clsx';
 
 import {
     makeStyles,
     createStyles,
     CssBaseline,
-    Typography,
     Theme,
-    Container,
-    Grid,
-    Button,
-    Card,
-    CardContent,
-    CardActions,
 } from '@material-ui/core';
 import SearchAppBar from '../../components/nav';
 import CompareArrowsIcon from '@material-ui/icons/CompareArrows';
@@ -36,6 +25,7 @@ import { IncomingMessage } from 'http';
 import HomePicture from '../../components/homePicture';
 import CardIcon from '../../components/cardIcon';
 import CardGrid from '../../components/cardGrid';
+import { ICard } from '../../lib/interfaces/card.interface';
 
 const cards: ICard[] = [
     {

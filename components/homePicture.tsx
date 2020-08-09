@@ -49,8 +49,7 @@ interface IProps {
     onClick: () => void
 }
 
-const HomePicture = (props: IProps) => 
-{
+const HomePicture = (props: IProps) => {
     const classes = useStyles();
     return (
         <div className={classes.main}>

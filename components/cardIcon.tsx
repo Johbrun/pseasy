@@ -19,8 +19,7 @@ interface IProps {
     icon : JSX.Element
 }
 
-const cardIcon = (props: IProps) => 
-{
+const cardIcon = (props: IProps) => {
     const classes = useStyles();
 
     return (

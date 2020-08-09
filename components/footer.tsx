@@ -2,8 +2,7 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { makeStyles, Theme, createStyles, Typography } from '@material-ui/core';
 
-function Copyright() 
-{
+function Copyright() {
     return (
         <>
             <Typography variant="body2" color="textSecondary" align="center">
@@ -26,8 +25,7 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 );
 
-export default function Footer() 
-{
+export default function Footer() {
     const classes = useStyles();
 
     return (
