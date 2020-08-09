@@ -35,7 +35,7 @@ import { postVisit } from '../../services/visit.service';
 import { IncomingMessage } from 'http';
 import HomePicture from '../../components/homePicture';
 import CardIcon from '../../components/cardIcon';
-import CardGrid, { ICard } from '../../components/cardGrid';
+import CardGrid from '../../components/cardGrid';
 
 const cards: ICard[] = [
     {
@@ -118,8 +118,7 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 );
 
-const Home: NextPage<{}> = () => 
-{
+const Home: NextPage<{}> = () => {
     const classes = useStyles();
     const router = useRouter();
 
@@ -147,15 +146,14 @@ const Home: NextPage<{}> = () =>
                 <HomePicture onClick={handleClickSheets}/>
                 <CardGrid cards={cards}/>
             </main>
-            
+
             <Footer />
         </div>
     );
 };
 
-const getServerSideProps = async ( req : IncomingMessage ) => 
-{
-    console.log('GetInitialProps index');
+const getServerSideProps = async ( req : IncomingMessage ) => {
+    console.log(' InitialProps index');
     if (req) postVisit(req);
 
     return { props: {} };
