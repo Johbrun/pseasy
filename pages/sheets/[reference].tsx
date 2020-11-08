@@ -18,7 +18,6 @@ import {
     fetchSheetsLight,
 } from '../../services/sheet.service';
 import { fetchCategories } from '../../services/category.service';
-import { postVisit } from '../../services/visit.service';
 import { useRouter } from 'next/router';
 import { IncomingMessage } from 'http';
 
@@ -94,14 +93,13 @@ const SheetPage: NextPage<IProps> = ({ sheet, sheetsLight, categories }) => {
     );
 };
 
-const getServerSideProps = async ( req : IncomingMessage, query :  Record<string, string>) => {
-    if (req) postVisit(req);
+const getServerSideProps = async ( req : IncomingMessage) => {
     const start = +new Date();
 
     const apiCalls: Promise<any>[] = [
         fetchSheetsLight(),
         fetchCategories(),
-        fetchSheetByReference(query.reference, query.version),
+        fetchSheetByReference(req.query.reference, req.query.version),
     ];
     const [sheetsLight, categories, sheetExtended] = await Promise.all(
         apiCalls );

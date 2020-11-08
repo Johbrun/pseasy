@@ -124,8 +124,8 @@ export default function SheetContent(props: IProps) {
             d.added
                 ? `__${d.value}__`
                 : d.removed
-                ? `<s>${d.value}</s>`
-                : d.value
+                    ? `<s>${d.value}</s>`
+                    : d.value
         )
         .join('');
 
@@ -137,7 +137,6 @@ export default function SheetContent(props: IProps) {
         event: React.ChangeEvent<{ value: unknown }>
     ) => {
         if (props.sheet.history && props.onSelectVersion) {
-            console.log(props.sheet.history, event.target.value);
             const hSelected = props.sheet.history.find(
                 (s) => s.id === (event.target.value as string)
             );
@@ -150,8 +149,6 @@ export default function SheetContent(props: IProps) {
         event: React.ChangeEvent<{ value: unknown }>
     ) => {
         if (props.sheet.history && props.onSelectCompare) {
-            console.log('sdfljsdfkjsdfl');
-
             setShowModale(true);
 
             props.onSelectCompare(

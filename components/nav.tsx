@@ -4,7 +4,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import {
     createStyles,
-    fade,
     Theme,
     makeStyles,
 } from '@material-ui/core/styles';
@@ -236,9 +235,6 @@ export default function SearchAppBar(props: IProps) {
                         <Link href="/sheets">
                             <a>Fiches PSE</a>
                         </Link>
-                        <Link href="/quizz">
-                            <a>Quizz</a>
-                        </Link>
                         <Link href="/about">
                             <a>A propos</a>
                         </Link>
@@ -254,9 +250,6 @@ export default function SearchAppBar(props: IProps) {
                         <div className={classes.mobileMenuPanel}>
                             <Link href="/sheets">
                                 <a>Fiches PSE</a>
-                            </Link>
-                            <Link href="/quizz">
-                                <a>Quizz</a>
                             </Link>
                             <Link href="/about">
                                 <a>A propos</a>

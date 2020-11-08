@@ -5,29 +5,17 @@ import { makeStyles, createStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Head from 'next/head';
 import SearchAppBar from '../../components/nav';
-import SideDrawer from '../../components/drawer';
-import SheetContent from '../../components/sheetContent';
 import {
     SheetLight,
-    SheetExtended,
 } from '../../lib/interfaces/sheet.interface';
 import { Category } from '../../lib/interfaces/category.interface';
-import CategoriesSheetsList from '../../components/categoriesSheetsList';
 import Footer from '../../components/footer';
 import {
-    fetchSheetByReference,
     fetchSheetsLight,
 } from '../../services/sheet.service';
 import { fetchCategories } from '../../services/category.service';
 import {
     Typography,
-    FormControl,
-    FormLabel,
-    FormGroup,
-    FormControlLabel,
-    Checkbox,
-    FormHelperText,
-    Grid,
 } from '@material-ui/core';
 import theme from '../../theme';
 import AssignmentIcon from '@material-ui/icons/Assignment';
@@ -41,7 +29,7 @@ const useStyles = makeStyles(() =>
     createStyles({
         root: {
             fontSize: '0.875rem',
-            fontFamily: "'Avenir', 'Roboto', 'Helvetica', 'Arial', sans-serif",
+            fontFamily: '\'Avenir\', \'Roboto\', \'Helvetica\', \'Arial\', sans-serif',
             fontWeight: 400,
             lineHeight: '1.73',
             letterSpacing: '0.01071em',
@@ -92,8 +80,8 @@ const AboutPage: NextPage<IProps> = () => {
                     <p>
                         <Typography className={classes.explainations}>
                             PSEasy est né pour diverses raisons. Avant tout,
-                            elle est là pour permettre l'accès à l'information
-                            facilement, avec ou sans réseau, par n'importe quel
+                            elle est là pour permettre l&apos;accès à l&apos;information
+                            facilement, avec ou sans réseau, par n&apos;importe quel
                             secouriste. La connaissance étant quelle chose qui
                             doit être travaillée, il faut alors pourvoir en tout
                             temps y avoir accès.
@@ -124,11 +112,10 @@ const AboutPage: NextPage<IProps> = () => {
 
                     <h2>Nous contacter</h2>
                     <Typography className={classes.explainations}>
-                        Vous avez une idée pour améliorer le site ? Des
-                        questions pour le quizz ? Une proposition de partenariat
+                        Vous avez une idée pour améliorer le site ? Une proposition de partenariat
                         ? <br />
                         PSeasy est une application en plein développement !
-                        N'hésitez pas à nous contacter à l'adresse suivante :
+                        N&apos;hésitez pas à nous contacter à l&apos;adresse suivante :
                         <AssignmentIcon /> pseasy[at]protonmail.com
                     </Typography>
                 </main>
@@ -147,7 +134,7 @@ const getServerSideProps = async () => {
 
     const end = +new Date();
     console.log(
-        `Data fetchedc Count: ${sheetsLight.length} in ${
+        `Data fetched Count: ${sheetsLight.length} in ${
             (end - start) / 1000
         } seconds`
     );
@@ -158,5 +145,5 @@ const getServerSideProps = async () => {
     };
 };
 
-export { getServerSideProps }
+export { getServerSideProps };
 export default AboutPage;

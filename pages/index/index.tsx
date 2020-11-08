@@ -4,9 +4,7 @@ import { NextPage } from 'next';
 import PhoneIphoneIcon from '@material-ui/icons/PhoneIphone';
 import ClassIcon from '@material-ui/icons/Class';
 import BallotIcon from '@material-ui/icons/Ballot';
-import SearchIcon from '@material-ui/icons/Search';
 import CloudOffIcon from '@material-ui/icons/CloudOff';
-import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import ScheduleIcon from '@material-ui/icons/Schedule';
 
 import {
@@ -17,11 +15,8 @@ import {
 } from '@material-ui/core';
 import SearchAppBar from '../../components/nav';
 import CompareArrowsIcon from '@material-ui/icons/CompareArrows';
-import CommentIcon from '@material-ui/icons/Comment';
 import { useRouter } from 'next/router';
 import Footer from '../../components/footer';
-import { postVisit } from '../../services/visit.service';
-import { IncomingMessage } from 'http';
 import HomePicture from '../../components/homePicture';
 import CardIcon from '../../components/cardIcon';
 import CardGrid from '../../components/cardGrid';
@@ -55,12 +50,7 @@ const cards: ICard[] = [
         icon: <CardIcon icon={<CompareArrowsIcon/>}/>,
         status: 'Opérationnel',
     },
-    {
-        title: 'Quizz',
-        content: 'Testez vos connaissances du référentiel',
-        icon: <CardIcon icon={<HelpOutlineIcon/>}/>,
-        status: 'Opérationnel',
-    },
+
     {
         title: 'Mode \'App\'',
         content:
@@ -72,22 +62,8 @@ const cards: ICard[] = [
         title: 'Mode hors ligne',
         content: 'Profitez de l\'application même sans connexion à l\'Internet',
         icon: <CardIcon icon={<CloudOffIcon/>}/>,
-        status: 'Prévu T2 2020',
-    },
-    {
-        title: 'Recherche par mot clé',
-        content:
-            'Retrouvez toutes les fiches en lien avec un ou plusieurs mots clés',
-        icon: <CardIcon icon={<SearchIcon/>}/>,
         status: 'Prévu T4 2020',
-    },
-    {
-        title: 'Echangez',
-        content:
-            'Une interrogation, un flou ? Surligner la partie intéressée, poser votre question, la communauté vous répondra !',
-        icon: <CardIcon icon={<CommentIcon/>}/>,
-        status: 'Prévu T4 2020',
-    },
+    }
 ];
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -142,10 +118,7 @@ const Home: NextPage<{}> = () => {
     );
 };
 
-const getServerSideProps = async ( req : IncomingMessage ) => {
-    console.log(' InitialProps index');
-    if (req) postVisit(req);
-
+const getServerSideProps = async ( ) => {
     return { props: {} };
 };
 

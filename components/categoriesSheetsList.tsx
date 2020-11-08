@@ -117,10 +117,10 @@ export default function CategoriesSheetsList(props: IProps) {
                                 .filter((s) =>
                                     filterSheet
                                         ? s.title
-                                              .toLowerCase()
-                                              .includes(
-                                                  filterSheet.toLowerCase()
-                                              )
+                                            .toLowerCase()
+                                            .includes(
+                                                filterSheet.toLowerCase()
+                                            )
                                         : true
                                 )
                             // .sort((s1, s2 ) => s1.title < s2.title ? -1 : 1)

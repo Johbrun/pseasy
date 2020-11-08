@@ -1,6 +1,5 @@
 import React from 'react';
-import { makeStyles, Button, Modal } from '@material-ui/core';
-import Link from 'next/link';
+import { makeStyles, Modal } from '@material-ui/core';
 
 function getModalStyle() {
     const top = 50;
@@ -34,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
 export default function DiffModal() {
     const classes = useStyles();
     const [modalStyle] = React.useState(getModalStyle);
-    const [open, setOpen] = React.useState(true);
+    const [open] = React.useState(true);
 
     const handleClose = () => {};
 
