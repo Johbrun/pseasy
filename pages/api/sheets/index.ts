@@ -1,16 +1,9 @@
 import * as express from 'express';
 import getSummary from '../../../lib/query/getSummary';
 import * as parser from '../../../lib/parser';
-import saveNewVisitor from '../../../lib/actions/saveNewVisitor';
-import { queryToVisitUser } from '../../../lib/helpers/queryToUserVisit';
 import { ErrorCodes } from '../../../lib/interfaces/errorCodes';
 
 module.exports = async (req: express.Request, res: express.Response) => {
-    try {
-        saveNewVisitor(queryToVisitUser(req));
-    } catch (e) {
-        console.error(e);
-    }
     if (req.method === 'GET') {
         const sheets = await getSummary();
 

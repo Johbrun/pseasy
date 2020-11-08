@@ -10,86 +10,162 @@ import { Category } from '../../lib/interfaces/category.interface';
 import CategoriesSheetsList from '../../components/categoriesSheetsList';
 import Footer from '../../components/footer';
 import { fetchSheetsLight } from '../../services/sheet.service';
-import { postVisit } from '../../services/visit.service';
-import { fetchCategories } from '../../services/category.service';
-import { SheetLight } from '../../lib/interfaces/sheet.interface';
+import { fetchCategories } from '../../services/category.
+ervice';
+import { SheetLight } from '../../lib/interfaces/sheet.in
+erface';
 import { IncomingMessage } from 'http';
 
-interface IProps {
+interface IProps
+{
     sheetsLight: SheetLight[];
-    categories: Category[];
+    ca
+
+gories: Category[]
+
 }
 
-const useStyles = makeStyles(() =>
+const useStyles = makeStyl
+s(() =>
     createStyles({
-        root: {
-            fontSize: '0.875rem',
-            fontFamily: '\'Avenir\', \'Roboto\', \'Helvetica\', \'Arial\', sans-serif',
+
+ 
+
+    root: {
+            fontSize: 
+0.875rem',
+       
+    fontFamily:
+'\'Avenir\', \'Roboto\', \'Helvet
+ca\', \'Arial\', sans-serif',
             fontWeight: 400,
-            lineHeight: '1.73',
-            letterSpacing: '0.01071em',
-            background: 'rgba(62, 72, 110, 0.05)',
-        },
+            lineHeight: '1.7
+',
+            letterSpacing
+ '0.01071em',
+            backg
+ound: 'rgba(62, 72, 110, 0.05)',
+      
+ },
         content: {
-            display: 'flex',
-        },
+            display: 'flex'
+
+        }
+
     })
 );
 
-const SheetPage: NextPage<IProps> = ({ sheetsLight, categories }) => 
+const 
+heetPage: NextPage<IProps> =
+({ sheetsL
+ght, c
+te
+
+ries }) => 
 {
     console.log(sheetsLight, categories)
-    const classes = useStyles();
-    const [open, setOpen] = React.useState(false);
+    const cla e
+ = useStyles();
+    const [open, setOpen;
+ = React.useState(false);
 
-    return (
+    r
+turn (
         <div className={classes.root}>
-            <Head>
-                <title>PSEasy - Fiches PSE</title>
-            </Head>
+    
+
+      <Head>
+                <title>PSEasy - Fiches
+PSE</title>
+      
+     </Head>
 
             <CssBaseline />
-            <div className={classes.content}>
-                <SearchAppBar open={open} setOpen={setOpen} />
+        
+   <div className={
+
+asses.content}>
+           
+    <SearchAppBar open={open} setOpen={setOpe
+} />
 
                 <SideDrawer
-                    open={open}
-                    setOpen={setOpen}
-                    categories={categories}
-                    sheetsLight={sheetsLight}
-                />
+                    open={op
+
+}
+                    setOp
+n={setOpen}
+                   
+categories={categories}
+             
+      sheetsLight={sheetsLight}
+           
+    />
 
                 <CategoriesSheetsList
-                    open={open}
-                    categories={categories}
-                    sheetsLight={sheetsLight}
-                />
+                  
+
+open={open}
+                    categ
+ries={categories}
+             
+      sheetsLight={sheetsLight}
+           
+    />
             </div>
-            <Footer />
+            <Footer
+/>
         </div>
-    );
+
+   );
 };
 
-const getServerSideProps = async ( req : IncomingMessage) => 
+const ge
+ServerSideProps = asyn
+ ( req : Incom
+ngMess
+ge
+
+=> 
 {
-    if (req) postVisit(req);
     const start = +new Date();
 
-    const apiCalls: Promise<any>[] = [fetchSheetsLight(), fetchCategories()];
-    const [sheetsLight, categories] = await Promise.all(apiCalls);
+    const apiCalls: Pr i
+e<any>[] = [fetchSheetsLight
+), fetchCategories()];
+    con
 
-    const end = +new Date();
+ [sheetsLight, categories] = await Promise.all(apiCalls);
+
+    const end = +n
+w Date();
     console.log(
-        `Data fetched ; Count: ${sheetsLight.length} in ${
-            (end - start) / 1000
+        `Data fetched ; Count: ${sheets
+
+ght.length} in ${
+          
+ (end - start) /
+1000
         } seconds`
     );
 
     return {props : {
-        sheetsLight: sheetsLight,
-        categories,
-    }};
-};
+    
+   sheetsLight: sheetsLight,
+   
+    categories,
+  
+ }};
+}
 
-export { getServerSideProps };
-export default SheetPage;
+
+export { getServerSi
+eProps };
+export default SheetPag
+;
+
+
+
+
+
+

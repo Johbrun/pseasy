@@ -71,16 +71,6 @@ CREATE TABLE `user` (
 
 -- --------------------------------------------------------
 
---
--- Structure de la table `visit`
---
-
-CREATE TABLE `visit` (
-  `id` int NOT NULL,
-  `idUser` varchar(255) NOT NULL,
-  `url` varchar(255) DEFAULT NULL,
-  `date` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Index pour les tables déchargées
@@ -108,12 +98,7 @@ ALTER TABLE `sheet`
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id`);
 
---
--- Index pour la table `visit`
---
-ALTER TABLE `visit`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `idUser` (`idUser`);
+
 
 --
 -- AUTO_INCREMENT pour les tables déchargées
@@ -125,11 +110,6 @@ ALTER TABLE `visit`
 ALTER TABLE `sheet`
   MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
---
--- AUTO_INCREMENT pour la table `visit`
---
-ALTER TABLE `visit`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- Contraintes pour les tables déchargées

@@ -20,7 +20,6 @@ import CompareArrowsIcon from '@material-ui/icons/CompareArrows';
 import CommentIcon from '@material-ui/icons/Comment';
 import { useRouter } from 'next/router';
 import Footer from '../../components/footer';
-import { postVisit } from '../../services/visit.service';
 import { IncomingMessage } from 'http';
 import HomePicture from '../../components/homePicture';
 import CardIcon from '../../components/cardIcon';
@@ -139,7 +138,6 @@ const Home: NextPage<{}> = () => {
 
 const getServerSideProps = async ( req : IncomingMessage ) => {
     console.log(' InitialProps index');
-    if (req) postVisit(req);
 
     return { props: {} };
 };
