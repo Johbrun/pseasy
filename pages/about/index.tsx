@@ -41,7 +41,7 @@ const useStyles = makeStyles(() =>
     createStyles({
         root: {
             fontSize: '0.875rem',
-            fontFamily: "'Avenir', 'Roboto', 'Helvetica', 'Arial', sans-serif",
+            fontFamily: '\'Avenir\', \'Roboto\', \'Helvetica\', \'Arial\', sans-serif',
             fontWeight: 400,
             lineHeight: '1.73',
             letterSpacing: '0.01071em',
@@ -124,8 +124,7 @@ const AboutPage: NextPage<IProps> = () => {
 
                     <h2>Nous contacter</h2>
                     <Typography className={classes.explainations}>
-                        Vous avez une idée pour améliorer le site ? Des
-                        questions pour le quizz ? Une proposition de partenariat
+                        Vous avez une idée pour améliorer le site ? Une proposition de partenariat
                         ? <br />
                         PSeasy est une application en plein développement !
                         N'hésitez pas à nous contacter à l'adresse suivante :
@@ -158,5 +157,5 @@ const getServerSideProps = async () => {
     };
 };
 
-export { getServerSideProps }
+export { getServerSideProps };
 export default AboutPage;

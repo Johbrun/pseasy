@@ -55,12 +55,7 @@ const cards: ICard[] = [
         icon: <CardIcon icon={<CompareArrowsIcon/>}/>,
         status: 'Opérationnel',
     },
-    {
-        title: 'Quizz',
-        content: 'Testez vos connaissances du référentiel',
-        icon: <CardIcon icon={<HelpOutlineIcon/>}/>,
-        status: 'Opérationnel',
-    },
+
     {
         title: 'Mode \'App\'',
         content:

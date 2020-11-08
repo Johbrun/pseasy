@@ -236,9 +236,6 @@ export default function SearchAppBar(props: IProps) {
                         <Link href="/sheets">
                             <a>Fiches PSE</a>
                         </Link>
-                        <Link href="/quizz">
-                            <a>Quizz</a>
-                        </Link>
                         <Link href="/about">
                             <a>A propos</a>
                         </Link>
@@ -254,9 +251,6 @@ export default function SearchAppBar(props: IProps) {
                         <div className={classes.mobileMenuPanel}>
                             <Link href="/sheets">
                                 <a>Fiches PSE</a>
-                            </Link>
-                            <Link href="/quizz">
-                                <a>Quizz</a>
                             </Link>
                             <Link href="/about">
                                 <a>A propos</a>

@@ -36,51 +36,7 @@ CREATE TABLE `category` (
 
 -- --------------------------------------------------------
 
---
--- Structure de la table `quizzAnswer`
---
 
-CREATE TABLE `quizzAnswer` (
-  `id` int NOT NULL,
-  `idQuestion` int NOT NULL,
-  `idUser` varchar(255) NOT NULL,
-  `answer1Choice` tinyint(1) DEFAULT NULL,
-  `answer2Choice` tinyint(1) DEFAULT NULL,
-  `answer3Choice` tinyint(1) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `quizzQuestion`
---
-
-CREATE TABLE `quizzQuestion` (
-  `id` int NOT NULL,
-  `sheetReference` varchar(200) NOT NULL,
-  `difficulty` int NOT NULL,
-  `question` varchar(512) NOT NULL,
-  `explaination` varchar(2048) NOT NULL,
-  `answer1` varchar(255) DEFAULT NULL,
-  `answer2` varchar(255) DEFAULT NULL,
-  `answer3` varchar(255) DEFAULT NULL,
-  `answer1IsOk` tinyint(1) NOT NULL,
-  `answer2IsOk` tinyint(1) NOT NULL,
-  `answer3IsOk` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `quizzStat`
---
-
-CREATE TABLE `quizzStat` (
-  `id` int NOT NULL,
-  `idQuestion` int NOT NULL,
-  `nbAnswers` int NOT NULL DEFAULT '0',
-  `nbFirstOk` int NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -137,26 +93,7 @@ ALTER TABLE `category`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `number` (`number`);
 
---
--- Index pour la table `quizzAnswer`
---
-ALTER TABLE `quizzAnswer`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `idQuestion` (`idQuestion`),
-  ADD KEY `idUser` (`idUser`);
 
---
--- Index pour la table `quizzQuestion`
---
-ALTER TABLE `quizzQuestion`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `quizzStat`
---
-ALTER TABLE `quizzStat`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `idQuestion` (`idQuestion`);
 
 --
 -- Index pour la table `sheet`
@@ -183,24 +120,6 @@ ALTER TABLE `visit`
 --
 
 --
--- AUTO_INCREMENT pour la table `quizzAnswer`
---
-ALTER TABLE `quizzAnswer`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT pour la table `quizzQuestion`
---
-ALTER TABLE `quizzQuestion`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT pour la table `quizzStat`
---
-ALTER TABLE `quizzStat`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT pour la table `sheet`
 --
 ALTER TABLE `sheet`
@@ -215,13 +134,6 @@ ALTER TABLE `visit`
 --
 -- Contraintes pour les tables déchargées
 --
-
---
--- Contraintes pour la table `quizzAnswer`
---
-ALTER TABLE `quizzAnswer`
-  ADD CONSTRAINT `quizzAnswer_ibfk_1` FOREIGN KEY (`idQuestion`) REFERENCES `quizzQuestion` (`id`),
-  ADD CONSTRAINT `quizzAnswer_ibfk_2` FOREIGN KEY (`idUser`) REFERENCES `user` (`id`);
 
 --
 -- Contraintes pour la table `sheet`
