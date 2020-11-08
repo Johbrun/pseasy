@@ -64,11 +64,11 @@ export default function WarningModal() {
                         temps.
                     </p>
                     <p>
-                        La génération des fiches par l'IA peut induire quelques
+                        La génération des fiches par l&apos;IA peut induire quelques
                         erreurs. Nous faisons notre maximun pour les éviter.
                     </p>
                     <p>
-                        Si vous souhaitez contacter l'équipe, pour aider,
+                        Si vous souhaitez contacter l&apos;équipe, pour aider,
                         proposer des idées ou un partenariat,{' '}
                         <Link href="/about">
                             <a>cliquez ici</a>

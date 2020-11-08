@@ -4,7 +4,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import {
     createStyles,
-    fade,
     Theme,
     makeStyles,
 } from '@material-ui/core/styles';

@@ -1,7 +1,6 @@
 /* eslint-disable react/jsx-no-undef */
 import React from 'react';
 import { makeStyles, Button, Modal } from '@material-ui/core';
-import Link from 'next/link';
 import SheetContent from './sheetContent';
 import { SheetExtended } from '../lib/interfaces/sheet.interface';
 

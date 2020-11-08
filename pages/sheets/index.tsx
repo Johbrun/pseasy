@@ -12,7 +12,6 @@ import Footer from '../../components/footer';
 import { fetchSheetsLight } from '../../services/sheet.service';
 import { fetchCategories } from '../../services/category.service';
 import { SheetLight } from '../../lib/interfaces/sheet.interface';
-import { IncomingMessage } from 'http';
 
 interface IProps {
     sheetsLight: SheetLight[];
@@ -35,9 +34,7 @@ const useStyles = makeStyles(() =>
     })
 );
 
-const SheetPage: NextPage<IProps> = ({ sheetsLight, categories }) => 
-{
-    console.log(sheetsLight, categories)
+const SheetPage: NextPage<IProps> = ({ sheetsLight, categories }) => {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
 
@@ -69,8 +66,7 @@ const SheetPage: NextPage<IProps> = ({ sheetsLight, categories }) =>
     );
 };
 
-const getServerSideProps = async ( req : IncomingMessage) => 
-{
+const getServerSideProps = async () => {
     const start = +new Date();
 
     const apiCalls: Promise<any>[] = [fetchSheetsLight(), fetchCategories()];
