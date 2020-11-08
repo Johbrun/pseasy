@@ -1,17 +1,18 @@
 import { Category } from '../lib/interfaces/category.interface';
-import axios from 'axios';
+import firebaseWrapper from '../lib/firebase';
 
 let categories: Category[] = [];
 
 const fetchCategories = async (noCache: boolean = false) => {
-    if (categories.length > 0 || noCache) return categories;
+    if (categories.length > 0 || noCache) {
+        console.log('use cache for categories');
+
+        return categories;
+    }
 
     console.log('Fetch categories...');
-    categories = (
-        await axios.request({
-            url: `${process.env.API_URL}/api/categories`,
-        })
-    ).data as Category[];
+    const fetched = (await firebaseWrapper.firestore().collection('categories').get()).docs.map(c =>(c.data())) as Category[];
+    categories = fetched;
     console.log('Fetch categories [OK]');
 
     return categories;

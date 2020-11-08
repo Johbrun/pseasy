@@ -12,6 +12,7 @@ import Footer from '../../components/footer';
 import { fetchSheetsLight } from '../../services/sheet.service';
 import { fetchCategories } from '../../services/category.service';
 import { SheetLight } from '../../lib/interfaces/sheet.interface';
+import firebase from '../../lib/firebase';
 
 interface IProps {
     sheetsLight: SheetLight[];
@@ -69,6 +70,7 @@ const SheetPage: NextPage<IProps> = ({ sheetsLight, categories }) => {
 const getServerSideProps = async () => {
     const start = +new Date();
 
+
     const apiCalls: Promise<any>[] = [fetchSheetsLight(), fetchCategories()];
     const [sheetsLight, categories] = await Promise.all(apiCalls);
 
@@ -81,7 +83,7 @@ const getServerSideProps = async () => {
 
     return {props : {
         sheetsLight: sheetsLight,
-        categories,
+        categories ,
     }};
 };
 
