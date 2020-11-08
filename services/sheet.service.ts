@@ -12,7 +12,9 @@ const fetchSheetsLight = async (noCache: boolean = false) => {
     console.log('Fetch sheets light...');
 
     // withConverter
-    const fetched = (await firebaseWrapper.firestore().collection('sheets').get()).docs.map(c =>(c.data())) as SheetExtended[];
+    let fetched = (await firebaseWrapper.firestore().collection('sheets').get()).docs.map(c =>(c.data())) as SheetExtended[];
+    fetched = fetched.map(f => ({...f, content:'' }))
+
     sheetsLightCache = fetched;
     console.log('Fetch sheets light [OK]');
 

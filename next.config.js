@@ -3,7 +3,7 @@ const withCSS = require('@zeit/next-sass');
 // const withOffline = require('next-offline');
 const withPWA = require('next-pwa');
 
-module.exports = withPWA(
+module.exports = 
     withCSS({
         env: {
             ENV: process.env.ENV,
@@ -32,5 +32,4 @@ module.exports = withPWA(
             dest: 'public',
         },
         useFileSystemPublicRoutes:true
-    })
-);
+    });
