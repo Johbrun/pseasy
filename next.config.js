@@ -31,5 +31,6 @@ module.exports = withPWA(
         pwa: {
             dest: 'public',
         },
+        useFileSystemPublicRoutes:true
     })
 );
