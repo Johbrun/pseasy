@@ -93,7 +93,7 @@ const SheetPage: NextPage<IProps> = ({ sheet, sheetsLight, categories }) => {
     );
 };
 
-const getServerSideProps = async ( req : IncomingMessage) => {
+const getServerSideProps = async ( req : IncomingMessage & { query : any}) => {
     const start = +new Date();
 
     const apiCalls: Promise<any>[] = [
