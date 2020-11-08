@@ -1,4 +1,3 @@
-require('dotenv-extended').load();
 import firebase from 'firebase';
 
 const firebaseConfig = {
