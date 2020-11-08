@@ -30,32 +30,32 @@ const drawerWidth = 400;
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
-            display: 'flex'
+            display: 'flex',
         },
         title: {
-            flexGrow: 1
+            flexGrow: 1,
         },
         category: {
             textTransform: 'uppercase',
-            fontSize: '0.95rem'
+            fontSize: '0.95rem',
         },
         drawer: {
             width: drawerWidth,
-            flexShrink: 0
+            flexShrink: 0,
         },
         drawerPaper: {
-            width: drawerWidth
+            width: drawerWidth,
         },
         drawerHeader: {
             display: 'flex',
             alignItems: 'center',
             padding: theme.spacing(0, 1),
             ...theme.mixins.toolbar,
-            justifyContent: 'space-between'
+            justifyContent: 'space-between',
         },
         nested: {
             paddingLeft: theme.spacing(4),
-            fontSize: '0.9rem'
+            fontSize: '0.9rem',
         },
         chip: {
             color: 'white',
@@ -65,44 +65,41 @@ const useStyles = makeStyles((theme: Theme) =>
             marginRight: '4px',
         },
         chipConnaissance: {
-            backgroundColor: 'blueviolet'
+            backgroundColor: 'blueviolet',
         },
         chipProcedure: {
-            backgroundColor: 'royalblue'
+            backgroundColor: 'royalblue',
         },
         chipTechnique: {
-            backgroundColor: 'orange'
+            backgroundColor: 'orange',
         },
     })
 );
-export default function SideDrawer(props: IProps) 
-{
+export default function SideDrawer(props: IProps) {
     const router = useRouter();
     const classes = useStyles();
     const [openedId, setOpenedId] = React.useState(-1);
 
-    const handleDrawerClose = () => 
-    {
+    const handleDrawerClose = () => {
         props.setOpen(false);
     };
 
-    const prefixFromReference = (reference: string) => 
-    {
+    const prefixFromReference = (reference: string) => {
         const type = refSheetToType(reference);
-        return (<Chip
-            key={reference}
-            className={clsx(classes.chip, {
-                [classes.chipConnaissance]: type === 'Connaissances',
-                [classes.chipProcedure]: type === 'Procédures',
-                [classes.chipTechnique]: type === 'Techniques'
-            })}
-        />);
+        return (
+            <Chip
+                key={reference}
+                className={clsx(classes.chip, {
+                    [classes.chipConnaissance]: type === 'Connaissances',
+                    [classes.chipProcedure]: type === 'Procédures',
+                    [classes.chipTechnique]: type === 'Techniques',
+                })}
+            />
+        );
     };
 
-    const handleClickCategory = (id: number) => 
-    {
-        if (id === openedId) 
-        {
+    const handleClickCategory = (id: number) => {
+        if (id === openedId) {
             id = -1;
         }
         setOpenedId(id);
@@ -116,7 +113,7 @@ export default function SideDrawer(props: IProps)
                 anchor="left"
                 open={props.open}
                 classes={{
-                    paper: classes.drawerPaper
+                    paper: classes.drawerPaper,
                 }}
             >
                 <div className={classes.drawerHeader}>
@@ -126,10 +123,7 @@ export default function SideDrawer(props: IProps)
                 </div>
 
                 <List>
-                    <ListItem
-                        button
-                        onClick={() => router.push('/sheets')}
-                    >
+                    <ListItem button onClick={() => router.push('/sheets')}>
                         <ListItemIcon>
                             <AssignmentIcon />
                         </ListItemIcon>
@@ -140,8 +134,8 @@ export default function SideDrawer(props: IProps)
                         />
                     </ListItem>
 
-                    {props.categories.map(category => (
-                        <div key={'li-' + category.id} >
+                    {props.categories.map((category) => (
+                        <div key={'li-' + category.id}>
                             <ListItem
                                 button
                                 key={'li-' + category.id}
@@ -156,10 +150,16 @@ export default function SideDrawer(props: IProps)
                                 </ListItemIcon>
 
                                 <ListItemText
-                                    primary={category.number + ' ' + category.name}
+                                    primary={
+                                        category.number + ' ' + category.name
+                                    }
                                     className={classes.category}
                                 />
-                                {openedId === category.id ? <ExpandLess /> : <ExpandMore />}
+                                {openedId === category.id ? (
+                                    <ExpandLess />
+                                ) : (
+                                    <ExpandMore />
+                                )}
                             </ListItem>
                             <Collapse
                                 key={'co-' + category.id}
@@ -169,16 +169,29 @@ export default function SideDrawer(props: IProps)
                             >
                                 <List component="div" disablePadding>
                                     {props.sheetsLight
-                                        .filter(s => s.idCategory === category.id)
-                                        .map(s => (
+                                        .filter(
+                                            (s) => s.idCategory === category.id
+                                        )
+                                        .map((s) => (
                                             <ListItemText
                                                 className={classes.nested}
                                                 key={s.id}
                                                 primary={
                                                     <>
-                                                        {prefixFromReference(s.reference)}
-                                                        <Link href={'/sheets/[reference]'} as={`/sheets/${s.reference}`}>
-                                                            <a>{s.title ? s.title : 'Aucun titre renseigné'}</a>
+                                                        {prefixFromReference(
+                                                            s.reference
+                                                        )}
+                                                        <Link
+                                                            href={
+                                                                '/sheets/[reference]'
+                                                            }
+                                                            as={`/sheets/${s.reference}`}
+                                                        >
+                                                            <a>
+                                                                {s.title
+                                                                    ? s.title
+                                                                    : 'Aucun titre renseigné'}
+                                                            </a>
                                                         </Link>
                                                     </>
                                                 }
@@ -190,6 +203,6 @@ export default function SideDrawer(props: IProps)
                     ))}
                 </List>
             </Drawer>
-        </div >
+        </div>
     );
 }

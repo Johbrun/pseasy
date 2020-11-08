@@ -1,9 +1,19 @@
 const months = [
-    'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'
+    'Janvier',
+    'Février',
+    'Mars',
+    'Avril',
+    'Mai',
+    'Juin',
+    'Juillet',
+    'Août',
+    'Septembre',
+    'Octobre',
+    'Novembre',
+    'Décembre',
 ];
 
-export function fromDateFormated(str: String) 
-{
+export function fromDateFormated(str: String) {
     const [m, y] = str.split(' ');
     const monthInt = months.indexOf(m);
 

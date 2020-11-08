@@ -3,10 +3,8 @@ import Document, { Head, Main, NextScript } from 'next/document';
 import { ServerStyleSheets } from '@material-ui/core/styles';
 import theme from '../theme';
 
-export default class MyDocument extends Document 
-{
-    render() 
-    {
+export default class MyDocument extends Document {
+    render() {
         return (
             <html lang="en">
                 <Head>
@@ -16,13 +14,16 @@ export default class MyDocument extends Document
                         content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no"
                     />
                     {/* PWA primary color */}
-                    <meta name="theme-color" content={theme.palette.primary.main} />
+                    <meta
+                        name="theme-color"
+                        content={theme.palette.primary.main}
+                    />
                     <link
                         rel="stylesheet"
                         href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
                     />
                 </Head>
-                {process.env.NODE_ENV.toLowerCase() === 'production' && <script src="woopra.js"></script> }
+                
                 <body>
                     <Main />
                     <NextScript />
@@ -32,8 +33,7 @@ export default class MyDocument extends Document
     }
 }
 
-MyDocument.getInitialProps = async ctx => 
-{
+MyDocument.getInitialProps = async (ctx) => {
     // Resolution order
     //
     // On the server:
@@ -62,7 +62,7 @@ MyDocument.getInitialProps = async ctx =>
 
     ctx.renderPage = () =>
         originalRenderPage({
-            enhanceApp: App => props => sheets.collect(<App {...props} />)
+            enhanceApp: (App) => (props) => sheets.collect(<App {...props} />),
         });
 
     const initialProps = await Document.getInitialProps(ctx);
@@ -72,7 +72,7 @@ MyDocument.getInitialProps = async ctx =>
         // Styles fragment is rendered after the app and page rendering finish.
         styles: [
             ...React.Children.toArray(initialProps.styles),
-            sheets.getStyleElement()
-        ]
+            sheets.getStyleElement(),
+        ],
     };
 };

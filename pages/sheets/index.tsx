@@ -10,9 +10,9 @@ import { Category } from '../../lib/interfaces/category.interface';
 import CategoriesSheetsList from '../../components/categoriesSheetsList';
 import Footer from '../../components/footer';
 import { fetchSheetsLight } from '../../services/sheet.service';
-import { postVisit } from '../../services/visit.service';
 import { fetchCategories } from '../../services/category.service';
 import { SheetLight } from '../../lib/interfaces/sheet.interface';
+import firebase from '../../lib/firebase';
 
 interface IProps {
     sheetsLight: SheetLight[];
@@ -30,13 +30,12 @@ const useStyles = makeStyles(() =>
             background: 'rgba(62, 72, 110, 0.05)',
         },
         content: {
-            display: 'flex'
+            display: 'flex',
         },
     })
 );
 
-const SheetPage: NextPage<IProps> = ({ sheetsLight, categories }) => 
-{
+const SheetPage: NextPage<IProps> = ({ sheetsLight, categories }) => {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
 
@@ -50,33 +49,43 @@ const SheetPage: NextPage<IProps> = ({ sheetsLight, categories }) =>
             <div className={classes.content}>
                 <SearchAppBar open={open} setOpen={setOpen} />
 
-                <SideDrawer open={open} setOpen={setOpen} categories={categories} sheetsLight={sheetsLight} />
-               
+                <SideDrawer
+                    open={open}
+                    setOpen={setOpen}
+                    categories={categories}
+                    sheetsLight={sheetsLight}
+                />
+
                 <CategoriesSheetsList
                     open={open}
                     categories={categories}
-                    sheetsLight={sheetsLight} />
+                    sheetsLight={sheetsLight}
+                />
             </div>
             <Footer />
         </div>
     );
 };
 
-SheetPage.getInitialProps = async ({ req }) => 
-{
-    if (req) postVisit(req);
+const getServerSideProps = async () => {
     const start = +new Date();
+
 
     const apiCalls: Promise<any>[] = [fetchSheetsLight(), fetchCategories()];
     const [sheetsLight, categories] = await Promise.all(apiCalls);
 
     const end = +new Date();
-    console.log(`Data fetched ; Count: ${sheetsLight.length} in ${(end - start) / 1000} seconds`);
+    console.log(
+        `Data fetched ; Count: ${sheetsLight.length} in ${
+            (end - start) / 1000
+        } seconds`
+    );
 
-    return {
+    return {props : {
         sheetsLight: sheetsLight,
-        categories
-    };
+        categories ,
+    }};
 };
 
+export { getServerSideProps };
 export default SheetPage;

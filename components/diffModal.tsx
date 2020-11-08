@@ -1,11 +1,9 @@
 import React from 'react';
-import { makeStyles, Button, Modal } from '@material-ui/core';
-import Link from 'next/link';
+import { makeStyles, Modal } from '@material-ui/core';
 
-function getModalStyle() 
-{
-    const top = 50  ;
-    const left = 50  ;
+function getModalStyle() {
+    const top = 50;
+    const left = 50;
     return {
         top: `${top}%`,
         left: `${left}%`,
@@ -13,7 +11,7 @@ function getModalStyle()
     };
 }
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
     modal: {
         display: 'flex',
         alignItems: 'center',
@@ -27,21 +25,17 @@ const useStyles = makeStyles(theme => ({
         boxShadow: theme.shadows[5],
         padding: theme.spacing(2, 4, 3),
         [theme.breakpoints.down('sm')]: {
-            width: '85%'
-        }
+            width: '85%',
+        },
     },
 }));
 
-export default function DiffModal() 
-{
+export default function DiffModal() {
     const classes = useStyles();
     const [modalStyle] = React.useState(getModalStyle);
-    const [open, setOpen] = React.useState(true);
+    const [open] = React.useState(true);
 
-    const handleClose = () => 
-    {
-
-    };
+    const handleClose = () => {};
 
     return (
         <div>
@@ -54,7 +48,8 @@ export default function DiffModal()
                 <div style={modalStyle} className={classes.paper}>
                     <h2>Travail en cours</h2>
                     <p>
-                            Calcul des différences en cours, le processus ne devrait prendre que quelques secondes...
+                        Calcul des différences en cours, le processus ne devrait
+                        prendre que quelques secondes...
                     </p>
                 </div>
             </Modal>
