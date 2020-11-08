@@ -58,17 +58,6 @@ CREATE TABLE `sheet` (
 
 -- --------------------------------------------------------
 
---
--- Structure de la table `user`
---
-
-CREATE TABLE `user` (
-  `id` varchar(255) NOT NULL,
-  `ip` varchar(20) DEFAULT NULL,
-  `userAgent` varchar(255) DEFAULT NULL,
-  `name` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
 -- --------------------------------------------------------
 
 
@@ -91,14 +80,6 @@ ALTER TABLE `category`
 ALTER TABLE `sheet`
   ADD PRIMARY KEY (`id`),
   ADD KEY `idCategory` (`idCategory`);
-
---
--- Index pour la table `user`
---
-ALTER TABLE `user`
-  ADD PRIMARY KEY (`id`);
-
-
 
 --
 -- AUTO_INCREMENT pour les tables déchargées

@@ -93,13 +93,13 @@ const SheetPage: NextPage<IProps> = ({ sheet, sheetsLight, categories }) => {
     );
 };
 
-const getServerSideProps = async ( req : IncomingMessage, query :  Record<string, string>) => {
+const getServerSideProps = async ( req : IncomingMessage) => {
     const start = +new Date();
 
     const apiCalls: Promise<any>[] = [
         fetchSheetsLight(),
         fetchCategories(),
-        fetchSheetByReference(query.reference, query.version),
+        fetchSheetByReference(req.query.reference, req.query.version),
     ];
     const [sheetsLight, categories, sheetExtended] = await Promise.all(
         apiCalls );
