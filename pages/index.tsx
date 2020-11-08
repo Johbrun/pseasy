@@ -13,14 +13,14 @@ import {
     CssBaseline,
     Theme,
 } from '@material-ui/core';
-import SearchAppBar from '../../components/nav';
+import SearchAppBar from '../components/nav';
 import CompareArrowsIcon from '@material-ui/icons/CompareArrows';
 import { useRouter } from 'next/router';
-import Footer from '../../components/footer';
-import HomePicture from '../../components/homePicture';
-import CardIcon from '../../components/cardIcon';
-import CardGrid from '../../components/cardGrid';
-import { ICard } from '../../lib/interfaces/card.interface';
+import Footer from '../components/footer';
+import HomePicture from '../components/homePicture';
+import CardIcon from '../components/cardIcon';
+import CardGrid from '../components/cardGrid';
+import { ICard } from '../lib/interfaces/card.interface';
 
 const cards: ICard[] = [
     {
@@ -119,6 +119,7 @@ const Home: NextPage<{}> = () => {
 };
 
 const getServerSideProps = async ( ) => {
+    console.log("sdlfjsdklfhjklfdjsf")
     return { props: {} };
 };
 
