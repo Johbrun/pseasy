@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { NextPage } from 'next';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -20,6 +20,7 @@ import {
 import { fetchCategories } from '../../services/category.service';
 import { useRouter } from 'next/router';
 import { IncomingMessage } from 'http';
+import firebaseWrapper from '../../lib/firebase';
 
 interface IProps {
     sheet: SheetExtended;
@@ -59,8 +60,16 @@ const SheetPage: NextPage<IProps> = ({ sheet, sheetsLight, categories }) => {
     };
 
     const onSelectCompare = async (version: string) => {
+        // firebaseWrapper.analytics().logEvent('using_diff');
         setSheetCompare(await fetchSheetByReference(sheet.reference, version));
     };
+
+    useEffect(() => {
+        if (typeof window !== 'undefined'){
+            firebaseWrapper.analytics().logEvent('open_sheet', {reference:sheet.reference});
+        }
+
+    }, [sheet]);
 
     return (
         <div className={classes.root}>
@@ -94,7 +103,7 @@ const SheetPage: NextPage<IProps> = ({ sheet, sheetsLight, categories }) => {
 };
 
 const getServerSideProps = async ( req : IncomingMessage & { query : any}) => {
-    const start = +new Date();
+    const start = +new Date()
 
     const apiCalls: Promise<any>[] = [
         fetchSheetsLight(),
