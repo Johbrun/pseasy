@@ -11,7 +11,8 @@ const fetchCategories = async (noCache: boolean = false) => {
     }
 
     console.log('Fetch categories...');
-    const fetched = (await firebaseWrapper.firestore().collection('categories').get()).docs.map(c =>(c.data())) as Category[];
+    const fetched = (await firebaseWrapper.firestore().collection('categories').orderBy('number').get()).docs.map(c =>(c.data())) as Category[];
+    
     categories = fetched;
     console.log('Fetch categories [OK]');
 
