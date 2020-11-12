@@ -119,7 +119,6 @@ const Home: NextPage<{}> = () => {
 };
 
 const getServerSideProps = async ( ) => {
-    console.log("sdlfjsdklfhjklfdjsf")
     return { props: {} };
 };
 

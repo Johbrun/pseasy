@@ -17,6 +17,9 @@ const theme = createMuiTheme({
             default: '#fff',
             footer: '#ddd',
         },
+        grey : {
+            main : '#CCC'
+        }
     },
 });
 

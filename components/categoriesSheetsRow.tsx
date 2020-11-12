@@ -64,6 +64,7 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         row: {
             cursor: 'pointer',
+            height: '45px',
         },
         hideSm: {
             [theme.breakpoints.down('sm')]: {
