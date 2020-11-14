@@ -38,12 +38,25 @@ const useStyles = makeStyles((theme: Theme) =>
         // modify content when drawer is opened
         content: {
             flexGrow: 1,
-            padding: theme.spacing(3),
+            padding: theme.spacing(3) + 'px 20%',
+            [theme.breakpoints.down('xs')]: {
+                padding: theme.spacing(3) + 'px 10px'
+            },
             transition: theme.transitions.create('margin', {
                 easing: theme.transitions.easing.sharp,
                 duration: theme.transitions.duration.leavingScreen,
             }),
             marginLeft: -drawerWidth,
+            fontSize: '16px',
+            fontFamilly: 'Helvetica',
+            textAlign: 'justify',
+            '& h2': {
+                borderBottom : '1px solid ' + theme.palette.grey[400],
+                fontSize: '28px'
+            },
+            '& h5' : {
+                fontSize: '20px'
+            }
         },
         contentShift: {
             transition: theme.transitions.create('margin', {
@@ -124,7 +137,7 @@ export default function SheetContent(props: IProps) {
             d.added
                 ? `__${d.value}__`
                 : d.removed
-                    ? `<s>${d.value}</s>`
+                    ? ''
                     : d.value
         )
         .join('');

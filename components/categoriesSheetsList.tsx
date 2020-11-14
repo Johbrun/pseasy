@@ -106,7 +106,7 @@ export default function CategoriesSheetsList(props: IProps) {
                                 .filter((s) => s.idCategory === category.id)
                                 .filter(
                                     (s) =>
-                                        s.level === filterLevel ||
+                                        s.level == filterLevel ||
                                         filterLevel === 0
                                 )
                                 .filter(

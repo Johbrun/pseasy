@@ -11,7 +11,7 @@ import {
 import { Category } from '../../lib/interfaces/category.interface';
 import Footer from '../../components/footer';
 import {
-    fetchSheetsLight,
+    fetchSheets,
 } from '../../services/sheet.service';
 import { fetchCategories } from '../../services/category.service';
 import {
@@ -128,7 +128,7 @@ const AboutPage: NextPage<IProps> = () => {
 const getServerSideProps = async () => {
     const start = +new Date();
 
-    const apiCalls: Promise<any>[] = [fetchSheetsLight(), fetchCategories()];
+    const apiCalls: Promise<any>[] = [fetchSheets(true), fetchCategories()];
 
     const [sheetsLight, categories] = await Promise.all(apiCalls);
 

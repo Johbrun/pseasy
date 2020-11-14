@@ -118,10 +118,9 @@ const Home: NextPage<{}> = () => {
     );
 };
 
-const getServerSideProps = async ( ) => {
-    console.log("sdlfjsdklfhjklfdjsf")
+const getStaticProps  = async ( ) => {
     return { props: {} };
 };
 
-export { getServerSideProps };
+export { getStaticProps  };
 export default Home;
