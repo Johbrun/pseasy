@@ -9,10 +9,9 @@ import SideDrawer from '../../components/drawer';
 import { Category } from '../../lib/interfaces/category.interface';
 import CategoriesSheetsList from '../../components/categoriesSheetsList';
 import Footer from '../../components/footer';
-import { fetchSheetsLight } from '../../services/sheet.service';
+import { fetchSheets } from '../../services/sheet.service';
 import { fetchCategories } from '../../services/category.service';
 import { SheetLight } from '../../lib/interfaces/sheet.interface';
-import firebase from '../../lib/firebase';
 
 interface IProps {
     sheetsLight: SheetLight[];
@@ -67,11 +66,11 @@ const SheetPage: NextPage<IProps> = ({ sheetsLight, categories }) => {
     );
 };
 
-const getServerSideProps = async () => {
+const getStaticProps = async () => {
     const start = +new Date();
 
 
-    const apiCalls: Promise<any>[] = [fetchSheetsLight(), fetchCategories()];
+    const apiCalls: Promise<any>[] = [fetchSheets(true), fetchCategories()];
     const [sheetsLight, categories] = await Promise.all(apiCalls);
 
     const end = +new Date();
@@ -87,5 +86,5 @@ const getServerSideProps = async () => {
     }};
 };
 
-export { getServerSideProps };
+export { getStaticProps  };
 export default SheetPage;

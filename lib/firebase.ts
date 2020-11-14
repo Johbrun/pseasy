@@ -13,7 +13,10 @@ const firebaseConfig = {
 };
 try {
     firebase.initializeApp(firebaseConfig);
-    firebase.analytics();
+    if (typeof window !== 'undefined')
+    {
+        firebase.analytics();
+    }
 } catch(err){
     if (!/already exists/.test(err.message)) {
         console.error('Firebase initialization error', err.stack);

@@ -1,7 +1,7 @@
 require('dotenv').config();
 const withCSS = require('@zeit/next-sass');
 // const withOffline = require('next-offline');
-const withPWA = require('next-pwa');
+// const withPWA = require('next-pwa');
 
 module.exports = 
     withCSS({
@@ -28,8 +28,7 @@ module.exports =
         sassLoaderOptions: {
             includePaths: ['styles'],
         },
-        pwa: {
-            dest: 'public',
-        },
-        useFileSystemPublicRoutes:true
+        // pwa: {
+        //     dest: 'public',
+        // },
     });

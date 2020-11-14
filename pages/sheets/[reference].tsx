@@ -15,11 +15,9 @@ import { Category } from '../../lib/interfaces/category.interface';
 import Footer from '../../components/footer';
 import {
     fetchSheetByReference,
-    fetchSheetsLight,
+    fetchSheets,
 } from '../../services/sheet.service';
 import { fetchCategories } from '../../services/category.service';
-import { useRouter } from 'next/router';
-import { IncomingMessage } from 'http';
 import firebaseWrapper from '../../lib/firebase';
 
 interface IProps {
@@ -50,31 +48,28 @@ const SheetPage: NextPage<IProps> = ({ sheet, sheetsLight, categories }) => {
     const [sheetCompare, setSheetCompare] = React.useState<
         SheetExtended | undefined
     >(undefined);
-    const router = useRouter();
+    const [currentSheet, setSheet] = React.useState(sheet);
 
     const onSelectVersion = async (version: string) => {
-        router.push(
-            `/sheets/[reference]?version=${version}`,
-            `/sheets/${sheet?.reference}?version=${version}`
-        );
+        setSheet(await fetchSheetByReference(currentSheet.reference, version))
     };
 
     const onSelectCompare = async (version: string) => {
         if (typeof window !== undefined) {
             firebaseWrapper.analytics().logEvent('using_diff');
-        } setSheetCompare(await fetchSheetByReference(sheet.reference, version));
+        } setSheetCompare(await fetchSheetByReference(currentSheet.reference, version));
     };
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
-            firebaseWrapper.analytics().logEvent('open_sheet', { reference: sheet.reference });
+            firebaseWrapper.analytics().logEvent('open_sheet', { reference: currentSheet.reference });
         }
-    }, [sheet]);
+    }, [currentSheet]);
 
     return (
         <div className={classes.root}>
             <Head>
-                <title>PSEasy - Fiches PSE {sheet.title}</title>
+                <title>PSEasy - Fiches PSE {currentSheet.title}</title>
             </Head>
 
             <CssBaseline />
@@ -91,7 +86,7 @@ const SheetPage: NextPage<IProps> = ({ sheet, sheetsLight, categories }) => {
 
                 <SheetContent
                     open={open}
-                    sheet={sheet}
+                    sheet={currentSheet}
                     sheetCompare={sheetCompare}
                     onSelectVersion={onSelectVersion}
                     onSelectCompare={onSelectCompare}
@@ -102,13 +97,14 @@ const SheetPage: NextPage<IProps> = ({ sheet, sheetsLight, categories }) => {
     );
 };
 
-const getServerSideProps = async (req: IncomingMessage & { query: any }) => {
-    const start = +new Date()
+const getStaticProps = async ({ params }: any) => {
+    const start = +new Date();
 
+    console.log("=> context.param.reference", params);
     const apiCalls: Promise<any>[] = [
-        fetchSheetsLight(),
+        fetchSheets(true),
         fetchCategories(),
-        fetchSheetByReference(req.query.reference, req.query.version),
+        fetchSheetByReference(params.reference, undefined /*req.query.version*/),
     ];
     const [sheetsLight, categories, sheetExtended] = await Promise.all(
         apiCalls);
@@ -124,9 +120,24 @@ const getServerSideProps = async (req: IncomingMessage & { query: any }) => {
             sheet: sheetExtended,
             sheetsLight: sheetsLight,
             categories,
-        }
+        },
+        // notFound  : false
     };
 };
 
-export { getServerSideProps };
+const getStaticPaths = async () => {
+    // Call firebase endpoint to get sheets
+    const sheets = await fetchSheets(true);
+
+    // Get the paths we want to pre-render based on sheets
+    const paths = sheets.map(sheet => ({
+        params: { reference: sheet.reference }
+    }))
+    return {
+        paths,
+        fallback: false// or false // See the "fallback" section below
+    };
+}
+
+export { getStaticProps, getStaticPaths };
 export default SheetPage;

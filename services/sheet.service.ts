@@ -1,20 +1,20 @@
-import { SheetLight, SheetExtended } from '../lib/interfaces/sheet.interface';
+import { Sheet, SheetExtended } from '../lib/interfaces/sheet.interface';
 import firebaseWrapper from '../lib/firebase';
 
-let sheetsLightCache: SheetLight[] = [];
+let sheetsCache: Sheet[] = [];
 let sheetsExtendedCache: Record<string,SheetExtended[]> = {};
 
-const fetchSheetsLight = async (noCache: boolean = false) => {
-    if (sheetsLightCache.length > 0 || noCache) {
-        console.log('use cache for fetchSheetsLight');
-        return sheetsLightCache;
+const fetchSheets = async (light: boolean, noCache: boolean = false) => {
+    if (sheetsCache.length > 0 || noCache) {
+        console.log('use cache for fetchSheets');
+        return sheetsCache;
     }
     console.log('Fetch sheets light...');
 
-    const fetched = (await firebaseWrapper.firestore().collection('sheets').orderBy('updatedDate', 'desc').get()).docs.map(c =>(c.data())) as SheetLight[];
+    const fetched = (await firebaseWrapper.firestore().collection('sheets').orderBy('updatedDate', 'desc').get()).docs.map(c =>(c.data())) as Sheet[];
     
     // keep only newest sheets for each reference
-    let uniques:SheetLight[] = [];
+    let uniques:Sheet[] = [];
     
     fetched.forEach(s => {
         if (!uniques.find(u => u.reference === s.reference))
@@ -23,13 +23,13 @@ const fetchSheetsLight = async (noCache: boolean = false) => {
         }
     });
 
-    uniques = uniques.sort((a,b) => a.id > b.id ? 1 : -1).map(f => ({...f, content:'' }));
+    uniques = uniques.sort((a,b) => a.id > b.id ? 1 : -1).map(f => ({...f, content: light? '' : f.content }));
     
 
-    sheetsLightCache = uniques;
-    console.log('Fetch sheets light [OK]');
+    sheetsCache = uniques;
+    console.log('Fetch sheets [OK]');
 
-    return sheetsLightCache;
+    return sheetsCache;
 };
 
 const fetchSheetByReference = async (
@@ -42,9 +42,9 @@ const fetchSheetByReference = async (
     console.log(`Fetch sheet ${reference} with version ${version}...`);
 
     if (sheetsExtendedCache[reference]) {
-        console.log('use cache for fetchSheetsLight '+reference + ' ' + version);
+        console.log('use cache for fetchSheets '+reference + ' ' + version);
     } else {
-        console.log('NO cache for fetchSheetsLight '+reference + ' ' + version);
+        console.log('NO cache for fetchSheets '+reference + ' ' + version);
     }
 
     const sheetsExtended = sheetsExtendedCache[reference] ? sheetsExtendedCache[reference] : (await firebaseWrapper.firestore().collection('sheets').where('reference', '==', reference).orderBy('updatedDate', 'desc').get()).docs.map(c =>(c.data())) as SheetExtended[];
@@ -58,4 +58,4 @@ const fetchSheetByReference = async (
     return currentSheet;
 };
 
-export { fetchSheetsLight, fetchSheetByReference };
+export { fetchSheets, fetchSheetByReference };
