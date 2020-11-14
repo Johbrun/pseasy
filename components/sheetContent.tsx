@@ -51,7 +51,11 @@ const useStyles = makeStyles((theme: Theme) =>
             fontFamilly: 'Helvetica',
             textAlign: 'justify',
             '& h2': {
-                borderBottom : '1px solid ' + theme.palette.grey.main
+                borderBottom : '1px solid ' + theme.palette.grey.main,
+                fontSize: '28px'
+            },
+            '& h5' : {
+                fontSize: '20px'
             }
         },
         contentShift: {
@@ -133,7 +137,7 @@ export default function SheetContent(props: IProps) {
             d.added
                 ? `__${d.value}__`
                 : d.removed
-                    ? `<s>${d.value}</s>`
+                    ? ''
                     : d.value
         )
         .join('');

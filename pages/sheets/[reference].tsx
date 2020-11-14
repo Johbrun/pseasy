@@ -60,15 +60,15 @@ const SheetPage: NextPage<IProps> = ({ sheet, sheetsLight, categories }) => {
     };
 
     const onSelectCompare = async (version: string) => {
-        // firebaseWrapper.analytics().logEvent('using_diff');
-        setSheetCompare(await fetchSheetByReference(sheet.reference, version));
+        if (typeof window !== undefined) {
+            firebaseWrapper.analytics().logEvent('using_diff');
+        } setSheetCompare(await fetchSheetByReference(sheet.reference, version));
     };
 
     useEffect(() => {
-        if (typeof window !== 'undefined'){
-            firebaseWrapper.analytics().logEvent('open_sheet', {reference:sheet.reference});
+        if (typeof window !== 'undefined') {
+            firebaseWrapper.analytics().logEvent('open_sheet', { reference: sheet.reference });
         }
-
     }, [sheet]);
 
     return (
@@ -102,7 +102,7 @@ const SheetPage: NextPage<IProps> = ({ sheet, sheetsLight, categories }) => {
     );
 };
 
-const getServerSideProps = async ( req : IncomingMessage & { query : any}) => {
+const getServerSideProps = async (req: IncomingMessage & { query: any }) => {
     const start = +new Date()
 
     const apiCalls: Promise<any>[] = [
@@ -111,12 +111,11 @@ const getServerSideProps = async ( req : IncomingMessage & { query : any}) => {
         fetchSheetByReference(req.query.reference, req.query.version),
     ];
     const [sheetsLight, categories, sheetExtended] = await Promise.all(
-        apiCalls );
+        apiCalls);
 
     const end = +new Date();
     console.log(
-        `Data fetched ; Count: ${sheetsLight.length} in ${
-            (end - start) / 1000
+        `Data fetched ; Count: ${sheetsLight.length} in ${(end - start) / 1000
         } seconds`
     );
 
