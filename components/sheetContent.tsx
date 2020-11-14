@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme: Theme) =>
             fontFamilly: 'Helvetica',
             textAlign: 'justify',
             '& h2': {
-                borderBottom : '1px solid ' + theme.palette.grey,
+                borderBottom : '1px solid ' + theme.palette.grey[400],
                 fontSize: '28px'
             },
             '& h5' : {
