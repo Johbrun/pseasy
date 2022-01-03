@@ -1,0 +1,39 @@
+{
+    "name": "pseasy",
+    "version": 2,
+    "alias": "pseasy.fr",
+    "env": {
+        "MYSQL_HOST": "@mysql-host",
+        "MYSQL_DATABASE": "@mysql-database",
+        "MYSQL_USER": "@mysql-user",
+        "MYSQL_PASSWORD": "@mysql-password"
+    },
+    "build": {
+        "env": {
+            "API_URL": "https://pseasy.fr"
+        }
+    },
+    "headers": [
+        {
+            "source": "/(.*)",
+            "headers": [
+                {
+                    "key": "X-Content-Type-Options",
+                    "value": "nosniff"
+                },
+                {
+                    "key": "X-Frame-Options",
+                    "value": "DENY"
+                },
+                {
+                    "key": "X-XSS-Protection",
+                    "value": "1; mode=block"
+                },
+                {
+                    "key": "Referrer-Policy",
+                    "value": "no-referrer"
+                }
+            ]
+        }
+    ]
+}
