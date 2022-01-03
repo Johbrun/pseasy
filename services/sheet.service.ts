@@ -1,5 +1,5 @@
 import { Sheet, SheetExtended } from '../lib/interfaces/sheet.interface'
-import sheets from '../db/sheets.json'
+import sheets from '../db/index.json'
 
 let sheetsCache: Sheet[] = []
 let sheetsExtendedCache: Record<string,SheetExtended[]> = {}
