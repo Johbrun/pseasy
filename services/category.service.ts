@@ -1,5 +1,4 @@
 import { Category } from '../lib/interfaces/category.interface'
-// import firebaseWrapper from '../lib/firebase';
 import categoriesDb from '../db/categories.json'
 
 let categories: Category[] = []
@@ -12,6 +11,7 @@ const fetchCategories = async (noCache: boolean = false) => {
     }
 
     console.log('Fetch categories...')
+    // TODO : convert that for using json files
     // const fetched = (await firebaseWrapper.firestore().collection('categories').orderBy('number').get()).docs.map(c =>(c.data())) as Category[];
     const fetched = categoriesDb as unknown as Category[]
 

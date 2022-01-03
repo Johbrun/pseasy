@@ -18,7 +18,6 @@ import {
     fetchSheets,
 } from '../../services/sheet.service';
 import { fetchCategories } from '../../services/category.service';
-import firebaseWrapper from '../../lib/firebase';
 
 interface IProps {
     sheet: SheetExtended;
@@ -56,13 +55,13 @@ const SheetPage: NextPage<IProps> = ({ sheet, sheetsLight, categories }) => {
 
     const onSelectCompare = async (version: string) => {
         if (typeof window !== undefined) {
-            firebaseWrapper.analytics().logEvent('using_diff');
+            // TODO : log event using_diff here 
         } setSheetCompare(await fetchSheetByReference(currentSheet.reference, version));
     };
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
-            firebaseWrapper.analytics().logEvent('open_sheet', { reference: currentSheet.reference });
+            // TODO : log event open_sheet here 
         }
     }, [currentSheet]);
 
@@ -126,7 +125,6 @@ const getStaticProps = async ({ params }: any) => {
 };
 
 const getStaticPaths = async () => {
-    // Call firebase endpoint to get sheets
     const sheets = await fetchSheets(true);
 
     // Get the paths we want to pre-render based on sheets

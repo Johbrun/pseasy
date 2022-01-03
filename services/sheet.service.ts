@@ -1,5 +1,4 @@
 import { Sheet, SheetExtended } from '../lib/interfaces/sheet.interface'
-// import firebaseWrapper from '../lib/firebase';
 import sheets from '../db/sheets.json'
 
 let sheetsCache: Sheet[] = []
@@ -12,6 +11,7 @@ const fetchSheets = async (light: boolean, noCache: boolean = false) => {
     }
     console.log('Fetch sheets light...')
 
+    // TODO : convert that for using json files
     // const fetched = (await firebaseWrapper.firestore().collection('sheets').orderBy('updatedDate', 'desc').get()).docs.map(c =>(c.data())) as Sheet[];
     const fetched = sheets as unknown as Sheet[]
 
@@ -48,7 +48,7 @@ const fetchSheetByReference = async (
         console.log('NO cache for fetchSheets '+reference + ' ' + version)
     }
 
-    // TODO 
+    // TODO : convert that for using json files
     const sheetsExtended = sheetsExtendedCache[reference] ? sheetsExtendedCache[reference] : sheets as unknown as SheetExtended[] //(await firebaseWrapper.firestore().collection('sheets').where('reference', '==', reference).orderBy('updatedDate', 'desc').get()).docs.map(c =>(c.data())) as SheetExtended[];
     sheetsExtendedCache[reference] = sheetsExtended
 
