@@ -1,11 +1,26 @@
-name: Example workflow for Node using Snyk
-on: push
+name: Semgrep
+on:
+  workflow_dispatch: {}
+  pull_request: {}
+  push:
+    branches:
+      - semgrep-3
+    paths:
+      - .github/workflows/semgrep.yml
+  schedule:
+    # random HH:MM to avoid a load spike on GitHub Actions at 00:00
+    - cron: '12 15 * * *'
 jobs:
-  security:
+  semgrep:
+    name: semgrep/ci
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    env:
+      SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
+    container:
+      image: semgrep/semgrep
+    if: (github.actor != 'dependabot[bot]')
     steps:
-      - uses: actions/checkout@main
-      - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/node@master
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      - uses: actions/checkout@v4
+      - run: semgrep ci
